@@ -23,20 +23,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-// import handlebars from 'express-handlebars';
+const express_handlebars_1 = __importDefault(require("express-handlebars"));
 const path_1 = __importDefault(require("path"));
 const http = __importStar(require("http"));
 const index_1 = __importDefault(require("../routes/index"));
 const app = express_1.default();
+// paths
 const publicFolderPath = path_1.default.resolve(__dirname, '../../public');
+const layoutDirPath = path_1.default.resolve(__dirname, '../../views/layouts');
+const defaultLayerPth = path_1.default.resolve(__dirname, '../../views/layouts/index.hbs');
+const partialDirPath = path_1.default.resolve(__dirname, '../../views/partials');
+// Express & Handlebars Setup
 app.use(express_1.default.static(publicFolderPath));
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
+app.set('view engine', 'hbs');
+app.engine('hbs', express_handlebars_1.default({
+    layoutsDir: layoutDirPath,
+    extname: 'hbs',
+    defaultLayout: defaultLayerPth,
+    partialsDir: partialDirPath
+}));
+// Main Page
+app.get('/', (req, res) => {
+    res.render('main');
+});
+// Use routers
 app.use('/api', index_1.default);
-// app.get('/', (req, res) => {
-//   res.json({
-//     msg: 'Main Page'
-//   });
-// });
 const myServer = new http.Server(app);
 exports.default = myServer;
