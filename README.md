@@ -1,10 +1,18 @@
 # Primera Entrega Proyecto Final
+<<<<<<< HEAD
 
 ## Facundo Creus
 
 ## Stack
 
 `App en Node JS. Código en Typescript. Servidor Express. Motor de Plantillas Handlebars`
+=======
+## Facundo Creus
+
+## Stack
+   
+#### App en Node JS. Código en Typescript. Servidor Express. Motor de Plantillas Handlebars
+>>>>>>> bc0dbfa4dd6a036afddca7e2ee119ba033e320c3
 
 <div>
  <img src='https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/nodejs/nodejs.png' width='60' height='60' alt='Node JS' />
@@ -16,6 +24,7 @@
 <BR />
 <br />
 
+<<<<<<< HEAD
 ## Este proyecto en Glitch
 
 `https://unleashed-nonchalant-atmosphere.glitch.me`
@@ -43,6 +52,48 @@
 `POST - Item: http://localhost:8080/api/carrito/:id_producto`
 
 `DELETE - Producto: http://localhost:8080/api/carrito/borrar/:id`
+=======
+## ENDPOINTS LOCALHOST
+        
+### Productos:
+`
+GET - All Productos: http://localhost:8080/api/productos/listar
+`
+
+`
+GET - Single Producto: http://localhost:8080/api/productos/listar/:id
+`
+
+`
+POST - Producto: http://localhost:8080/api/productos/agregar
+`
+
+`
+PUT - Producto: http://localhost:8080/api/productos/actualizar/:id
+`
+
+`
+DELETE - Producto: http://localhost:8080/api/productos/borrar/:id
+`
+
+### Carrito:
+
+`
+GET - All Items: http://localhost:8080/api/carrito/listar
+`
+
+`
+GET - Single Item: http://localhost:8080/api/carrito/listar/:id
+`
+
+`
+POST - Item: http://localhost:8080/api/carrito/:id_producto
+`
+
+`
+DELETE - Producto: http://localhost:8080/api/carrito/borrar/:id
+` 
+>>>>>>> bc0dbfa4dd6a036afddca7e2ee119ba033e320c3
 
 ## ENDPOINTS GLITCH
 
@@ -58,7 +109,11 @@
 
 `DELETE - Producto: https://unleashed-nonchalant-atmosphere.glitch.me/api/productos/borrar/:id`
 
+<<<<<<< HEAD
 ###Carrito:
+=======
+### Carrito:
+>>>>>>> bc0dbfa4dd6a036afddca7e2ee119ba033e320c3
 
 `GET - All Items: https://unleashed-nonchalant-atmosphere.glitch.me/api/carrito/listar`
 
