@@ -32,7 +32,7 @@ class Persistence {
         const producto = poductList.filter((item) => item.id === id);
         const newItem = {
             id: getMaxid(),
-            timestamp: moment_1.default().format('MMM DD hh:mm:ss'),
+            timestamp: (0, moment_1.default)().format('MMM DD hh:mm:ss'),
             producto: producto
         };
         carrito.push(newItem);

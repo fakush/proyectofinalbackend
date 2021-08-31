@@ -3,6 +3,7 @@ import handlebars from 'express-handlebars';
 import path from 'path';
 import * as http from 'http';
 import routersIndex from '../routes/index';
+import AuxFile from '../controllers/controllerFiles';
 
 const app = express();
 
@@ -27,9 +28,14 @@ app.engine(
   })
 );
 
+// Data Aux
+const loadMyArray = new AuxFile('productList.json');
+const myArray = JSON.parse(loadMyArray.read());
+const listData = { isList: false, isForm: true, addItem: true, productItem: myArray };
+
 // Main Page
 app.get('/', (req, res) => {
-  res.render('main');
+  res.render('main', listData);
 });
 
 // Use routers

@@ -27,7 +27,8 @@ const express_handlebars_1 = __importDefault(require("express-handlebars"));
 const path_1 = __importDefault(require("path"));
 const http = __importStar(require("http"));
 const index_1 = __importDefault(require("../routes/index"));
-const app = express_1.default();
+const controllerFiles_1 = __importDefault(require("../controllers/controllerFiles"));
+const app = (0, express_1.default)();
 // paths
 const publicFolderPath = path_1.default.resolve(__dirname, '../../public');
 const layoutDirPath = path_1.default.resolve(__dirname, '../../views/layouts');
@@ -38,15 +39,19 @@ app.use(express_1.default.static(publicFolderPath));
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.set('view engine', 'hbs');
-app.engine('hbs', express_handlebars_1.default({
+app.engine('hbs', (0, express_handlebars_1.default)({
     layoutsDir: layoutDirPath,
     extname: 'hbs',
     defaultLayout: defaultLayerPth,
     partialsDir: partialDirPath
 }));
+// Data Aux
+const loadMyArray = new controllerFiles_1.default('productList.json');
+const myArray = JSON.parse(loadMyArray.read());
+const listData = { isList: false, isForm: true, addItem: true, productItem: myArray };
 // Main Page
 app.get('/', (req, res) => {
-    res.render('main');
+    res.render('main', listData);
 });
 // Use routers
 app.use('/api', index_1.default);

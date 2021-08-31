@@ -26,7 +26,7 @@ class Persistence {
         const newItem = {
             // Seteo algunos valores x default
             id: getMaxid(),
-            timestamp: moment_1.default().format('MM DD hh:mm:ss'),
+            timestamp: (0, moment_1.default)().format('MM DD hh:mm:ss'),
             nombre: data.nombre,
             descripcion: data.descripcion || 'Falta descripción',
             codigo: data.codigo || 'PXXXX',
@@ -40,7 +40,7 @@ class Persistence {
     }
     update(id, data) {
         const index = productos.findIndex((item) => Number(item.id) === id);
-        productos[index].timestamp = moment_1.default().format('MMM DD hh:mm:ss');
+        productos[index].timestamp = (0, moment_1.default)().format('MMM DD hh:mm:ss');
         productos[index].nombre = data.nombre;
         // Chequeo si los valores cambiaron antes de asignarlos
         if (data.descripcion)

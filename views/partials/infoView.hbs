@@ -33,93 +33,154 @@
         />
       </div>
       <div>
-        <BR />
         <br />
-        <h5 style='text-align: center;'>ENDPOINTS LOCALHOST</h5>
-        <h6>Productos:</h6>
-        <div class='alert alert-success' role='alert'>
-          GET - All Productos:
-          <a href='#' class='alert-link'>http://localhost:8080/api/productos/listar</a>
+        <div class='accordion' id='accordionExample'>
+          <div class='card'>
+            <div class='card-header' id='headingOne'>
+              <h2 class='mb-0'>
+                <button
+                  class='btn btn-light btn-block text-left'
+                  type='button'
+                  data-toggle='collapse'
+                  data-target='#collapseOne'
+                  aria-expanded='false'
+                  aria-controls='collapseOne'
+                >
+                  <h5 style='text-align: center;'>ENDPOINTS LOCALHOST</h5>
+                </button>
+              </h2>
+            </div>
+
+            <div id='collapseOne' class='collapse show' aria-labelledby='headingOne' data-parent='#accordionExample'>
+              <div class='card-body'>
+                <h6>Productos:</h6>
+                <div class='alert alert-success' role='alert'>
+                  GET - All Productos:
+                  <a href='#' class='alert-link'>http://localhost:8080/api/productos/listar</a>
+                </div>
+                <div class='alert alert-success' role='alert'>
+                  GET - Single Producto:
+                  <a href='#' class='alert-link'>http://localhost:8080/api/productos/listar/:id</a>
+                </div>
+                <div class='alert alert-warning' role='alert'>
+                  POST - Producto:
+                  <a href='#' class='alert-link'>http://localhost:8080/api/productos/agregar</a>
+                </div>
+                <div class='alert alert-primary' role='alert'>
+                  PUT - Producto:
+                  <a href='#' class='alert-link'>http://localhost:8080/api/productos/actualizar/:id</a>
+                </div>
+                <div class='alert alert-danger' role='alert'>
+                  DELETE - Producto:
+                  <a href='#' class='alert-link'>http://localhost:8080/api/productos/borrar/:id</a>
+                </div>
+                <h6>Carrito:</h6>
+                <div class='alert alert-success' role='alert'>
+                  GET - All Items:
+                  <a href='#' class='alert-link'>http://localhost:8080/api/carrito/listar</a>
+                </div>
+                <div class='alert alert-success' role='alert'>
+                  GET - Single Item:
+                  <a href='#' class='alert-link'>http://localhost:8080/api/carrito/listar/:id</a>
+                </div>
+                <div class='alert alert-warning' role='alert'>
+                  POST - Item:
+                  <a href='#' class='alert-link'>http://localhost:8080/api/carrito/:id_producto</a>
+                </div>
+                <div class='alert alert-danger' role='alert'>
+                  DELETE - Producto:
+                  <a href='#' class='alert-link'>http://localhost:8080/api/carrito/borrar/:id</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class='card'>
+            <div class='card-header' id='headingTwo'>
+              <h2 class='mb-0'>
+                <button
+                  class='btn btn-light btn-block text-left collapsed'
+                  type='button'
+                  data-toggle='collapse'
+                  data-target='#collapseTwo'
+                  aria-expanded='false'
+                  aria-controls='collapseTwo'
+                >
+                  <h5 style='text-align: center;'>ENDPOINTS GLITCH</h5>
+                </button>
+              </h2>
+            </div>
+            <div id='collapseTwo' class='collapse' aria-labelledby='headingTwo' data-parent='#accordionExample'>
+              <div class='card-body'>
+                <h6>Productos:</h6>
+                <div class='alert alert-success' role='alert'>
+                  GET - All Productos:
+                  <a
+                    href='#'
+                    class='alert-link'
+                  >https://unleashed-nonchalant-atmosphere.glitch.me/api/productos/listar</a>
+                </div>
+                <div class='alert alert-success' role='alert'>
+                  GET - Single Producto:
+                  <a
+                    href='#'
+                    class='alert-link'
+                  >https://unleashed-nonchalant-atmosphere.glitch.me/api/productos/listar/:id</a>
+                </div>
+                <div class='alert alert-warning' role='alert'>
+                  POST - Producto:
+                  <a
+                    href='#'
+                    class='alert-link'
+                  >https://unleashed-nonchalant-atmosphere.glitch.me/api/productos/agregar</a>
+                </div>
+                <div class='alert alert-primary' role='alert'>
+                  PUT - Producto:
+                  <a
+                    href='#'
+                    class='alert-link'
+                  >https://unleashed-nonchalant-atmosphere.glitch.me/api/productos/actualizar/:id</a>
+                </div>
+                <div class='alert alert-danger' role='alert'>
+                  DELETE - Producto:
+                  <a
+                    href='#'
+                    class='alert-link'
+                  >https://unleashed-nonchalant-atmosphere.glitch.me/api/productos/borrar/:id</a>
+                </div>
+                <h6>Carrito:</h6>
+                <div class='alert alert-success' role='alert'>
+                  GET - All Items:
+                  <a
+                    href='#'
+                    class='alert-link'
+                  >https://unleashed-nonchalant-atmosphere.glitch.me/api/carrito/listar</a>
+                </div>
+                <div class='alert alert-success' role='alert'>
+                  GET - Single Item:
+                  <a
+                    href='#'
+                    class='alert-link'
+                  >https://unleashed-nonchalant-atmosphere.glitch.me/api/carrito/listar/:id</a>
+                </div>
+                <div class='alert alert-warning' role='alert'>
+                  POST - Item:
+                  <a
+                    href='#'
+                    class='alert-link'
+                  >https://unleashed-nonchalant-atmosphere.glitch.me/api/carrito/:id_producto</a>
+                </div>
+                <div class='alert alert-danger' role='alert'>
+                  DELETE - Producto:
+                  <a
+                    href='#'
+                    class='alert-link'
+                  >https://unleashed-nonchalant-atmosphere.glitch.me/api/carrito/borrar/:id</a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class='alert alert-success' role='alert'>
-          GET - Single Producto:
-          <a href='#' class='alert-link'>http://localhost:8080/api/productos/listar/:id</a>
-        </div>
-        <div class='alert alert-warning' role='alert'>
-          POST - Producto:
-          <a href='#' class='alert-link'>http://localhost:8080/api/productos/agregar</a>
-        </div>
-        <div class='alert alert-primary' role='alert'>
-          PUT - Producto:
-          <a href='#' class='alert-link'>http://localhost:8080/api/productos/actualizar/:id</a>
-        </div>
-        <div class='alert alert-danger' role='alert'>
-          DELETE - Producto:
-          <a href='#' class='alert-link'>http://localhost:8080/api/productos/borrar/:id</a>
-        </div>
-        <h6>Carrito:</h6>
-        <div class='alert alert-success' role='alert'>
-          GET - All Items:
-          <a href='#' class='alert-link'>http://localhost:8080/api/carrito/listar</a>
-        </div>
-        <div class='alert alert-success' role='alert'>
-          GET - Single Item:
-          <a href='#' class='alert-link'>http://localhost:8080/api/carrito/listar/:id</a>
-        </div>
-        <div class='alert alert-warning' role='alert'>
-          POST - Item:
-          <a href='#' class='alert-link'>http://localhost:8080/api/carrito/:id_producto</a>
-        </div>
-        <div class='alert alert-danger' role='alert'>
-          DELETE - Producto:
-          <a href='#' class='alert-link'>http://localhost:8080/api/carrito/borrar/:id</a>
-        </div>
-      </div>
-      <div>
-        <BR />
-        <br />
-        <h5 style='text-align: center;'>ENDPOINTS GLITCH</h5>
-        <h6>Productos:</h6>
-        <div class='alert alert-success' role='alert'>
-          GET - All Productos:
-          <a href='#' class='alert-link'>https://unleashed-nonchalant-atmosphere.glitch.me/api/productos/listar</a>
-        </div>
-        <div class='alert alert-success' role='alert'>
-          GET - Single Producto:
-          <a href='#' class='alert-link'>https://unleashed-nonchalant-atmosphere.glitch.me/api/productos/listar/:id</a>
-        </div>
-        <div class='alert alert-warning' role='alert'>
-          POST - Producto:
-          <a href='#' class='alert-link'>https://unleashed-nonchalant-atmosphere.glitch.me/api/productos/agregar</a>
-        </div>
-        <div class='alert alert-primary' role='alert'>
-          PUT - Producto:
-          <a
-            href='#'
-            class='alert-link'
-          >https://unleashed-nonchalant-atmosphere.glitch.me/api/productos/actualizar/:id</a>
-        </div>
-        <div class='alert alert-danger' role='alert'>
-          DELETE - Producto:
-          <a href='#' class='alert-link'>https://unleashed-nonchalant-atmosphere.glitch.me/api/productos/borrar/:id</a>
-        </div>
-        <h6>Carrito:</h6>
-        <div class='alert alert-success' role='alert'>
-          GET - All Items:
-          <a href='#' class='alert-link'>https://unleashed-nonchalant-atmosphere.glitch.me/api/carrito/listar</a>
-        </div>
-        <div class='alert alert-success' role='alert'>
-          GET - Single Item:
-          <a href='#' class='alert-link'>https://unleashed-nonchalant-atmosphere.glitch.me/api/carrito/listar/:id</a>
-        </div>
-        <div class='alert alert-warning' role='alert'>
-          POST - Item:
-          <a href='#' class='alert-link'>https://unleashed-nonchalant-atmosphere.glitch.me/api/carrito/:id_producto</a>
-        </div>
-        <div class='alert alert-danger' role='alert'>
-          DELETE - Producto:
-          <a href='#' class='alert-link'>https://unleashed-nonchalant-atmosphere.glitch.me/api/carrito/borrar/:id</a>
-        </div>
+
       </div>
 
     </div>

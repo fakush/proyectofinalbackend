@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const controllerCarrito_1 = require("../controllers/controllerCarrito");
-const router = express_1.Router();
+const router = (0, express_1.Router)();
 router.get('/listar', controllerCarrito_1.controllerCarrito.getItems);
 router.get('/listar/:id', controllerCarrito_1.controllerCarrito.checkValidId, controllerCarrito_1.controllerCarrito.getItems);
 router.post('/agregar/:id_producto', controllerCarrito_1.controllerCarrito.checkValidProduct, controllerCarrito_1.controllerCarrito.addItem);
