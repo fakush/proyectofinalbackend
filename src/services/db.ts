@@ -1,50 +1,92 @@
 import knex from 'knex';
+import dbConfig from '../../knexfile';
 
-export const sqliteDB = knex({
-  client: 'sqlite3',
-  connection: { filename: '../../db/mensajes.sqlite' },
-  useNullAsDefault: true
-});
+class MySQLdb {
+  connection: any;
 
-export const mySQLDB = knex({
-  client: 'mysql',
-  connection: {
-    host: '127.0.0.1',
-    user: 'root',
-    password: '',
-    database: 'db_coderhouse'
-  },
-  pool: { min: 0, max: 7 }
-});
-
-sqliteDB.schema.hasTable('cars').then((exists) => {
-  if (!exists) {
-    console.log('NO EXISTE LA TABLA CARS. VAMOS A CREARLA');
-    sqliteDB.schema
-      .createTable('cars', (table) => {
-        table.increments('id');
-        table.string('name');
-        table.integer('año');
-      })
-      .then(() => {
-        console.log('DONE');
-      });
+  constructor() {
+    const environment = process.env.NODE_ENV || 'productos_dev';
+    console.log(`SETTING ${environment} DB`);
+    const options = dbConfig[environment];
+    this.connection = knex(options);
   }
-});
 
-mySQLDB.schema.hasTable('productos').then((exists) => {
-  if (!exists) {
-    console.log('NO EXISTE LA TABLA productos. VAMOS A CREARLA');
-    mySQLDB.schema
-      .createTable('productos', (productosTable) => {
-        productosTable.increments();
-        productosTable.string('nombre').notNullable();
-        productosTable.string('descripcion').notNullable();
-        productosTable.integer('stock').notNullable();
-        productosTable.decimal('precio', 4, 2);
-      })
-      .then(() => {
-        console.log('DONE');
-      });
+  init() {
+    this.connection.schema.hasTable('productos').then((exists: any) => {
+      if (!exists) {
+        console.log('SQL: Initializing table "productos"');
+        this.connection.schema
+          .createTable('productos', (productosTable: any) => {
+            productosTable.increments('id');
+            productosTable.string('timestamp').notNullable();
+            productosTable.string('nombre').notNullable();
+            productosTable.string('descripcion').notNullable();
+            productosTable.string('codigo').notNullable();
+            productosTable.string('foto').notNullable();
+            productosTable.decimal('precio', 8, 2).notNullable();
+            productosTable.integer('stock').notNullable();
+          })
+          .then(() => {
+            console.log('SQL: Done creating table "productos"');
+          });
+      }
+    });
   }
-});
+
+  find(tableName: string, id: number) {
+    return this.connection(tableName).where('id', id);
+  }
+
+  get(tableName: string, id: number | null = null) {
+    if (id) return this.connection(tableName).where('id', id);
+    return this.connection(tableName);
+  }
+
+  async create(tableName: string, data: any) {
+    return this.connection(tableName).insert(data);
+  }
+
+  update(tableName: string, id: number, data: any) {
+    return this.connection(tableName).where('id', id).update(data);
+  }
+
+  delete(tableName: string, id: number) {
+    return this.connection(tableName).where('id', id).del();
+  }
+}
+
+export const mySQLdbService = new MySQLdb();
+
+class MySqliteDB {
+  connection: any;
+  constructor() {
+    const environment = process.env.NODE_ENV || 'mensajes_dev';
+    console.log(`SETTING ${environment} DB`);
+    const options = dbConfig[environment];
+    this.connection = knex(options);
+  }
+
+  init() {
+    this.connection.schema.hasTable('chat_log').then((exists: any) => {
+      if (!exists) {
+        console.log('SQLITE: Initializing table "chat_log"');
+        this.connection.schema
+          .createTable('chat_log', (table: any) => {
+            table.increments('id');
+            table.date('timestamp');
+            table.string('user');
+            table.string('message');
+          })
+          .then(() => {
+            console.log('SQLITE: DONE');
+          });
+      }
+    });
+  }
+
+  async create(tableName: string, data: any) {
+    return this.connection(tableName).insert(data);
+  }
+}
+
+export const MySqliteDBService = new MySqliteDB();

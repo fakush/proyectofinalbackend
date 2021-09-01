@@ -56,6 +56,7 @@ class Persistence {
     };
     productos.push(newItem);
     productsFile.write(productos);
+
     return newItem;
   }
 
@@ -63,12 +64,12 @@ class Persistence {
     const index = productos.findIndex((item: { id: any }) => Number(item.id) === id);
     productos[index].timestamp = moment().format('MMM DD hh:mm:ss');
     productos[index].nombre = data.nombre;
-    // Chequeo si los valores cambiaron antes de asignarlos
+    // Chequeo si los valores cambiaron antes de asignarlos (Algunos son obligatorios, pero quedan con validación por si varía más adelante)
     if (data.descripcion) productos[index].descripcion = data.descripcion;
     if (data.codigo) productos[index].codigo = data.codigo;
     if (data.foto) productos[index].foto = data.foto;
-    productos[index].precio = Number(data.precio);
-    productos[index].stock = Number(data.stock);
+    if (data.precio) productos[index].precio = Number(data.precio);
+    if (data.stock) productos[index].stock = Number(data.stock);
     productsFile.write(productos);
   }
 

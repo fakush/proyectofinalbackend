@@ -37,7 +37,7 @@ exports.seed = function (knex) {
       descripcion: 'Primavera en el hogar, No hay nada, y sin embargo hay de todo',
       codigo: 'P0001',
       foto: 'https://picsum.photos/200',
-      precio: 613,
+      precio: 613.56,
       stock: 25
     },
     {

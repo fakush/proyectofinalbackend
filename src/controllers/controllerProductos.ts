@@ -1,11 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
-import { persistenceProductos } from '../persistence/persistenceProductos';
+// import { persistenceProductos } from '../persistence/persistenceProductos';
+import { productosDBService } from '../persistence/persistenceDBProductos';
 
 class Producto {
   getProducts(req: Request, res: Response) {
     const id = Number(req.params.id);
     if (id) {
-      const producto = persistenceProductos.get(id);
+      const producto = productosDBService.get(id);
+      console.log(producto);
 
       if (!producto)
         res.status(404).json({
@@ -16,7 +18,7 @@ class Producto {
       });
     }
     return res.json({
-      data: persistenceProductos.get()
+      data: productosDBService.get()
     });
   }
 
@@ -38,7 +40,7 @@ class Producto {
         msg: 'missing parameters'
       });
     }
-    const producto = persistenceProductos.find(id);
+    const producto = productosDBService.find(id);
     if (!producto) {
       return res.status(404).json({
         msg: 'product not found'
@@ -48,7 +50,7 @@ class Producto {
   }
 
   addProducts(req: Request, res: Response) {
-    const newItem = persistenceProductos.add(req.body);
+    const newItem = productosDBService.add(req.body);
 
     return res.json({
       msg: 'creando productos',
@@ -58,19 +60,19 @@ class Producto {
 
   updateProducts(req: Request, res: Response) {
     const id = Number(req.params.id);
-    persistenceProductos.update(id, req.body);
+    productosDBService.update(id, req.body);
     res.json({
       msg: 'actualizando productos',
-      data: persistenceProductos.get(id)
+      data: productosDBService.get(id)
     });
   }
 
   deleteProducts(req: Request, res: Response) {
     const id = Number(req.params.id);
-    persistenceProductos.delete(id);
+    productosDBService.delete(id);
     return res.json({
       msg: 'borrando productos',
-      data: persistenceProductos.get()
+      data: productosDBService.get()
     });
   }
 }
