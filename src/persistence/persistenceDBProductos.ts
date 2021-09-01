@@ -26,8 +26,8 @@ interface Product {
 
 class PersistenciaProductos {
   async find(id: number) {
-    const item = await mySQLdbService.find(tableName, id);
-    if (!item.length) return false;
+    const item: any = await mySQLdbService.find(tableName, id);
+    if (item.length == 0) return false;
     return true;
   }
 
@@ -51,7 +51,7 @@ class PersistenciaProductos {
       stock: Number(data.stock)
     };
     const newItem = await mySQLdbService.create(tableName, newItemData);
-    return await mySQLdbService.get(tableName, newItem);
+    return mySQLdbService.get(tableName, Number(newItem));
   }
 
   async update(id: number, data: newProduct) {

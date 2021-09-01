@@ -17,7 +17,7 @@ module.exports = {
 
   mensajes_dev: {
     client: 'sqlite3',
-    connection: { filename: './db/chatLog' },
+    connection: { filename: './db/chatLog.sqlite' },
     useNullAsDefault: true,
     migrations: {
       directory: __dirname + '/db/migrations'

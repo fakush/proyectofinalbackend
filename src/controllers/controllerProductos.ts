@@ -3,11 +3,10 @@ import { Request, Response, NextFunction } from 'express';
 import { productosDBService } from '../persistence/persistenceDBProductos';
 
 class Producto {
-  getProducts(req: Request, res: Response) {
+  async getProducts(req: Request, res: Response) {
     const id = Number(req.params.id);
     if (id) {
-      const producto = productosDBService.get(id);
-      console.log(producto);
+      const producto = await productosDBService.get(id);
 
       if (!producto)
         res.status(404).json({
@@ -18,7 +17,7 @@ class Producto {
       });
     }
     return res.json({
-      data: productosDBService.get()
+      data: await productosDBService.get()
     });
   }
 
@@ -33,14 +32,14 @@ class Producto {
     next();
   }
 
-  checkValidId(req: Request, res: Response, next: NextFunction) {
+  async checkValidId(req: Request, res: Response, next: NextFunction) {
     const id = Number(req.params.id);
     if (!id) {
       return res.status(400).json({
         msg: 'missing parameters'
       });
     }
-    const producto = productosDBService.find(id);
+    const producto = await productosDBService.find(id);
     if (!producto) {
       return res.status(404).json({
         msg: 'product not found'
@@ -49,8 +48,8 @@ class Producto {
     next();
   }
 
-  addProducts(req: Request, res: Response) {
-    const newItem = productosDBService.add(req.body);
+  async addProducts(req: Request, res: Response) {
+    const newItem = await productosDBService.add(req.body);
 
     return res.json({
       msg: 'creando productos',
@@ -58,21 +57,21 @@ class Producto {
     });
   }
 
-  updateProducts(req: Request, res: Response) {
+  async updateProducts(req: Request, res: Response) {
     const id = Number(req.params.id);
-    productosDBService.update(id, req.body);
+    await productosDBService.update(id, req.body);
     res.json({
       msg: 'actualizando productos',
-      data: productosDBService.get(id)
+      data: await productosDBService.get(id)
     });
   }
 
-  deleteProducts(req: Request, res: Response) {
+  async deleteProducts(req: Request, res: Response) {
     const id = Number(req.params.id);
-    productosDBService.delete(id);
+    await productosDBService.delete(id);
     return res.json({
       msg: 'borrando productos',
-      data: productosDBService.get()
+      data: await productosDBService.get()
     });
   }
 }

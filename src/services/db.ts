@@ -34,24 +34,24 @@ class MySQLdb {
   }
 
   find(tableName: string, id: number) {
-    return this.connection(tableName).where('id', id);
+    return new Promise((resolve) => resolve(this.connection(tableName).where('id', id)));
   }
 
   get(tableName: string, id: number | null = null) {
-    if (id) return this.connection(tableName).where('id', id);
-    return this.connection(tableName);
+    if (id) return new Promise((resolve) => resolve(this.connection(tableName).where('id', id)));
+    return new Promise((resolve) => resolve(this.connection(tableName)));
   }
 
-  async create(tableName: string, data: any) {
-    return this.connection(tableName).insert(data);
+  create(tableName: string, data: any) {
+    return new Promise((resolve) => resolve(this.connection(tableName).insert(data)));
   }
 
   update(tableName: string, id: number, data: any) {
-    return this.connection(tableName).where('id', id).update(data);
+    return new Promise((resolve) => resolve(this.connection(tableName).where('id', id).update(data)));
   }
 
   delete(tableName: string, id: number) {
-    return this.connection(tableName).where('id', id).del();
+    return new Promise((resolve) => resolve(this.connection(tableName).where('id', id).del()));
   }
 }
 
@@ -84,8 +84,8 @@ class MySqliteDB {
     });
   }
 
-  async create(tableName: string, data: any) {
-    return this.connection(tableName).insert(data);
+  async create(data: any) {
+    return this.connection('chat_log').insert(data);
   }
 }
 
