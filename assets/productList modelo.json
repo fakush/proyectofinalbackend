@@ -6,7 +6,7 @@
     "descripcion": "Cuando canta la cigarra, cuando canta, canta en coro y el sol muere.",
     "codigo": "P0002",
     "foto": "https://picsum.photos/200",
-    "precio": 751,
+    "precio": 2751,
     "stock": 8
   },
   {
@@ -16,7 +16,7 @@
     "descripcion": "Cuando canta la cigarra, cuando canta, canta en coro y el sol muere.",
     "codigo": "P0005",
     "foto": "https://picsum.photos/200",
-    "precio": 898,
+    "precio": 1898,
     "stock": 12
   },
   {
@@ -36,7 +36,7 @@
     "descripcion": "Primavera en el hogar, No hay nada, y sin embargo hay de todo",
     "codigo": "P0001",
     "foto": "https://picsum.photos/200",
-    "precio": 613,
+    "precio": 3613,
     "stock": 25
   },
   {
@@ -56,7 +56,7 @@
     "descripcion": "Mil pequeños peces blancos, Como si hirviera, El color del agua",
     "codigo": "P0005",
     "foto": "https://picsum.photos/200",
-    "precio": 796,
+    "precio": 4796,
     "stock": 12
   },
   {
@@ -66,7 +66,7 @@
     "descripcion": "Pareciera que el sapo, Va a expeler, una nube",
     "codigo": "P0004",
     "foto": "https://picsum.photos/200",
-    "precio": 121,
+    "precio": 1201,
     "stock": 16
   },
   {
@@ -86,7 +86,7 @@
     "descripcion": "Bajo la lluvia de verano, El sendero, Desapareció",
     "codigo": "P0002",
     "foto": "https://picsum.photos/200",
-    "precio": 247,
+    "precio": 2457,
     "stock": 15
   }
 ]
