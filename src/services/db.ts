@@ -54,7 +54,6 @@ class MySQLdb {
     return new Promise((resolve) => resolve(this.connection(tableName).where('id', id).del()));
   }
 }
-
 export const mySQLdbService = new MySQLdb();
 
 class MySqliteDB {
@@ -88,5 +87,4 @@ class MySqliteDB {
     return this.connection('chat_log').insert(data);
   }
 }
-
 export const MySqliteDBService = new MySqliteDB();

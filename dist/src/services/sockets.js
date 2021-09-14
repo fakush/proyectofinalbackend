@@ -7,7 +7,8 @@ const socket_io_1 = require("socket.io");
 const moment_1 = __importDefault(require("moment"));
 const messages_1 = __importDefault(require("../utils/messages"));
 const controllerFiles_1 = __importDefault(require("../controllers/controllerFiles"));
-const persistenceDBChat_1 = require("../persistence/persistenceDBChat");
+// import { persistenciaChatService } from '../persistence/persistenceDBChat';
+const mongo_db_1 = require("../services/mongo_db");
 // Lógica Aux
 const data = { username: undefined, text: undefined, time: 'string' };
 const loadMyArray = new controllerFiles_1.default('productList.json');
@@ -44,7 +45,8 @@ const initWsServer = (server) => {
             io.emit('chat-message', (0, messages_1.default)(data));
             console.log((0, messages_1.default)(data));
             sendToLog.write((0, messages_1.default)(data));
-            persistenceDBChat_1.persistenciaChatService.add(data);
+            // persistenciaChatService.add(data);
+            mongo_db_1.mongoDBService.addToLog(data);
         });
     });
     return io;

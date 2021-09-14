@@ -1,6 +1,7 @@
 import myServer from './services/server';
 import initWsServer from './services/sockets';
-import { mySQLdbService, MySqliteDBService } from './services/db';
+// import { mySQLdbService, MySqliteDBService } from './services/db';
+import { mongoDBService } from './services/mongo_db';
 
 const port = process.env.Port || 8080;
 initWsServer(myServer);
@@ -9,5 +10,6 @@ myServer.on('error', (err) => {
   console.log('SERVER ERROR: ', err);
 });
 
-mySQLdbService.init();
-MySqliteDBService.init();
+mongoDBService.connect();
+// mySQLdbService.init();
+// MySqliteDBService.init();

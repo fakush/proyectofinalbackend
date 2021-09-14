@@ -2,7 +2,8 @@ import { Server } from 'socket.io';
 import moment from 'moment';
 import formatMessages from '../utils/messages';
 import AuxFile from '../controllers/controllerFiles';
-import { persistenciaChatService } from '../persistence/persistenceDBChat';
+// import { persistenciaChatService } from '../persistence/persistenceDBChat';
+import { mongoDBService } from '../services/mongo_db';
 
 // Lógica Aux
 const data = { username: undefined, text: undefined, time: 'string' };
@@ -47,7 +48,8 @@ const initWsServer = (server: any) => {
       io.emit('chat-message', formatMessages(data));
       console.log(formatMessages(data));
       sendToLog.write(formatMessages(data));
-      persistenciaChatService.add(data);
+      // persistenciaChatService.add(data);
+      mongoDBService.addToLog(data);
     });
   });
 

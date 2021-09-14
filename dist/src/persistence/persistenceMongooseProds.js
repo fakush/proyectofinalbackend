@@ -13,37 +13,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.productosDBService = void 0;
-const mongo_db_1 = require("../services/mongo_db");
+const db_1 = require("../services/db");
 const moment_1 = __importDefault(require("moment"));
+const tableName = 'productos';
 class PersistenciaProductos {
     find(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const item = yield mongo_db_1.mongoDBService.find(id);
-            if (item == 0)
+            const item = yield db_1.mySQLdbService.find(tableName, id);
+            if (item.length == 0)
                 return false;
             return true;
-        });
-    }
-    findGreatest() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const item = yield mongo_db_1.mongoDBService.findGreatest();
-            return item.id + 1;
         });
     }
     get(id = null) {
         return __awaiter(this, void 0, void 0, function* () {
             if (id) {
-                const item = yield mongo_db_1.mongoDBService.get(id);
+                const item = yield db_1.mySQLdbService.get(tableName, id);
                 return item;
             }
-            const items = yield mongo_db_1.mongoDBService.get();
+            const items = yield db_1.mySQLdbService.get(tableName);
             return items;
         });
     }
     add(data) {
         return __awaiter(this, void 0, void 0, function* () {
             const newItemData = {
-                id: 0,
                 timestamp: (0, moment_1.default)().format('MM DD hh:mm:ss'),
                 nombre: data.nombre,
                 descripcion: data.descripcion || 'Falta descripción',
@@ -52,24 +46,18 @@ class PersistenciaProductos {
                 precio: Number(data.precio),
                 stock: Number(data.stock)
             };
-            const cretateItem = () => {
-                const proceso = this.findGreatest()
-                    .then((result) => (newItemData.id = result))
-                    .then(() => mongo_db_1.mongoDBService.create(newItemData))
-                    .then(() => mongo_db_1.mongoDBService.get(Number(newItemData.id)));
-                return proceso;
-            };
-            return yield cretateItem();
+            const newItem = yield db_1.mySQLdbService.create(tableName, newItemData);
+            return db_1.mySQLdbService.get(tableName, Number(newItem));
         });
     }
     update(id, data) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield mongo_db_1.mongoDBService.update(id, data);
+            return yield db_1.mySQLdbService.update(tableName, id, data);
         });
     }
     delete(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield mongo_db_1.mongoDBService.delete(id);
+            return yield db_1.mySQLdbService.delete(tableName, id);
         });
     }
 }

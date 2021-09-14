@@ -1,9 +1,8 @@
-import { mySQLdbService } from '../services/db';
+import { mongoDBService } from '../services/mongo_db';
 import moment from 'moment';
 
-const tableName = 'productos';
-
 interface newProduct {
+  id: Number;
   timestamp: any;
   nombre: string;
   descripcion: string;
@@ -26,22 +25,28 @@ interface Product {
 
 class PersistenciaProductos {
   async find(id: number) {
-    const item: any = await mySQLdbService.find(tableName, id);
-    if (item.length == 0) return false;
+    const item: any = await mongoDBService.find(id);
+    if (item == 0) return false;
     return true;
+  }
+
+  async findGreatest() {
+    const item: any = await mongoDBService.findGreatest();
+    return item.id + 1;
   }
 
   async get(id: number | null = null) {
     if (id) {
-      const item = await mySQLdbService.get(tableName, id);
+      const item = await mongoDBService.get(id);
       return item;
     }
-    const items = await mySQLdbService.get(tableName);
+    const items = await mongoDBService.get();
     return items;
   }
 
   async add(data: newProduct) {
     const newItemData: newProduct = {
+      id: 0,
       timestamp: moment().format('MM DD hh:mm:ss'),
       nombre: data.nombre,
       descripcion: data.descripcion || 'Falta descripción',
@@ -50,16 +55,22 @@ class PersistenciaProductos {
       precio: Number(data.precio),
       stock: Number(data.stock)
     };
-    const newItem = await mySQLdbService.create(tableName, newItemData);
-    return mySQLdbService.get(tableName, Number(newItem));
+    const cretateItem = () => {
+      const proceso = this.findGreatest()
+        .then((result: Number) => (newItemData.id = result))
+        .then(() => mongoDBService.create(newItemData))
+        .then(() => mongoDBService.get(Number(newItemData.id)));
+      return proceso;
+    };
+    return await cretateItem();
   }
 
   async update(id: number, data: newProduct) {
-    return await mySQLdbService.update(tableName, id, data);
+    return await mongoDBService.update(id, data);
   }
 
   async delete(id: number) {
-    return await mySQLdbService.delete(tableName, id);
+    return await mongoDBService.delete(id);
   }
 }
 
