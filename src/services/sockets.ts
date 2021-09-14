@@ -7,11 +7,15 @@ import { mongoDBService } from '../services/mongo_db';
 
 // Lógica Aux
 const data = { username: undefined, text: undefined, time: 'string' };
-const loadMyArray = new AuxFile('productList.json');
-const myArray = JSON.parse(loadMyArray.read());
-const sendToLog = new AuxFile('chat.log');
+// const loadMyArray = new AuxFile('productList.json');
+// const myArray = JSON.parse(loadMyArray.read());
+let myArray: any = [];
+// const sendToLog = new AuxFile('chat.log');
 
-const nextId = () => myArray.reduce((item: { id: number }, max: number) => (item.id > max ? item.id : max), 0);
+const nextId = async () => {
+  const item: any = await mongoDBService.findGreatest();
+  return item.id + 1;
+};
 
 const initWsServer = (server: any) => {
   const io = new Server(server);
@@ -22,23 +26,26 @@ const initWsServer = (server: any) => {
     // Lógica Lista Productos
 
     socket.on('askData', () => {
-      socket.emit('productMessages', myArray);
+      mongoDBService.get().then((result) => socket.emit('productMessages', result));
     });
 
     socket.on('new-product-message', (productData) => {
       const newMessage = {
-        id: Number(nextId().id) + 1,
+        id: 0,
         timestamp: moment().format('DD-MM-YYYY h:mm a'),
         nombre: productData.nombre,
-        descripcion: productData.descripcion,
+        descripcion: productData.descripcion || 'Sin descripción',
         codigo: productData.codigo,
-        foto: productData.foto,
+        foto: productData.foto || 'https://picsum.photos/200',
         precio: productData.precio,
-        price: productData.price,
         stock: productData.stock
       };
-      myArray.push(newMessage);
-      io.emit('productMessages', myArray);
+      nextId()
+        .then((data) => (newMessage.id = data))
+        .then(() => mongoDBService.create(newMessage))
+        .then(() => mongoDBService.get())
+        .then((data) => (myArray = data))
+        .then(() => io.emit('productMessages', myArray));
     });
 
     socket.on('chatMessage', (msg) => {
@@ -47,7 +54,7 @@ const initWsServer = (server: any) => {
       data.time = moment().format('h:mm a');
       io.emit('chat-message', formatMessages(data));
       console.log(formatMessages(data));
-      sendToLog.write(formatMessages(data));
+      // sendToLog.write(formatMessages(data));
       // persistenciaChatService.add(data);
       mongoDBService.addToLog(data);
     });
