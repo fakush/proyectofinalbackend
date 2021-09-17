@@ -2,17 +2,6 @@ import mongoose from 'mongoose';
 
 const dbCollection = 'productos';
 
-export interface ProductData {
-  id: Number;
-  timestamp: String;
-  nombre: String;
-  descripcion: String;
-  codigo: String;
-  foto: String;
-  precio: Number;
-  stock: Number;
-}
-
 const productsSchema = new mongoose.Schema({
   id: { type: Number, required: true, unique: true },
   timestamp: { type: String, required: true },
