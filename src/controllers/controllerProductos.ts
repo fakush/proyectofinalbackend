@@ -8,12 +8,29 @@ class Producto {
   checkValidProduct(req: Request, res: Response, next: NextFunction) {
     const { nombre, precio, stock } = req.body;
     //Note: Chequeo que los campos nombre, precio y stock existan y sean validos. (El resto pueden venir o no.)
-    if (!nombre || !precio || !stock || typeof nombre !== 'string' || isNaN(precio) || isNaN(stock)) {
+    if (!nombre || !precio || !stock) {
       return res.status(400).json({
-        msg: 'error de ingreso'
+        msg: 'Falta ingresar alguno de los campos obligatorios: Nombre, Precio y Stock'
       });
     }
+    next();
+  }
 
+  // Reviso que cada campo sea del tipo que debería ser
+  checkValidTypes(req: Request, res: Response, next: NextFunction) {
+    const { nombre, descripcion, codigo, foto, precio, stock } = req.body;
+    if (
+      (nombre && typeof nombre !== 'string') ||
+      (descripcion && typeof descripcion !== 'string') ||
+      (codigo && typeof codigo !== 'string') ||
+      (foto && typeof foto !== 'string') ||
+      (precio && isNaN(precio)) ||
+      (stock && isNaN(stock))
+    ) {
+      return res.status(400).json({
+        msg: 'El tipo de dato para alguno de los campos es incorrecto'
+      });
+    }
     next();
   }
 

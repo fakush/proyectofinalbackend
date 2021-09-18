@@ -9,13 +9,19 @@ router.get('/', asyncHandler(controllerProductos.getProducts));
 
 router.get('/:id', controllerProductos.checkValidId, asyncHandler(controllerProductos.getProducts));
 
-router.post('/', isAdmin, controllerProductos.checkValidProduct, asyncHandler(controllerProductos.addProducts));
+router.post(
+  '/',
+  isAdmin,
+  controllerProductos.checkValidProduct,
+  controllerProductos.checkValidTypes,
+  asyncHandler(controllerProductos.addProducts)
+);
 
 router.put(
   '/:id',
   isAdmin,
   controllerProductos.checkValidId,
-  controllerProductos.checkValidProduct,
+  controllerProductos.checkValidTypes,
   asyncHandler(controllerProductos.updateProducts)
 );
 

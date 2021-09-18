@@ -64,9 +64,9 @@ export class PersistenciaMongo implements ProductBaseClass {
     return newProduct;
   }
 
-  async update(id: string, data: newProductObject): Promise<ProductObject> {
-    // return this.products.findOneAndUpdate({ id: id }, { $set: data });
-    return this.products.findByIdAndUpdate(id, data);
+  async update(id: string, data: newProductObject) {
+    return !this.products.findOneAndUpdate({ id: id }, { $set: data });
+    // return this.products.findByIdAndUpdate(id, data);
   }
 
   async delete(id: string) {

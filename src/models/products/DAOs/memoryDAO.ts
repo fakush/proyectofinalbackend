@@ -110,12 +110,6 @@ export class PersistenciaMemoria implements ProductBaseClass {
     return this.productos.find((aProduct) => aProduct._id === id);
   }
 
-  //   getMaxid = () => {
-  //     const max = this.productos.sort((a, b) => a._id.localeCompare(b._id));
-  //     console.log(max);
-  //     return Number(max[0].id) + "a";
-  //   };
-
   async get(id?: string): Promise<ProductObject[]> {
     if (id) {
       return this.productos.filter((aProduct) => aProduct._id === id);
@@ -125,12 +119,12 @@ export class PersistenciaMemoria implements ProductBaseClass {
 
   async add(data: newProductObject): Promise<ProductObject> {
     const newItem: ProductObject = {
-      _id: uuidv4.toString(),
+      _id: uuidv4(),
       timestamp: moment().format('MM DD hh:mm:ss'),
       nombre: data.nombre!,
       descripcion: data.descripcion || 'Sin descripción',
       codigo: data.codigo || 'P0000',
-      foto: data.codigo || 'https://picsum.photos/200',
+      foto: data.foto || 'https://picsum.photos/200',
       precio: data.precio!,
       stock: data.stock || 0
     };
@@ -141,6 +135,13 @@ export class PersistenciaMemoria implements ProductBaseClass {
   async update(id: string, newProductData: newProductObject): Promise<ProductObject> {
     const index = this.findIndex(id);
     const oldProduct = this.productos[index];
+    oldProduct.timestamp = moment().format('MM DD hh:mm:ss');
+    if (newProductData.nombre?.length) oldProduct.nombre = newProductData.nombre;
+    if (newProductData.descripcion?.length) oldProduct.descripcion = newProductData.descripcion;
+    if (newProductData.codigo?.length) oldProduct.codigo = newProductData.codigo;
+    if (newProductData.foto?.length) oldProduct.foto = newProductData.foto;
+    if (newProductData.precio) oldProduct.precio = newProductData.precio;
+    if (newProductData.stock) oldProduct.stock = newProductData.stock;
 
     const updatedProduct: ProductObject = { ...oldProduct, ...newProductData };
     this.productos.splice(index, 1, updatedProduct);
@@ -155,11 +156,10 @@ export class PersistenciaMemoria implements ProductBaseClass {
   async query(options: ProductQuery): Promise<ProductObject[]> {
     type Conditions = (aProduct: ProductObject) => boolean;
     const query: Conditions[] = [];
-
     if (options.nombre) query.push((aProduct: ProductObject) => aProduct.nombre == options.nombre);
-
+    if (options.codigo) query.push((aProduct: ProductObject) => aProduct.codigo == options.codigo);
     if (options.precio) query.push((aProduct: ProductObject) => aProduct.precio == options.precio);
-
+    if (options.stock) query.push((aProduct: ProductObject) => aProduct.stock == options.stock);
     return this.productos.filter((aProduct) => query.every((x) => x(aProduct)));
   }
 }
