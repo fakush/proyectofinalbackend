@@ -1,9 +1,8 @@
-import express from 'express';
+import express, { ErrorRequestHandler } from 'express';
 import handlebars from 'express-handlebars';
 import path from 'path';
 import * as http from 'http';
 import routersIndex from '../routes/index';
-import AuxFile from '../controllers/controllerFiles';
 
 const app = express();
 
@@ -12,6 +11,15 @@ const publicFolderPath = path.resolve(__dirname, '../../public');
 const layoutDirPath = path.resolve(__dirname, '../../views/layouts');
 const defaultLayerPth = path.resolve(__dirname, '../../views/layouts/index.hbs');
 const partialDirPath = path.resolve(__dirname, '../../views/partials');
+
+//Error Handler
+const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+  console.log(`HUBO UN ERROR ${err}`);
+  res.status(500).json({
+    err: err.message
+  });
+};
+app.use(errorHandler);
 
 // Express & Handlebars Setup
 app.use(express.static(publicFolderPath));
@@ -28,15 +36,15 @@ app.engine(
   })
 );
 
-// Data Aux
-const loadMyArray = new AuxFile('productList.json');
-const myArray = JSON.parse(loadMyArray.read());
-const listData = { isList: false, isForm: true, addItem: true, productItem: myArray };
+// // Data Aux
+// const loadMyArray = new AuxFile('productList.json');
+// const myArray = JSON.parse(loadMyArray.read());
+// const listData = { isList: false, isForm: true, addItem: true, productItem: myArray };
 
-// Main Page
-app.get('/', (req, res) => {
-  res.render('main', listData);
-});
+// // Main Page
+// app.get('/', (req, res) => {
+//   res.render('main', listData);
+// });
 
 // Use routers
 app.use('/api', routersIndex);

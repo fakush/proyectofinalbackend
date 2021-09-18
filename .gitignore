@@ -1,3 +1,4 @@
 node_modules
 /viejoeslintrc.json
 /db/chatLog.sqlite
+/.env

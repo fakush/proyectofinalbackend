@@ -1,3 +1,5 @@
+// todo: Migrar y Eliminar antes de entregar.
+
 import { MySqliteDBService } from '../services/db';
 import moment from 'moment';
 

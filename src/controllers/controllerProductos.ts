@@ -1,45 +1,30 @@
 import { Request, Response, NextFunction } from 'express';
+import { productsAPI } from '../apis/productos';
+import { ProductQuery } from '../models/products/products.interfaces';
 // import { persistenceProductos } from '../persistence/persistenceProductos';
-import { productosDBService } from '../persistence/persistenceDBProductos';
+// import { productosDBService } from '../persistence/persistenceDBProductos';
 
 class Producto {
-  async getProducts(req: Request, res: Response) {
-    const id = Number(req.params.id);
-    if (id) {
-      const producto = await productosDBService.get(id);
-
-      if (!producto)
-        res.status(404).json({
-          msg: `product not found`
-        });
-      return res.json({
-        data: producto
-      });
-    }
-    return res.json({
-      data: await productosDBService.get()
-    });
-  }
-
   checkValidProduct(req: Request, res: Response, next: NextFunction) {
     const { nombre, precio, stock } = req.body;
-    // Chequeo que los campos nombre, precio y stock existan y sean validos. (El resto pueden venir o no.)
+    //Note: Chequeo que los campos nombre, precio y stock existan y sean validos. (El resto pueden venir o no.)
     if (!nombre || !precio || !stock || typeof nombre !== 'string' || isNaN(precio) || isNaN(stock)) {
       return res.status(400).json({
         msg: 'error de ingreso'
       });
     }
+
     next();
   }
 
   async checkValidId(req: Request, res: Response, next: NextFunction) {
-    const id = Number(req.params.id);
+    const id = req.params.id;
     if (!id) {
       return res.status(400).json({
         msg: 'missing parameters'
       });
     }
-    const producto = await productosDBService.find(id);
+    const producto = await productsAPI.getProducts(id);
     if (!producto) {
       return res.status(404).json({
         msg: 'product not found'
@@ -48,30 +33,47 @@ class Producto {
     next();
   }
 
-  async addProducts(req: Request, res: Response) {
-    const newItem = await productosDBService.add(req.body);
+  async getProducts(req: Request, res: Response) {
+    const id = req.params.id;
+    const { nombre, codigo, precio, stock } = req.query;
+    if (id) {
+      const producto = await productsAPI.getProducts(id);
+      if (!producto) res.status(404).json({ msg: `product not found` });
+      return res.json({ data: producto });
+    }
 
-    return res.json({
-      msg: 'creando productos',
-      data: newItem
-    });
+    const query: ProductQuery = {};
+    if (nombre) query.nombre = nombre.toString();
+    if (codigo) query.codigo = codigo.toString();
+    if (precio) query.precio = Number(precio);
+    if (stock) query.stock = Number(stock);
+    if (Object.keys(query).length) {
+      return res.json({ data: await productsAPI.query(query) });
+    }
+
+    return res.json({ data: await productsAPI.getProducts() });
+  }
+
+  async addProducts(req: Request, res: Response) {
+    const newItem = await productsAPI.addProduct(req.body);
+    return res.json({ msg: 'creando productos', data: newItem });
   }
 
   async updateProducts(req: Request, res: Response) {
-    const id = Number(req.params.id);
-    await productosDBService.update(id, req.body);
+    const id = req.params.id;
+    const updatedItem = await productsAPI.updateProduct(id, req.body);
     res.json({
       msg: 'actualizando productos',
-      data: await productosDBService.get(id)
+      data: updatedItem
     });
   }
 
   async deleteProducts(req: Request, res: Response) {
-    const id = Number(req.params.id);
-    await productosDBService.delete(id);
+    const id = req.params.id;
+    await productsAPI.deleteProduct(id);
     return res.json({
       msg: 'borrando productos',
-      data: await productosDBService.get()
+      data: await productsAPI.getProducts()
     });
   }
 }

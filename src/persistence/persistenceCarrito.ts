@@ -1,3 +1,5 @@
+// todo: Migrar y Eliminar antes de entregar.
+
 import moment from 'moment';
 import AuxFile from '../controllers/controllerFiles';
 

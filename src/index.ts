@@ -1,15 +1,16 @@
 import myServer from './services/server';
 import initWsServer from './services/sockets';
 // import { mySQLdbService, MySqliteDBService } from './services/db';
-import { mongoDBService } from './services/mongo_db';
+// import { mongoDBService } from './services/mongo_db';
+import Config from './config';
 
-const port = process.env.Port || 8080;
+const port = Config.PORT;
 initWsServer(myServer);
 myServer.listen(port, () => console.log(`SERVER UP IN PORT ${port}`));
 myServer.on('error', (err) => {
   console.log('SERVER ERROR: ', err);
 });
 
-mongoDBService.connect();
+// mongoDBService.connect();
 // mySQLdbService.init();
 // MySqliteDBService.init();

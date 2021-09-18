@@ -1,28 +1,7 @@
+// todo: Migrar y Eliminar antes de entregar.
+
 import { mongoDBService } from '../services/mongo_db';
 import moment from 'moment';
-
-interface newProduct {
-  id: Number;
-  timestamp: any;
-  nombre: string;
-  descripcion: string;
-  codigo: string;
-  foto: string;
-  precio: number;
-  stock: number;
-}
-
-interface Product {
-  id: number;
-  timestamp: any;
-  nombre: string;
-  descripcion: string;
-  codigo: string;
-  foto: string;
-  precio: number;
-  stock: number;
-}
-
 class PersistenciaProductos {
   async find(id: number) {
     const item: any = await mongoDBService.find(id);
