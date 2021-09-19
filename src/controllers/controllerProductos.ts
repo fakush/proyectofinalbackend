@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { productsAPI } from '../apis/productos';
+import { productsAPI } from '../apis/productsAPI';
 import { ProductQuery } from '../models/products/products.interfaces';
 // import { persistenceProductos } from '../persistence/persistenceProductos';
 // import { productosDBService } from '../persistence/persistenceDBProductos';

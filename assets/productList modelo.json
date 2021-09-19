@@ -1,6 +1,6 @@
 [
   {
-    "id": 1,
+    "_id": "1",
     "timestamp": "Apr 5 05:06:08",
     "nombre": "BMW",
     "descripcion": "Cuando canta la cigarra, cuando canta, canta en coro y el sol muere.",
@@ -10,7 +10,7 @@
     "stock": 8
   },
   {
-    "id": 2,
+    "_id": "2",
     "timestamp": "Apr 5 05:06:08",
     "nombre": "Kleenex",
     "descripcion": "Cuando canta la cigarra, cuando canta, canta en coro y el sol muere.",
@@ -20,7 +20,7 @@
     "stock": 12
   },
   {
-    "id": 3,
+    "_id": "3",
     "timestamp": "Apr 4 05:06:07",
     "nombre": "Johnson & Johnson",
     "descripcion": "Esta primavera en mi cabaña, Absolutamente nada, Absolutamente todo",
@@ -30,7 +30,7 @@
     "stock": 7
   },
   {
-    "id": 4,
+    "_id": "4",
     "timestamp": "Apr 5 05:06:08",
     "nombre": "Colgate",
     "descripcion": "Primavera en el hogar, No hay nada, y sin embargo hay de todo",
@@ -40,7 +40,7 @@
     "stock": 25
   },
   {
-    "id": 5,
+    "_id": "5",
     "timestamp": "Apr 5 05:06:08",
     "nombre": "Pampers",
     "descripcion": "Anoche cubrí, mis hijos dormidos, y el ruido del mar.",
@@ -50,7 +50,7 @@
     "stock": 21
   },
   {
-    "id": 6,
+    "_id": "6",
     "timestamp": "Apr 4 05:06:09",
     "nombre": "Nike",
     "descripcion": "Mil pequeños peces blancos, Como si hirviera, El color del agua",
@@ -60,7 +60,7 @@
     "stock": 12
   },
   {
-    "id": 7,
+    "_id": "7",
     "timestamp": "Apr 4 05:06:09",
     "nombre": "Disney",
     "descripcion": "Pareciera que el sapo, Va a expeler, una nube",
@@ -70,7 +70,7 @@
     "stock": 16
   },
   {
-    "id": 8,
+    "_id": "8",
     "timestamp": "Apr 5 05:06:08",
     "nombre": "Pampers",
     "descripcion": "Mi cuenco de mendigar, Acepta hojas caídas",
@@ -80,7 +80,7 @@
     "stock": 1
   },
   {
-    "id": 9,
+    "_id": "9",
     "timestamp": "Apr 5 05:06:08",
     "nombre": "Audi",
     "descripcion": "Bajo la lluvia de verano, El sendero, Desapareció",

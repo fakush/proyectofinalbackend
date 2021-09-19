@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
 import Config from '../../../config';
 import { newProductObject, ProductObject, ProductQuery, ProductBaseClass } from '../products.interfaces';
+import moment from 'moment';
 
 //MongoSchema
 const productsSchema = new mongoose.Schema<ProductObject>({
-  _id: { type: String, required: true, unique: true },
   timestamp: { type: String, required: true },
   nombre: { type: String, required: true },
   descripcion: { type: String, default: 'Sin descripción' },
@@ -14,6 +14,7 @@ const productsSchema = new mongoose.Schema<ProductObject>({
   stock: { type: Number, default: 0 }
 });
 
+// Schema Alternativo
 // const productsSchema = new mongoose.Schema<ProductObject>({
 //   _id: String,
 //   timestamp: String,
@@ -27,6 +28,90 @@ const productsSchema = new mongoose.Schema<ProductObject>({
 
 const dbCollection = 'productos';
 
+const mockData = [
+  {
+    timestamp: 'Apr 5 05:06:08',
+    nombre: 'BMW',
+    descripcion: 'Cuando canta la cigarra, cuando canta, canta en coro y el sol muere.',
+    codigo: 'P0002',
+    foto: 'https://picsum.photos/200',
+    precio: 2751,
+    stock: 8
+  },
+  {
+    timestamp: 'Apr 5 05:06:08',
+    nombre: 'Kleenex',
+    descripcion: 'Cuando canta la cigarra, cuando canta, canta en coro y el sol muere.',
+    codigo: 'P0005',
+    foto: 'https://picsum.photos/200',
+    precio: 1898,
+    stock: 12
+  },
+  {
+    timestamp: 'Apr 4 05:06:07',
+    nombre: 'Johnson & Johnson',
+    descripcion: 'Esta primavera en mi cabaña, Absolutamente nada, Absolutamente todo',
+    codigo: 'P0002',
+    foto: 'https://picsum.photos/200',
+    precio: 570,
+    stock: 7
+  },
+  {
+    timestamp: 'Apr 5 05:06:08',
+    nombre: 'Colgate',
+    descripcion: 'Primavera en el hogar, No hay nada, y sin embargo hay de todo',
+    codigo: 'P0001',
+    foto: 'https://picsum.photos/200',
+    precio: 3613,
+    stock: 25
+  },
+  {
+    timestamp: 'Apr 5 05:06:08',
+    nombre: 'Pampers',
+    descripcion: 'Anoche cubrí, mis hijos dormidos, y el ruido del mar.',
+    codigo: 'P0003',
+    foto: 'https://picsum.photos/200',
+    precio: 856,
+    stock: 21
+  },
+  {
+    timestamp: 'Apr 4 05:06:09',
+    nombre: 'Nike',
+    descripcion: 'Mil pequeños peces blancos, Como si hirviera, El color del agua',
+    codigo: 'P0005',
+    foto: 'https://picsum.photos/200',
+    precio: 4796,
+    stock: 12
+  },
+  {
+    timestamp: 'Apr 4 05:06:09',
+    nombre: 'Disney',
+    descripcion: 'Pareciera que el sapo, Va a expeler, una nube',
+    codigo: 'P0004',
+    foto: 'https://picsum.photos/200',
+    precio: 1201,
+    stock: 16
+  },
+  {
+    timestamp: 'Apr 5 05:06:08',
+    nombre: 'Pampers',
+    descripcion: 'Mi cuenco de mendigar, Acepta hojas caídas',
+    codigo: 'P0005',
+    foto: 'https://picsum.photos/200',
+    precio: 514,
+    stock: 1
+  },
+  {
+    timestamp: 'Apr 5 05:06:08',
+    nombre: 'Audi',
+    descripcion: 'Bajo la lluvia de verano, El sendero, Desapareció',
+    codigo: 'P0002',
+    foto: 'https://picsum.photos/200',
+    precio: 2457,
+    stock: 15
+  }
+];
+
 export class PersistenciaMongo implements ProductBaseClass {
   private server: string;
   private products;
@@ -37,6 +122,12 @@ export class PersistenciaMongo implements ProductBaseClass {
       : (this.server = `mongodb+srv://${Config.MONGO_ATLAS_USER}:${Config.MONGO_ATLAS_PASSWORD}@${Config.MONGO_ATLAS_CLUSTER}/${Config.MONGO_ATLAS_DBNAME}?retryWrites=true&w=majority`);
     mongoose.connect(this.server);
     this.products = mongoose.model<ProductObject>(dbCollection, productsSchema);
+    this.products.count().then((count) => {
+      if (count < 1) {
+        console.log('Insertando Data Mockup');
+        this.products.insertMany(mockData);
+      }
+    });
   }
 
   async find(id: string): Promise<Boolean> {
@@ -59,14 +150,24 @@ export class PersistenciaMongo implements ProductBaseClass {
   }
 
   async add(data: newProductObject): Promise<ProductObject> {
-    const newProduct = new this.products(data);
+    const newItem: ProductObject = {
+      timestamp: moment().format('MM DD hh:mm:ss'),
+      nombre: data.nombre!,
+      descripcion: data.descripcion || 'Sin descripción',
+      codigo: data.codigo || 'P0000',
+      foto: data.foto || 'https://picsum.photos/200',
+      precio: data.precio!,
+      stock: data.stock!
+    };
+    const newProduct = new this.products(newItem);
     await newProduct.save();
     return newProduct;
   }
 
-  async update(id: string, data: newProductObject) {
-    return !this.products.findOneAndUpdate({ id: id }, { $set: data });
-    // return this.products.findByIdAndUpdate(id, data);
+  async update(id: string, data: newProductObject): Promise<ProductObject> {
+    const updateItem: any = data;
+    updateItem.timestamp = moment().format('MM DD hh:mm:ss');
+    return this.products.findByIdAndUpdate(id, updateItem).then(() => this.products.findById(id));
   }
 
   async delete(id: string) {

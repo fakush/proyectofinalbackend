@@ -1,11 +1,13 @@
+import fs from 'fs';
 import { newProductObject, ProductObject, ProductBaseClass, ProductQuery } from '../products.interfaces';
 import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
 
-export class PersistenciaMemoria implements ProductBaseClass {
+export class PersistenciaFS implements ProductBaseClass {
   private productos: ProductObject[] = [];
+  private fileName: string;
 
-  constructor() {
+  constructor(file: string) {
     const mockData = [
       {
         _id: '1',
@@ -98,15 +100,26 @@ export class PersistenciaMemoria implements ProductBaseClass {
         stock: 15
       }
     ];
-
-    mockData.forEach((item) => this.productos.push(item));
+    this.fileName = file;
+    this.productos = mockData;
+    this.guardar();
   }
 
-  findIndex(id: string) {
-    return this.productos.findIndex((aProduct) => aProduct._id == id);
+  async leer(archivo: string): Promise<void> {
+    this.productos = JSON.parse(await fs.promises.readFile(archivo, 'utf-8'));
   }
 
-  find(id: string): ProductObject | undefined {
+  async guardar(): Promise<void> {
+    await fs.promises.writeFile(this.fileName, JSON.stringify(this.productos, null, '\t'));
+  }
+
+  async findIndex(id: string): Promise<number> {
+    await this.leer(this.fileName);
+    return this.productos.findIndex((aProduct: ProductObject) => aProduct._id == id);
+  }
+
+  async find(id: string): Promise<ProductObject | undefined> {
+    await this.leer(this.fileName);
     return this.productos.find((aProduct) => aProduct._id === id);
   }
 
@@ -118,6 +131,7 @@ export class PersistenciaMemoria implements ProductBaseClass {
   }
 
   async add(data: newProductObject): Promise<ProductObject> {
+    await this.leer(this.fileName);
     const newItem: ProductObject = {
       _id: uuidv4(),
       timestamp: moment().format('MM DD hh:mm:ss'),
@@ -129,27 +143,31 @@ export class PersistenciaMemoria implements ProductBaseClass {
       stock: data.stock || 0
     };
     this.productos.push(newItem);
+    await this.guardar();
     return newItem;
   }
 
   async update(id: string, newProductData: newProductObject): Promise<ProductObject> {
-    const index = this.findIndex(id);
-    const oldProduct = this.productos[index];
-    oldProduct.timestamp = moment().format('MM DD hh:mm:ss');
-    // if (newProductData.nombre?.length) oldProduct.nombre = newProductData.nombre;
-    // if (newProductData.descripcion?.length) oldProduct.descripcion = newProductData.descripcion;
-    // if (newProductData.codigo?.length) oldProduct.codigo = newProductData.codigo;
-    // if (newProductData.foto?.length) oldProduct.foto = newProductData.foto;
-    // if (newProductData.precio) oldProduct.precio = newProductData.precio;
-    // if (newProductData.stock) oldProduct.stock = newProductData.stock;
-    const updatedProduct: ProductObject = { ...oldProduct, ...newProductData };
-    this.productos.splice(index, 1, updatedProduct);
-    return updatedProduct;
+    let objeto = await this.leer(this.fileName)
+      .then(() => this.findIndex(id))
+      .then((index) => {
+        let oldProduct = this.productos[Number(index)];
+        oldProduct.timestamp = moment().format('MM DD hh:mm:ss');
+        const updatedProduct: ProductObject = { ...oldProduct, ...newProductData };
+        this.productos.splice(Number(index), 1, updatedProduct);
+        this.guardar();
+        return updatedProduct;
+      });
+    return objeto;
   }
 
   async delete(id: string): Promise<void> {
-    const index = this.findIndex(id);
-    this.productos.splice(index, 1);
+    await this.leer(this.fileName)
+      .then(() => this.findIndex(id))
+      .then((index) => {
+        this.productos.splice(Number(index), 1);
+        this.guardar();
+      });
   }
 
   async query(options: ProductQuery): Promise<ProductObject[]> {
