@@ -194,18 +194,23 @@ export class PersistenciaFirebase implements ProductBaseClass {
     let filteredCollection = this.productsDB;
     if (options.nombre) filteredCollection = filteredCollection.where('nombre', '==', options.nombre);
     if (options.codigo) filteredCollection = filteredCollection.where('codigo', '==', options.codigo);
-    if (options.precio) filteredCollection = filteredCollection.where('precio', '==', options.precio);
-    if (options.precioMin) filteredCollection = filteredCollection.where('precio', '>=', options.precioMin);
-    if (options.precioMax) filteredCollection = filteredCollection.where('precio', '<=', options.precioMax);
-    if (options.stock) filteredCollection = filteredCollection.where('stock', '==', options.stock);
-    if (options.stockMin) filteredCollection = filteredCollection.where('stock', '>=', options.stockMin);
-    if (options.stockMax) filteredCollection = filteredCollection.where('stock', '<=', options.stockMax);
-    let items: any = await filteredCollection.get();
-    let docs = items.docs;
-    const output = docs.map((aDoc: any) => ({
-      id: aDoc.id,
-      data: aDoc.data()
-    }));
-    return output;
+    if (options.precio) filteredCollection = filteredCollection.where('precio', '==', Number(options.precio));
+    if (options.precioMin) filteredCollection = filteredCollection.where('precio', '>=', Number(options.precioMin));
+    if (options.precioMax) filteredCollection = filteredCollection.where('precio', '<=', Number(options.precioMax));
+    if (options.stock) filteredCollection = filteredCollection.where('stock', '==', Number(options.stock));
+    if (options.stockMin) filteredCollection = filteredCollection.where('stock', '>=', Number(options.stockMin));
+    if (options.stockMax) filteredCollection = filteredCollection.where('stock', '<=', Number(options.stockMax));
+    try {
+      let items: any = await filteredCollection.get();
+      let docs = items.docs;
+      const output = docs.map((aDoc: any) => ({
+        id: aDoc.id,
+        data: aDoc.data()
+      }));
+      return output;
+    } catch (error) {
+      console.log('No se permiten consultas con más de un tipo de condicional por rango');
+      return 'No se permiten consultas con más de un tipo de condicional por rango' as unknown as ProductObject[];
+    }
   }
 }

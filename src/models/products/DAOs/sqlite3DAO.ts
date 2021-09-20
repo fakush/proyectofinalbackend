@@ -155,13 +155,20 @@ export class PersistenciaSQLite3 implements ProductBaseClass {
   }
 
   async query(options: ProductQuery): Promise<ProductObject[]> {
-    let query: ProductQuery = {};
-    if (options.nombre) query.nombre = options.nombre;
-    if (options.codigo) query.codigo = options.codigo;
-    if (options.precio) query.precio = options.precio;
-    if (options.stock) query.stock = options.stock;
-    console.log(query);
-    return this.products(this.table).where(query);
+    return await this.products(this.table).where((builder: any) => {
+      if (options.nombre) builder.where({ nombre: options.nombre });
+      if (options.codigo) builder.where({ codigo: options.codigo });
+      if (options.precio) builder.where({ precio: options.precio });
+      if (options.precioMin) builder.where('precio', '>=', options.precioMin);
+      if (options.precioMax) builder.where('precio', '<=', options.precioMax);
+      if (options.precioMin && options.precioMax)
+        builder.where('precio', '>=', options.precioMin).andWhere('precio', '<=', options.precioMax);
+      if (options.stock) builder.where({ stock: options.stock });
+      if (options.stockMin) builder.where('stock', '>=', options.stockMin);
+      if (options.stockMax) builder.where('stock', '<=', options.stockMax);
+      if (options.stockMin && options.stockMax)
+        builder.where('stock', '>=', options.stockMin).andWhere('stock', '<=', options.stockMax);
+    });
   }
 
   // async query(options: ProductQuery): Promise<ProductObject[]> {

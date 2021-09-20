@@ -12,7 +12,7 @@ export enum Persistencia {
   FilesSystem = 'FS', //Tests: getOK, get_idOK, get_queryOK, get_query_rangeOK, PostOK, PutOK, DeleteOK
   MongoLocal = 'MONGO-LOCAL', //Tests: getOK, get_idOK, get_queryOK, get_query_rangeOK, PostOK, PutOK, DeleteOK
   MongoAtlas = 'MONGO-ATLAS', //Tests: getOK, get_idOK, get_queryOK, get_query_rangeOK, PostOK, PutOK, DeleteOK
-  Mysql = 'MYSQL', //Tests: getOK, get_idOK, get_queryOK, get_query_range?, PostOK, PutOK, DeleteOK
+  Mysql = 'MYSQL', //Tests: getOK, get_idOK, get_queryOK, get_query_rangeOK, PostOK, PutOK, DeleteOK
   SqlLite3 = 'SQL-LITE3', //Tests: getOK, get_idOK, get_queryOK, get_query_range?, PostOK, PutOK, DeleteOK
   Firebase = 'FIREBASE' //Tests: getOK, get_idOK, get_queryOK, get_query_rangeOK, PostOK, PutOK, DeleteOK
 }
