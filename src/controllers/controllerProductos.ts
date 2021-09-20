@@ -52,7 +52,7 @@ class Producto {
 
   async getProducts(req: Request, res: Response) {
     const id = req.params.id;
-    const { nombre, codigo, precio, stock } = req.query;
+    const { nombre, codigo, precio, precioMin, precioMax, stock, stockMin, stockMax } = req.query;
     if (id) {
       const producto = await productsAPI.getProducts(id);
       if (!producto) res.status(404).json({ msg: `product not found` });
@@ -63,7 +63,11 @@ class Producto {
     if (nombre) query.nombre = nombre.toString();
     if (codigo) query.codigo = codigo.toString();
     if (precio) query.precio = Number(precio);
+    if (precioMin) query.precioMin = precioMin.toString();
+    if (precioMax) query.precioMax = precioMax.toString();
     if (stock) query.stock = Number(stock);
+    if (stockMin) query.stockMin = precioMax.toString();
+    if (stockMax) query.stockMax = precioMax.toString();
     if (Object.keys(query).length) {
       return res.json({ data: await productsAPI.query(query) });
     }

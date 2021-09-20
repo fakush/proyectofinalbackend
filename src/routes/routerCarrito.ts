@@ -1,14 +1,14 @@
-import { Router } from 'express';
-import { controllerCarrito } from '../controllers/controllerCarrito';
+// import { Router } from 'express';
+// import { controllerCarrito } from '../controllers/controllerCarrito';
 
-const router = Router();
+// const router = Router();
 
-router.get('/listar', controllerCarrito.getItems);
+// router.get('/listar', controllerCarrito.getItems);
 
-router.get('/listar/:id', controllerCarrito.checkValidId, controllerCarrito.getItems);
+// router.get('/listar/:id', controllerCarrito.checkValidId, controllerCarrito.getItems);
 
-router.post('/agregar/:id_producto', controllerCarrito.checkValidProduct, controllerCarrito.addItem);
+// router.post('/agregar/:id_producto', controllerCarrito.checkValidProduct, controllerCarrito.addItem);
 
-router.delete('/borrar/:id', controllerCarrito.checkValidId, controllerCarrito.deleteItems);
+// router.delete('/borrar/:id', controllerCarrito.checkValidId, controllerCarrito.deleteItems);
 
-export default router;
+// export default router;

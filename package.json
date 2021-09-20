@@ -17,6 +17,8 @@
     "express": "^4.17.1",
     "express-async-handler": "^1.1.4",
     "express-handlebars": "^5.3.3",
+    "firebase": "^4.8.0",
+    "firebase-admin": "^9.11.1",
     "knex": "^0.95.10",
     "moment": "^2.29.1",
     "mongoose": "^6.0.5",
@@ -28,6 +30,7 @@
   "devDependencies": {
     "@types/express": "^4.17.13",
     "@types/express-handlebars": "^5.3.1",
+    "@types/firebase": "^3.2.1",
     "@types/knex": "^0.16.1",
     "@types/moment": "^2.13.0",
     "@types/mongoose": "^5.11.97",
