@@ -1,6 +1,6 @@
 // todo: Migrar y Eliminar antes de entregar.
 
-import { MySqliteDBService } from '../services/db';
+// import { MySqliteDBService } from '../services/db';
 import moment from 'moment';
 
 class PersistenciaChat {
@@ -11,7 +11,7 @@ class PersistenciaChat {
       message: data.text
     };
     console.log('enviando a persistencia');
-    return await MySqliteDBService.create(newChatLine);
+    // return await MySqliteDBService.create(newChatLine);
   }
 }
 

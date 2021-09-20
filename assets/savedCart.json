@@ -1,30 +1,46 @@
 [
-  {
-    "id": 1,
-    "timestamp": "Apr 4 05:06:07",
-    "producto": {
-      "id": 3,
-      "timestamp": "Apr 4 05:06:07",
-      "nombre": "Porsche",
-      "descripcion": "Primavera en el hogar, No hay nada, y sin embargo hay de todo",
-      "codigo": "P0001",
-      "foto": "https://picsum.photos/200",
-      "precio": 480,
-      "stock": 17
-    }
-  },
-  {
-    "id": 2,
-    "timestamp": "Apr 6 05:06:08",
-    "producto": {
-      "id": 4,
-      "timestamp": "Apr 5 05:06:08",
-      "nombre": "Colgate",
-      "descripcion": "Primavera en el hogar, No hay nada, y sin embargo hay de todo",
-      "codigo": "P0001",
-      "foto": "https://picsum.photos/200",
-      "precio": 613,
-      "stock": 25
-    }
-  }
+	{
+		"_id": "1",
+		"timestamp": "Apr 4 05:06:07",
+		"producto": {
+			"id": 0,
+			"timestamp": "Apr 4 05:06:07",
+			"nombre": "Porsche",
+			"descripcion": "Primavera en el hogar, No hay nada, y sin embargo hay de todo",
+			"codigo": "P0001",
+			"foto": "https://picsum.photos/200",
+			"precio": 480,
+			"stock": 17
+		}
+	},
+	{
+		"_id": "2",
+		"timestamp": "Apr 6 05:06:08",
+		"producto": {
+			"id": 4,
+			"timestamp": "Apr 5 05:06:08",
+			"nombre": "Colgate",
+			"descripcion": "Primavera en el hogar, No hay nada, y sin embargo hay de todo",
+			"codigo": "P0001",
+			"foto": "https://picsum.photos/200",
+			"precio": 613,
+			"stock": 25
+		}
+	},
+	{
+		"_id": "f94dce51-2150-4cd9-be0e-d2f175379f21",
+		"timestamp": "09 20 04:22:51",
+		"producto": [
+			{
+				"_id": "7",
+				"timestamp": "Apr 4 05:06:09",
+				"nombre": "Disney",
+				"descripcion": "Pareciera que el sapo, Va a expeler, una nube",
+				"codigo": "P0004",
+				"foto": "https://picsum.photos/200",
+				"precio": 1201,
+				"stock": 16
+			}
+		]
+	}
 ]

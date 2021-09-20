@@ -88,7 +88,7 @@ export class PersistenciaMemoria implements ProductBaseClass {
         stock: 1
       },
       {
-        id: '9',
+        _id: '9',
         timestamp: 'Apr 5 05:06:08',
         nombre: 'Audi',
         descripcion: 'Bajo la lluvia de verano, El sendero, Desapareció',

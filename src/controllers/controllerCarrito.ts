@@ -1,75 +1,77 @@
-// import { Request, Response, NextFunction } from 'express';
-// import { persistenceCarrito } from '../persistence/persistenceCarrito';
+import { Request, Response, NextFunction } from 'express';
+import { cartAPI } from '../apis/cartAPI';
+import { productsAPI } from '../apis/productsAPI';
+import { newCartObject } from '../models/cart/cart.iterfaces';
 
-// class Carrito {
-//   getItems(req: Request, res: Response) {
-//     const id = Number(req.params.id);
-//     if (id) {
-//       const item = persistenceCarrito.get(id);
+class Carrito {
+  async checkValidId(req: Request, res: Response, next: NextFunction) {
+    const id = req.params.id;
+    if (!id) {
+      return res.status(400).json({
+        msg: 'missing parameters'
+      });
+    }
+    const item = await cartAPI.getItems(id);
+    if (item.length < 1) {
+      return res.status(404).json({
+        msg: 'item not found'
+      });
+    }
+    next();
+  }
 
-//       if (!item)
-//         res.status(404).json({
-//           msg: `item not found`
-//         });
-//       return res.json({
-//         data: item
-//       });
-//     }
-//     return res.json({
-//       data: persistenceCarrito.get()
-//     });
-//   }
+  async checkValidProduct(req: Request, res: Response, next: NextFunction) {
+    const id = req.params.id_producto;
+    if (!id) {
+      return res.status(400).json({
+        msg: 'missing parameters'
+      });
+    }
+    const item = await productsAPI.getProducts(id);
+    if (item.length < 1) {
+      return res.status(404).json({
+        msg: 'product not found'
+      });
+    }
+    next();
+  }
 
-//   checkValidId(req: Request, res: Response, next: NextFunction) {
-//     const id = Number(req.params.id);
-//     if (!id) {
-//       return res.status(400).json({
-//         msg: 'missing parameters'
-//       });
-//     }
-//     const producto = persistenceCarrito.find(id);
-//     if (!producto) {
-//       return res.status(404).json({
-//         msg: 'item not found'
-//       });
-//     }
-//     next();
-//   }
+  async getItems(req: Request, res: Response) {
+    const id = req.params.id;
+    if (id) {
+      const item = await cartAPI.getItems(id);
+      if (!item)
+        res.status(404).json({
+          msg: `item not found`
+        });
+      return res.json({
+        data: item
+      });
+    }
+    return res.json({
+      data: await cartAPI.getItems()
+    });
+  }
 
-//   checkValidProduct(req: Request, res: Response, next: NextFunction) {
-//     const id = Number(req.params.id_producto);
-//     if (!id) {
-//       return res.status(400).json({
-//         msg: 'missing parameters'
-//       });
-//     }
-//     const item = persistenceCarrito.findProduct(id);
-//     if (!item) {
-//       return res.status(404).json({
-//         msg: 'product not found'
-//       });
-//     }
-//     next();
-//   }
+  async addItem(req: Request, res: Response) {
+    const id = req.params.id_producto;
+    const item = await productsAPI.getProducts(id);
+    const newItem = await cartAPI.addItems(item as unknown as newCartObject);
 
-//   addItem(req: Request, res: Response) {
-//     const id = Number(req.params.id_producto);
-//     const newItem = persistenceCarrito.add(id);
+    return res.json({
+      msg: 'añadiendo productos',
+      data: newItem
+    });
+  }
 
-//     return res.json({
-//       msg: 'añadiendo productos',
-//       data: newItem
-//     });
-//   }
+  async deleteItems(req: Request, res: Response) {
+    const id = req.params.id;
+    await cartAPI.deleteItem(id);
+    return res.json({
+      msg: 'borrando productos',
+      data: await cartAPI.getItems()
+    });
+  }
+}
 
-//   deleteItems(req: Request, res: Response) {
-//     const id = Number(req.params.id);
-//     persistenceCarrito.delete(id);
-//     return res.json({
-//       msg: 'borrando productos',
-//       data: persistenceCarrito.get()
-//     });
-//   }
-// }
-
-// export const controllerCarrito = new Carrito();
+export const controllerCarrito = new Carrito();

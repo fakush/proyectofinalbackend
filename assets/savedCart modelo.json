@@ -1,9 +1,9 @@
 [
   {
-    "id": 1,
+    "_id": 1,
     "timestamp": "Apr 4 05:06:07",
     "producto": {
-      "id": 0,
+      "id": 3,
       "timestamp": "Apr 4 05:06:07",
       "nombre": "Porsche",
       "descripcion": "Primavera en el hogar, No hay nada, y sin embargo hay de todo",
@@ -14,7 +14,7 @@
     }
   },
   {
-    "id": 2,
+    "_id": 2,
     "timestamp": "Apr 6 05:06:08",
     "producto": {
       "id": 4,
@@ -25,6 +25,20 @@
       "foto": "https://picsum.photos/200",
       "precio": 613,
       "stock": 25
+    }
+  },
+  {
+    "_id": 3,
+    "timestamp": "Apr 6 05:06:08",
+    "producto": {
+      "_id": "8",
+      "timestamp": "Apr 5 05:06:08",
+      "nombre": "Pampers",
+      "descripcion": "Mi cuenco de mendigar, Acepta hojas caídas",
+      "codigo": "P0005",
+      "foto": "https://picsum.photos/200",
+      "precio": 514,
+      "stock": 1
     }
   }
 ]

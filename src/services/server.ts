@@ -36,15 +36,15 @@ app.engine(
   })
 );
 
-// // Data Aux
-// const loadMyArray = new AuxFile('productList.json');
-// const myArray = JSON.parse(loadMyArray.read());
-// const listData = { isList: false, isForm: true, addItem: true, productItem: myArray };
+//TODO Esto se tiene que ir
+// Data Aux
+const myArray: any[] = [];
+const listData = { isList: false, isForm: true, addItem: true, productItem: myArray };
 
-// // Main Page
-// app.get('/', (req, res) => {
-//   res.render('main', listData);
-// });
+// Main Page
+app.get('/', (req, res) => {
+  res.render('main', listData);
+});
 
 // Use routers
 app.use('/api', routersIndex);

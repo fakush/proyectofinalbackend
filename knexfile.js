@@ -1,5 +1,5 @@
 module.exports = {
-  productos_sql_dev: {
+  ecommerce_sql_dev: {
     client: 'mysql',
     connection: {
       host: '127.0.0.1',
@@ -15,9 +15,9 @@ module.exports = {
     }
   },
 
-  productos_sqLite3_dev: {
+  ecommerce_sqLite3_dev: {
     client: 'sqlite3',
-    connection: { filename: './db/productos.sqlite' },
+    connection: { filename: './db/ecommerce.sqlite' },
     useNullAsDefault: true,
     migrations: {
       directory: __dirname + '/db/migrations'

@@ -1,9 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { productsAPI } from '../apis/productsAPI';
 import { ProductQuery } from '../models/products/products.interfaces';
-// import { persistenceProductos } from '../persistence/persistenceProductos';
-// import { productosDBService } from '../persistence/persistenceDBProductos';
-
 class Producto {
   checkValidProduct(req: Request, res: Response, next: NextFunction) {
     const { nombre, precio, stock } = req.body;
@@ -19,6 +16,11 @@ class Producto {
   // Reviso que cada campo sea del tipo que debería ser
   checkValidTypes(req: Request, res: Response, next: NextFunction) {
     const { nombre, descripcion, codigo, foto, precio, stock } = req.body;
+    if (!nombre && !descripcion && !codigo && !foto && !precio && !stock) {
+      return res.status(400).json({
+        msg: 'Al menos se debe ingresar un campo a modificar'
+      });
+    }
     if (
       (nombre && typeof nombre !== 'string') ||
       (descripcion && typeof descripcion !== 'string') ||
@@ -42,7 +44,7 @@ class Producto {
       });
     }
     const producto = await productsAPI.getProducts(id);
-    if (!producto) {
+    if (producto.length < 1) {
       return res.status(404).json({
         msg: 'product not found'
       });

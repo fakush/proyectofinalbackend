@@ -1,7 +1,7 @@
 import { newProductObject, ProductObject, ProductQuery } from '../models/products/products.interfaces';
 import { ProductsFactory, Persistencia } from '../models/products/products.factory';
 
-const tipo = Persistencia.Firebase;
+const tipo = Persistencia.Memory;
 
 class prodAPI {
   private productos;

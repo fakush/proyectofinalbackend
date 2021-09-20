@@ -18,13 +18,13 @@ router.post(
 );
 
 router.put(
-  '/:id',
+  '/:id?',
   isAdmin,
   controllerProductos.checkValidId,
   controllerProductos.checkValidTypes,
   asyncHandler(controllerProductos.updateProducts)
 );
 
-router.delete('/:id', isAdmin, controllerProductos.checkValidId, asyncHandler(controllerProductos.deleteProducts));
+router.delete('/:id?', isAdmin, controllerProductos.checkValidId, asyncHandler(controllerProductos.deleteProducts));
 
 export default router;

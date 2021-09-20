@@ -92,7 +92,7 @@ export class PersistenciaMysql implements ProductBaseClass {
   private table = 'productos';
 
   constructor() {
-    const environment = process.env.NODE_ENV || 'productos_sql_dev';
+    const environment = process.env.NODE_ENV || 'ecommerce_sql_dev';
     console.log(`SETTING ${environment} DB`);
     const options = dbConfig[environment];
     this.products = knex(options);
@@ -100,7 +100,7 @@ export class PersistenciaMysql implements ProductBaseClass {
       if (!exists) {
         console.log('SQL: Initializing table "productos"');
         this.products.schema
-          .createTable('productos', (productosTable: any) => {
+          .createTable(this.table, (productosTable: any) => {
             productosTable.increments('_id');
             productosTable.string('timestamp').notNullable();
             productosTable.string('nombre').notNullable();
@@ -171,4 +171,3 @@ export class PersistenciaMysql implements ProductBaseClass {
     });
   }
 }
-// export const productosDBService = new PersistenciaMongo();

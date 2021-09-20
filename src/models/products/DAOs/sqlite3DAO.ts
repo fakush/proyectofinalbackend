@@ -92,7 +92,7 @@ export class PersistenciaSQLite3 implements ProductBaseClass {
   private table = 'productos';
 
   constructor() {
-    const environment = process.env.NODE_ENV || 'productos_sqLite3_dev';
+    const environment = process.env.NODE_ENV || 'ecommerce_sqLite3_dev';
     console.log(`SETTING ${environment} DB`);
     const options = dbConfig[environment];
     this.products = knex(options);
