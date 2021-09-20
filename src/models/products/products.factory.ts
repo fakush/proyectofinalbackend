@@ -8,10 +8,10 @@ import { PersistenciaFirebase } from './DAOs/firebaseDAO';
 import path from 'path';
 
 export enum Persistencia {
-  Memoria = 'MEMORY', //Tests: getOK, get_idOK, get_queryOK, get_query_range?, PostOK, PutOK, DeleteOK
-  FilesSystem = 'FS', //Tests: getOK, get_idOK, get_queryOK, get_query_range?, PostOK, PutOK, DeleteOK
-  MongoLocal = 'MONGO-LOCAL', //Tests: getOK, get_idOK, get_queryOK, get_query_range?, PostOK, PutOK, DeleteOK
-  MongoAtlas = 'MONGO-ATLAS', //Tests: getOK, get_idOK, get_queryOK, get_query_range?, PostOK, PutOK, DeleteOK
+  Memory = 'MEMORY', //Tests: getOK, get_idOK, get_queryOK, get_query_rangeOK, PostOK, PutOK, DeleteOK
+  FilesSystem = 'FS', //Tests: getOK, get_idOK, get_queryOK, get_query_rangeOK, PostOK, PutOK, DeleteOK
+  MongoLocal = 'MONGO-LOCAL', //Tests: getOK, get_idOK, get_queryOK, get_query_rangeOK, PostOK, PutOK, DeleteOK
+  MongoAtlas = 'MONGO-ATLAS', //Tests: getOK, get_idOK, get_queryOK, get_query_rangeOK, PostOK, PutOK, DeleteOK
   Mysql = 'MYSQL', //Tests: getOK, get_idOK, get_queryOK, get_query_range?, PostOK, PutOK, DeleteOK
   SqlLite3 = 'SQL-LITE3', //Tests: getOK, get_idOK, get_queryOK, get_query_range?, PostOK, PutOK, DeleteOK
   Firebase = 'FIREBASE' //Tests: getOK, get_idOK, get_queryOK, get_query_rangeOK, PostOK, PutOK, DeleteOK
@@ -21,7 +21,7 @@ export class ProductsFactory {
   static get(tipo: Persistencia) {
     switch (tipo) {
       // Esta dos veces memoria para evitar "Error de capa 8"
-      case Persistencia.Memoria:
+      case Persistencia.Memory:
         console.log('Estoy escribiendo en Memoria');
         return new PersistenciaMemoria();
 

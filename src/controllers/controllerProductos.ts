@@ -66,8 +66,8 @@ class Producto {
     if (precioMin) query.precioMin = precioMin.toString();
     if (precioMax) query.precioMax = precioMax.toString();
     if (stock) query.stock = Number(stock);
-    if (stockMin) query.stockMin = precioMax.toString();
-    if (stockMax) query.stockMax = precioMax.toString();
+    if (stockMin) query.stockMin = stockMin.toString();
+    if (stockMax) query.stockMax = stockMax.toString();
     if (Object.keys(query).length) {
       return res.json({ data: await productsAPI.query(query) });
     }

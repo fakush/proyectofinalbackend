@@ -161,7 +161,6 @@ export class PersistenciaMysql implements ProductBaseClass {
     if (options.codigo) query.codigo = options.codigo;
     if (options.precio) query.precio = options.precio;
     if (options.stock) query.stock = options.stock;
-
     return this.products(this.table).where(query);
   }
 }

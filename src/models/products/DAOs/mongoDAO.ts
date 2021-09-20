@@ -14,18 +14,6 @@ const productsSchema = new mongoose.Schema<ProductObject>({
   stock: { type: Number, default: 0 }
 });
 
-// Schema Alternativo
-// const productsSchema = new mongoose.Schema<ProductObject>({
-//   _id: String,
-//   timestamp: String,
-//   nombre: String,
-//   descripcion: String,
-//   codigo: String,
-//   foto: String,
-//   precio: Number,
-//   stock: Number
-// });
-
 const dbCollection = 'productos';
 
 const mockData = [
@@ -180,9 +168,15 @@ export class PersistenciaMongo implements ProductBaseClass {
     if (options.codigo) query.codigo = options.codigo;
     if (options.precio) query.precio = options.precio;
     if (options.stock) query.stock = options.stock;
-
+    if (options.precioMax) query.precio = { $lte: Number(options.precioMax) } as unknown as number;
+    if (options.precioMin) query.precio = { $gte: Number(options.precioMin) } as unknown as number;
+    if (options.precioMin && options.precioMax)
+      query.precio = { $gte: Number(options.precioMin), $lte: Number(options.precioMax) } as unknown as number;
+    if (options.stockMax) query.stock = { $lte: Number(options.stockMax) } as unknown as number;
+    if (options.stockMin) query.stock = { $gte: Number(options.stockMin) } as unknown as number;
+    if (options.stockMin && options.stockMax)
+      query.stock = { $gte: Number(options.stockMin), $lte: Number(options.stockMax) } as unknown as number;
+    console.log(query);
     return this.products.find(query);
   }
 }
-
-// export const productosDBService = new PersistenciaMongo();

@@ -159,6 +159,10 @@ export class PersistenciaMemoria implements ProductBaseClass {
     if (options.codigo) query.push((aProduct: ProductObject) => aProduct.codigo == options.codigo);
     if (options.precio) query.push((aProduct: ProductObject) => aProduct.precio == options.precio);
     if (options.stock) query.push((aProduct: ProductObject) => aProduct.stock == options.stock);
+    if (options.precioMin) query.push((aProduct: ProductObject) => aProduct.precio >= Number(options.precioMin));
+    if (options.precioMax) query.push((aProduct: ProductObject) => aProduct.precio <= Number(options.precioMax));
+    if (options.stockMin) query.push((aProduct: ProductObject) => aProduct.precio >= Number(options.stockMin));
+    if (options.stockMax) query.push((aProduct: ProductObject) => aProduct.precio <= Number(options.stockMax));
     return this.productos.filter((aProduct) => query.every((x) => x(aProduct)));
   }
 }

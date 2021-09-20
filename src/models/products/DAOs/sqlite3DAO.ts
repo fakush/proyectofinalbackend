@@ -1,6 +1,5 @@
 import knex from 'knex';
 import dbConfig from '../../../../knexfile';
-import Config from '../../../config';
 import { newProductObject, ProductObject, ProductQuery, ProductBaseClass } from '../products.interfaces';
 import moment from 'moment';
 
@@ -156,7 +155,6 @@ export class PersistenciaSQLite3 implements ProductBaseClass {
   }
 
   async query(options: ProductQuery): Promise<ProductObject[]> {
-    console.log(options.precioMin);
     let query: ProductQuery = {};
     if (options.nombre) query.nombre = options.nombre;
     if (options.codigo) query.codigo = options.codigo;
@@ -165,4 +163,20 @@ export class PersistenciaSQLite3 implements ProductBaseClass {
     console.log(query);
     return this.products(this.table).where(query);
   }
+
+  // async query(options: ProductQuery): Promise<ProductObject[]> {
+  //   let query = `this.products(this.table).where('_id', '>', "0")`;
+  //   if (options.nombre) query += `.andWhere('nombre', '${options.nombre}')`;
+  //   if (options.codigo) query += `.andWhere('codigo', '${options.codigo}')`;
+  //   if (options.precio) query += `.andWhere('precio', '${options.precio}')`;
+  //   if (options.stock) query += `.andWhere('stock', '${options.stock}')`;
+  //   if (options.precioMin) query += `.andWhere('precio', ">=" ,'${options.precioMin}')`;
+  //   if (options.precioMax) query += `.andWhere('precio', ">=" ,'${options.precioMax}')`;
+  //   if (options.stockMin) query += `.andWhere('stock', ">=" ,'${options.stockMin}')`;
+  //   if (options.stockMax) query += `.andWhere('stock', ">=" ,'${options.stockMax}')`;
+  //   console.log(query);
+  //   const fn = () => Function(query);
+  //   return (await fn()) as unknown as ProductObject[];
+  //   // return await this.products(this.table).where('_id', '>', '0').andWhere('codigo', 'P0000').andWhere('stock', '36').andWhere('precio', '>=', '20');
+  // }
 }
