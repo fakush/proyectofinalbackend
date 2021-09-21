@@ -4,13 +4,14 @@
 
 ## Stack
 
-<h4 align="center">App en Node JS. Código en Typescript. Servidor Express. Motor de Plantillas Handlebars</h4>
+<h4 align="center">App en Node JS. Código en Typescript. Servidor Express. Motor de Plantillas Handlebars. WebSocket Socket.IO</h4>
 
 <div align="center">
  <img src='https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e82350fe8e3517d3494d/topics/nodejs/nodejs.png' width='60' height='60' alt='Node JS' />
  <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/1200px-Typescript_logo_2020.svg.png' width='60' height='60' alt='TypeScript' />
  <img src='https://scontent.faep14-2.fna.fbcdn.net/v/t1.6435-9/cp0/e15/q65/p64x64/94883637_107480410948830_6157616113157931008_n.jpg?_nc_cat=109&ccb=1-5&_nc_sid=85a577&efg=eyJpIjoidCJ9&_nc_eui2=AeFFuImFWiug3AzX1sdu7FtZmJg6Qrmz_AOYmDpCubP8A1u-Kw75XvBNEdua0WEcIhw&_nc_ohc=rpXZUc5ybKoAX9Sh7Z8&_nc_ht=scontent.faep14-2.fna&oh=357ad8f20bb50b79f08e39e47e6eb54b&oe=614C09C9' width='60' height='60' alt='Express' />
  <img src='https://i0.wp.com/blog.fossasia.org/wp-content/uploads/2017/07/handlebars-js.png?w=500&ssl=1' width='60' height='60' alt='Handlebars' />
+ <img src='https://cdn.worldvectorlogo.com/logos/socket-io.svg' width='60' height='60' alt='Socket IO' />
 </div>
 
 <h4 align="center">Persistencia: Memoria - File System / Motores de Bases de Datos: - MongoDB - MySQL - SQLite 3 - Firebase</h4>
