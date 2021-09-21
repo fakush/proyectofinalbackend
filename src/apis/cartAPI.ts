@@ -1,7 +1,7 @@
 import { newCartObject, CartObject } from '../models/cart/cart.iterfaces';
 import { CartFactory, Persistencia } from '../models/cart/cart.factory';
 
-const tipo = Persistencia.Firebase;
+const tipo = Persistencia.Memory;
 
 class cartAPIClass {
   private cart;

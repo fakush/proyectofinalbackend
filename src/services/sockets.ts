@@ -1,16 +1,7 @@
 import { Server } from 'socket.io';
 import moment from 'moment';
-import formatMessages from '../utils/messages';
-import { mongoDBService } from './mongo_db';
-
-// Lógica Aux
-const data = { username: 'string', text: 'string', time: 'string' };
-let myArray: any = [];
-
-const nextId = async () => {
-  const item: any = await mongoDBService.findGreatest();
-  return item.id + 1;
-};
+import { productsAPI } from '../apis/productsAPI';
+import { chatAPI } from '../apis/chatAPI';
 
 const initWsServer = (server: any) => {
   const io = new Server(server);
@@ -19,14 +10,12 @@ const initWsServer = (server: any) => {
     console.log('Nueva Conexion establecida');
 
     // Lógica Lista Productos
-
     socket.on('askData', () => {
-      //TODO Fix this
-      // mongoDBService.get().then((result) => socket.emit('productMessages', result));
+      productsAPI.getProducts().then((result) => socket.emit('productMessages', result));
     });
 
     socket.on('new-product-message', (productData) => {
-      const newMessage = {
+      const newProduct = {
         id: 0,
         timestamp: moment().format('DD-MM-YYYY h:mm a'),
         nombre: productData.nombre,
@@ -36,21 +25,22 @@ const initWsServer = (server: any) => {
         precio: productData.precio,
         stock: productData.stock
       };
-      nextId()
-        .then((data) => (newMessage.id = data))
-        .then(() => mongoDBService.create(newMessage))
-        .then(() => mongoDBService.get())
-        .then((data) => (myArray = data))
-        .then(() => io.emit('productMessages', myArray));
+      productsAPI
+        .addProduct(newProduct)
+        .then(() => productsAPI.getProducts())
+        .then((data) => io.emit('productMessages', data));
     });
 
     socket.on('chatMessage', (msg) => {
-      data.username = msg.user;
-      data.text = msg.message;
-      data.time = moment().format('h:mm a');
-      io.emit('chat-message', formatMessages(data));
-      console.log(formatMessages(data));
-      mongoDBService.addToLog(data);
+      console.log(msg);
+      const newChatLine = {
+        nombre: msg.nombre,
+        mensaje: msg.mensaje,
+        timestamp: moment().format('h:mm a')
+      };
+      console.log(newChatLine);
+      io.emit('chat-message', newChatLine);
+      chatAPI.addChatLine(newChatLine);
     });
   });
 

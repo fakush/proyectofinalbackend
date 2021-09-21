@@ -1,7 +1,7 @@
 <div class='container'>
   <div class='card'>
     <div class='card-header'>
-      Stack
+      <h4>Stack</h4>
     </div>
     <div class='card-body'>
       <h5 class='card-title' style='text-align: center;'>App en Node JS. Código en Typescript. Servidor Express. Motor
@@ -32,6 +32,47 @@
           alt='Handlebars'
         />
       </div>
+      <br />
+      <h5 class='card-title' style='text-align: center;'>Persistencia: Memoria - File System / Motores de Bases de
+        Datos: - MongoDB - MySQL - SQLite 3 - Firebase</h5>
+      <div class='iconRow'>
+        <img
+          src='https://icon-library.com/images/file-system-icon/file-system-icon-29.jpg'
+          width='60'
+          height='60'
+          alt='File System'
+        />
+        <img
+          src='https://media.istockphoto.com/vectors/circuit-and-video-chip-line-icon-graphic-processor-core-hardware-unit-vector-id1214107991?b=1&k=20&m=1214107991&s=170667a&w=0&h=YVQ9ajZ71JPxCdqXYODcaMJM3qz7LcV8QxASYFceVXo='
+          width='60'
+          height='60'
+          alt='Internal Memory'
+        />
+        <img
+          src='https://victorroblesweb.es/wp-content/uploads/2016/11/mongodb-150x150.png'
+          width='60'
+          height='60'
+          alt='Mongo DB'
+        />
+        <img
+          src='https://cdn.icon-icons.com/icons2/1381/PNG/512/mysqlworkbench_93532.png'
+          width='60'
+          height='60'
+          alt='MySQL'
+        />
+        <img
+          src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Sqlite-square-icon.svg/256px-Sqlite-square-icon.svg.png'
+          width='60'
+          height='60'
+          alt='SQLite 3'
+        />
+        <img
+          src='https://cdn.shortpixel.ai/spai/w_200+q_lossy+ret_img+to_webp/https://www.technisys.com/wp-content/uploads/2021/06/firebase_logo-1.png'
+          width='60'
+          height='60'
+          alt='Firebase'
+        />
+      </div>
       <div>
         <br />
         <div class='accordion' id='accordionExample'>
@@ -56,45 +97,45 @@
                 <h6>Productos:</h6>
                 <div class='alert alert-success' role='alert'>
                   GET - All Productos:
-                  <a href='#' class='alert-link'>http://localhost:8080/api/productos/listar</a>
+                  <a href='#' class='alert-link'>http://localhost:8080/api/productos/</a>
                 </div>
                 <div class='alert alert-success' role='alert'>
                   GET - Single Producto:
-                  <a href='#' class='alert-link'>http://localhost:8080/api/productos/listar/:id</a>
+                  <a href='#' class='alert-link'>http://localhost:8080/api/productos/:id</a>
                 </div>
                 <div class='alert alert-warning' role='alert'>
                   POST - Producto:
-                  <a href='#' class='alert-link'>http://localhost:8080/api/productos/agregar</a>
+                  <a href='#' class='alert-link'>http://localhost:8080/api/productos/</a>
                 </div>
                 <div class='alert alert-primary' role='alert'>
                   PUT - Producto:
-                  <a href='#' class='alert-link'>http://localhost:8080/api/productos/actualizar/:id</a>
+                  <a href='#' class='alert-link'>http://localhost:8080/api/productos/:id</a>
                 </div>
                 <div class='alert alert-danger' role='alert'>
                   DELETE - Producto:
-                  <a href='#' class='alert-link'>http://localhost:8080/api/productos/borrar/:id</a>
+                  <a href='#' class='alert-link'>http://localhost:8080/api/productos/:id</a>
                 </div>
                 <h6>Carrito:</h6>
                 <div class='alert alert-success' role='alert'>
                   GET - All Items:
-                  <a href='#' class='alert-link'>http://localhost:8080/api/carrito/listar</a>
+                  <a href='#' class='alert-link'>http://localhost:8080/api/carrito/</a>
                 </div>
                 <div class='alert alert-success' role='alert'>
                   GET - Single Item:
-                  <a href='#' class='alert-link'>http://localhost:8080/api/carrito/listar/:id</a>
+                  <a href='#' class='alert-link'>http://localhost:8080/api/carrito/:id</a>
                 </div>
                 <div class='alert alert-warning' role='alert'>
                   POST - Item:
                   <a href='#' class='alert-link'>http://localhost:8080/api/carrito/:id_producto</a>
                 </div>
                 <div class='alert alert-danger' role='alert'>
-                  DELETE - Producto:
-                  <a href='#' class='alert-link'>http://localhost:8080/api/carrito/borrar/:id</a>
+                  DELETE - Item:
+                  <a href='#' class='alert-link'>http://localhost:8080/api/carrito/:id</a>
                 </div>
               </div>
             </div>
           </div>
-          <div class='card'>
+          {{! <div class='card'>
             <div class='card-header' id='headingTwo'>
               <h2 class='mb-0'>
                 <button
@@ -178,7 +219,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> }}
         </div>
 
       </div>

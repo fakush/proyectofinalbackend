@@ -17,9 +17,10 @@ socket.emit('askData');
 const outputMessage = (message) => {
   const div = document.createElement('div');
   div.classList.add('chatMessage');
-  div.innerHTML = `<p><span class="chatUserName">${message.username}</span>
-  <span class="chatTime">${message.time}</span>
-  <span class="chatText">${message.text}</span></p>`;
+  div.innerHTML = `<p>
+  <span class="chatTime">${message.timestamp}/</span>
+  <span class="chatUserName">${message.nombre}:</span>
+  <span class="chatText">${message.mensaje}</span></p>`;
   chatWindow.appendChild(div);
 };
 
@@ -46,7 +47,7 @@ chatForm.addEventListener('submit', (e) => {
   e.preventDefault();
   // Reviso que este completo el email sino paso alerta
   if (validateEmail(chatEmail.value)) {
-    const mensaje = { user: chatEmail.value, message: msg.value };
+    const mensaje = { nombre: chatEmail.value, mensaje: msg.value };
     socket.emit('chatMessage', mensaje);
     msg.value = '';
   } else {
@@ -74,7 +75,7 @@ const render = (data) => {
   const html = data
     .map(
       (item) => `<ul class='list-group list-group-horizontal row' style="width: 75vw;">
-      <li class='list-group-item col-1'>${item.id}</li>
+      <li class='list-group-item col-1'>${item._id}</li>
       <li class='list-group-item col-2'>${item.timestamp}</li>
       <li class='list-group-item col-1'>${item.nombre}</li>
       <li class='list-group-item col-3'>${item.descripcion}</li>
