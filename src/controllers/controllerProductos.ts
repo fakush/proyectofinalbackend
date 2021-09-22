@@ -46,7 +46,7 @@ class Producto {
     const producto = await productsAPI.getProducts(id);
     if (producto.length < 1) {
       return res.status(404).json({
-        msg: 'product not found'
+        msg: 'Invalid Id'
       });
     }
     next();
