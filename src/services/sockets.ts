@@ -2,6 +2,7 @@ import { Server } from 'socket.io';
 import moment from 'moment';
 import { productsAPI } from '../apis/productsAPI';
 import { chatAPI } from '../apis/chatAPI';
+import faker from 'faker';
 
 const initWsServer = (server: any) => {
   const io = new Server(server);
@@ -12,6 +13,7 @@ const initWsServer = (server: any) => {
     // Lógica Lista Productos
     socket.on('askData', () => {
       productsAPI.getProducts().then((result) => socket.emit('productMessages', result));
+      chatAPI.getChatMessages().then((result) => socket.emit('chatLog-messages', result));
     });
 
     socket.on('new-product-message', (productData) => {
@@ -32,15 +34,24 @@ const initWsServer = (server: any) => {
     });
 
     socket.on('chatMessage', (msg) => {
-      console.log(msg);
+      const newChatEntry = {
+        email: msg.email,
+        nombre: msg.nombre || faker.name.firstName(),
+        apellido: msg.apellido || faker.name.lastName(),
+        edad: msg.edad || faker.datatype.number(90),
+        alias: msg.alias || faker.name.jobArea(),
+        avatar: msg.avatar || faker.image.avatar(),
+        message: msg.mensaje || faker.lorem.sentence(),
+        timestamp: moment().format()
+      };
       const newChatLine = {
-        nombre: msg.nombre,
+        avatar: msg.avatar || faker.image.avatar(),
         mensaje: msg.mensaje,
         timestamp: moment().format('h:mm a')
       };
       console.log(newChatLine);
       io.emit('chat-message', newChatLine);
-      chatAPI.addChatLine(newChatLine);
+      chatAPI.addChatLine(newChatEntry);
     });
   });
 

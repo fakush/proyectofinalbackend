@@ -2,8 +2,13 @@
 <h3>Centro de mensajes</h3>
 <form id='loginForm'>
   <div class='form-group'>
-    <label>Ingrese su email:</label>
-    <input type='text' class='form-control' id='chatEmail' name='chatEmail' />
+    <label>Ingrese sus datos: *Campo obligatorio. El resto se pueden completar random</label>
+    <input type='text' class='form-control' id='chatEmail' name='chatEmail' placeholder='Email*' />
+    <input type='text' class='form-control' id='chatNombre' name='chatNombre' placeholder='Nombre' />
+    <input type='text' class='form-control' id='chatApellido' name='chatApellido' placeholder='Apellido' />
+    <input type='text' class='form-control' id='chatEdad' name='chatEdad' placeholder='Edad' />
+    <input type='text' class='form-control' id='chatAlias' name='chatAlias' placeholder='Alias' />
+    <input type='text' class='form-control' id='chatAvatar' name='chatAvatar' placeholder='Avatar' />
   </div>
 </form>
 <hr />
@@ -12,7 +17,7 @@
 </div>
 <form id='chat-form'>
   <div class='form-group'>
-    <input type='text' class='form-control' id='msg' name='msg' />
+    <input type='text' class='form-control' id='msg' name='msg' placeholder='Mensaje' />
   </div>
   <button class='btn btn-primary'>Enviar</button>
 </form>

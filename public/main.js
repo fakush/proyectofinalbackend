@@ -2,6 +2,11 @@ const chatForm = document.getElementById('chat-form');
 const chatWindow = document.querySelector('.chatWindow');
 const msg = document.getElementById('msg');
 const chatEmail = document.getElementById('chatEmail');
+const chatNombre = document.getElementById('chatNombre');
+const chatApellido = document.getElementById('chatApellido');
+const chatEdad = document.getElementById('chatEdad');
+const chatAlias = document.getElementById('chatAlias');
+const chatAvatar = document.getElementById('chatAvatar');
 // const loginForm = document.getElementById('loginForm');
 
 // eslint-disable-next-line no-undef
@@ -17,10 +22,12 @@ socket.emit('askData');
 const outputMessage = (message) => {
   const div = document.createElement('div');
   div.classList.add('chatMessage');
-  div.innerHTML = `<p>
+  div.innerHTML = `
+  <img src="${message.avatar}" style="max-width: 40; max-heigth: 40"></img>
+  <p>
   <span class="chatTime">${message.timestamp}/</span>
-  <span class="chatUserName">${message.nombre}:</span>
-  <span class="chatText">${message.mensaje}</span></p>`;
+  <span class="chatText">${message.mensaje}</span>
+  </p>`;
   chatWindow.appendChild(div);
 };
 
@@ -47,7 +54,15 @@ chatForm.addEventListener('submit', (e) => {
   e.preventDefault();
   // Reviso que este completo el email sino paso alerta
   if (validateEmail(chatEmail.value)) {
-    const mensaje = { nombre: chatEmail.value, mensaje: msg.value };
+    const mensaje = {
+      email: chatEmail.value,
+      nombre: chatNombre.value,
+      apellido: chatApellido.value,
+      edad: chatEdad.value,
+      alias: chatAlias.value,
+      avatar: chatAvatar.value,
+      mensaje: msg.value
+    };
     socket.emit('chatMessage', mensaje);
     msg.value = '';
   } else {
@@ -70,7 +85,7 @@ const sendData = (e) => {
   socket.emit('new-product-message', input);
 };
 
-// Paso al browser cada dato del array
+// Paso todo el array de Productos
 const render = (data) => {
   const html = data
     .map(
@@ -89,8 +104,30 @@ const render = (data) => {
 
   document.getElementById('productList').innerHTML = html;
 };
-
-// Paso todo el array de mensajes
 socket.on('productMessages', (data) => {
   render(data);
+});
+
+const renderChat = (data) => {
+  console.log(data);
+  // Antes de pasar la data la tengo que desnormalizar.
+  const author = new normalizr.schema.Entity('author', {}, { idAttribute: 'email' });
+  const message = new normalizr.schema.Entity('mensaje', { author: author }, { idAttribute: '_id' });
+  const denormalizedData = normalizr.denormalize(data.result, message, data.entities);
+  console.log(denormalizedData);
+  const JSONdenormalizedData = JSON.stringify(denormalizedData);
+  // const html = denormalizedData
+  //   .map(
+  //     (item) => `
+  //         <img src="${item.author.avatar}" style="max-width: 40; max-heigth: 40"></img>
+  //         <p>
+  //           <span class="chatTime">${item.timestamp}/</span>
+  //           <span class="chatText">${item.message}</span>
+  //         </p>`
+  //   )
+  //   .join(' ');
+  // document.getElementById('productList').innerHTML = html;
+};
+socket.on('chatLog-messages', (data) => {
+  renderChat(data);
 });
