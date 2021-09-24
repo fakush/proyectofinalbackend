@@ -46,10 +46,12 @@ const initWsServer = (server: any) => {
       };
       const newChatLine = {
         avatar: msg.avatar || faker.image.avatar(),
-        mensaje: msg.mensaje,
-        timestamp: moment().format('h:mm a')
+        nombre: msg.nombre,
+        apellido: msg.apellido,
+        email: msg.email,
+        mensaje: msg.mensaje
       };
-      console.log(newChatLine);
+      // console.log(newChatLine);
       io.emit('chat-message', newChatLine);
       chatAPI.addChatLine(newChatEntry);
     });

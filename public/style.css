@@ -10,6 +10,11 @@ body {
   justify-content: space-around;
 }
 
+.form-cell {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
 .listContainer {
   display: flex;
   flex-direction: column;
@@ -22,6 +27,7 @@ body {
   background-color: whitesmoke;
   border-radius: 10px;
   padding: 10px;
+  overflow-y: scroll;
 }
 
 .chatUserName {
@@ -36,6 +42,7 @@ body {
 .chatText {
   font-style: italic;
   color: green;
+  font-weight: bold;
 }
 
 .container {

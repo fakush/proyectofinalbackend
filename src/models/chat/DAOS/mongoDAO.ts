@@ -108,6 +108,42 @@ const mockData = [
     },
     message: 'Hulk sad...',
     timestamp: '16 de Abril de 1974'
+  },
+  {
+    author: {
+      alias: 'YouKnowMe',
+      apellido: 'Laufeyson',
+      avatar: 'https://icons.iconarchive.com/icons/hopstarter/superhero-avatar/128/Avengers-Loki-icon.png',
+      edad: 35,
+      email: 'loki@avengerssucks.com',
+      nombre: 'Loki'
+    },
+    message: 'Whassssaaaaa!',
+    timestamp: '16 de Abril de 1974'
+  },
+  {
+    author: {
+      alias: 'The God Of Thunder',
+      apellido: 'Laufeyson',
+      avatar: 'https://icons.iconarchive.com/icons/hopstarter/superhero-avatar/256/Avengers-Thor-icon.png',
+      edad: 46,
+      email: 'god_of_thunder@avengers.com',
+      nombre: 'Thor'
+    },
+    message: 'Whassssaaaaa!',
+    timestamp: '16 de Abril de 1974'
+  },
+  {
+    author: {
+      email: 'the.i.man@avengers.com',
+      nombre: 'Tony',
+      apellido: 'Stark',
+      alias: 'Iron Man',
+      edad: 22,
+      avatar: 'https://icons.iconarchive.com/icons/hopstarter/superhero-avatar/128/Avengers-Iron-Man-icon.png'
+    },
+    message: 'God Damn It!!!',
+    timestamp: '16 de Abril de 1974'
   }
 ];
 

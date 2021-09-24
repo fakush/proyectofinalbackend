@@ -23,11 +23,13 @@ const outputMessage = (message) => {
   const div = document.createElement('div');
   div.classList.add('chatMessage');
   div.innerHTML = `
-  <img src="${message.avatar}" style="max-width: 40; max-heigth: 40"></img>
-  <p>
-  <span class="chatTime">${message.timestamp}/</span>
-  <span class="chatText">${message.mensaje}</span>
-  </p>`;
+          <p>
+            <span><img src="${message.avatar}" style="max-width: 40; max-heigth: 40"></img></span>
+            <span class="chatUserName">${message.nombre} ${message.apellido} </span>
+            <span class="chatTime"> (${message.email})/</span>
+            <span class="chatText">${message.mensaje}</span>
+          </p>
+        `;
   chatWindow.appendChild(div);
 };
 
@@ -109,23 +111,23 @@ socket.on('productMessages', (data) => {
 });
 
 const renderChat = (data) => {
-  console.log(data);
   // Antes de pasar la data la tengo que desnormalizar.
   const author = new normalizr.schema.Entity('author', {}, { idAttribute: 'email' });
   const message = new normalizr.schema.Entity('mensaje', { author: author }, { idAttribute: '_id' });
-  const denormalizedData = normalizr.denormalize(data.result, message, data.entities);
-  console.log(denormalizedData);
-  const JSONdenormalizedData = JSON.stringify(denormalizedData);
-  // const html = denormalizedData
-  //   .map(
-  //     (item) => `
-  //         <img src="${item.author.avatar}" style="max-width: 40; max-heigth: 40"></img>
-  //         <p>
-  //           <span class="chatTime">${item.timestamp}/</span>
-  //           <span class="chatText">${item.message}</span>
-  //         </p>`
-  //   )
-  //   .join(' ');
+  const messageSchema = new normalizr.schema.Array(message);
+  const denormalizedData = normalizr.denormalize(data.result, messageSchema, data.entities);
+  denormalizedData.map((item) => {
+    const div = document.createElement('div');
+    div.classList.add('chatMessage');
+    div.innerHTML = `
+          <p>
+            <span><img src="${item.author.avatar}" style="max-width: 40; max-heigth: 40"></img></span>
+            <span class="chatUserName">${item.author.nombre} ${item.author.apellido} </span>
+            <span class="chatTime"> (${item.author.email})/</span>
+            <span class="chatText">${item.message}</span>
+          </p>`;
+    chatWindow.appendChild(div);
+  });
   // document.getElementById('productList').innerHTML = html;
 };
 socket.on('chatLog-messages', (data) => {
