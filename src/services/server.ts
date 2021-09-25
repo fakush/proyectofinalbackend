@@ -1,4 +1,6 @@
-import express, { ErrorRequestHandler } from 'express';
+import express, { Request, Response, ErrorRequestHandler } from 'express';
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
 import handlebars from 'express-handlebars';
 import path from 'path';
 import * as http from 'http';
@@ -36,14 +38,56 @@ app.engine(
   })
 );
 
-//TODO Esto se tiene que ir
-// Data Aux
-const myArray: any[] = [];
-const listData = { isList: false, isForm: true, addItem: true, productItem: myArray };
+//Login
+let logged = { islogged: false, isTimedOut: false, isDestroyed: false, nombre: '' };
+const unSegundo = 1000;
+const unMinuto = unSegundo * 60;
+const unaHora = unMinuto * 60;
+const unDia = unaHora * 24;
+app.use(cookieParser());
+app.use(
+  session({
+    secret: 'SuperSecreto',
+    resave: false,
+    saveUninitialized: false,
+    rolling: true,
+    cookie: { maxAge: unMinuto }
+  })
+);
 
 // Main Page
-app.get('/', (req, res) => {
-  res.render('main', listData);
+app.get('/', (req: any, res) => {
+  console.log('estoy en get');
+  if (!req.session.nombre && logged.islogged) {
+    logged.islogged = false;
+    logged.isTimedOut = true;
+    res.render('main', logged);
+    logged.isTimedOut = false;
+    logged.nombre = '';
+  }
+  if (logged.isDestroyed) {
+    res.render('main', logged);
+    logged.nombre = ``;
+    logged.isDestroyed = false;
+  } else {
+    res.render('main', logged);
+  }
+});
+
+app.post('/login', (req: any, res) => {
+  if (req.body.nombre) {
+    req.session.nombre = req.body.nombre;
+    logged.nombre = req.body.nombre;
+    logged.islogged = true;
+  }
+  res.redirect('/');
+});
+
+app.post('/logout', (req: any, res) => {
+  req.session.destroy;
+  logged.islogged = false;
+  logged.isDestroyed = true;
+  res.redirect('/');
 });
 
 // Use routers

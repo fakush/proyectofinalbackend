@@ -170,20 +170,4 @@ export class PersistenciaSQLite3 implements ProductBaseClass {
         builder.where('stock', '>=', options.stockMin).andWhere('stock', '<=', options.stockMax);
     });
   }
-
-  // async query(options: ProductQuery): Promise<ProductObject[]> {
-  //   let query = `this.products(this.table).where('_id', '>', "0")`;
-  //   if (options.nombre) query += `.andWhere('nombre', '${options.nombre}')`;
-  //   if (options.codigo) query += `.andWhere('codigo', '${options.codigo}')`;
-  //   if (options.precio) query += `.andWhere('precio', '${options.precio}')`;
-  //   if (options.stock) query += `.andWhere('stock', '${options.stock}')`;
-  //   if (options.precioMin) query += `.andWhere('precio', ">=" ,'${options.precioMin}')`;
-  //   if (options.precioMax) query += `.andWhere('precio', ">=" ,'${options.precioMax}')`;
-  //   if (options.stockMin) query += `.andWhere('stock', ">=" ,'${options.stockMin}')`;
-  //   if (options.stockMax) query += `.andWhere('stock', ">=" ,'${options.stockMax}')`;
-  //   console.log(query);
-  //   const fn = () => Function(query);
-  //   return (await fn()) as unknown as ProductObject[];
-  //   // return await this.products(this.table).where('_id', '>', '0').andWhere('codigo', 'P0000').andWhere('stock', '36').andWhere('precio', '>=', '20');
-  // }
 }

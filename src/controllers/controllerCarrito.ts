@@ -1,22 +1,25 @@
 import { Request, Response, NextFunction } from 'express';
 import { cartAPI } from '../apis/cartAPI';
 import { productsAPI } from '../apis/productsAPI';
-import { newCartObject } from '../models/cart/cart.iterfaces';
+import { newCartObject } from '../models/cart/cart.interfaces';
 
 class Carrito {
   async checkValidId(req: Request, res: Response, next: NextFunction) {
     const id = req.params.id;
+    // Esto verifica que haya un parametro
     if (!id) {
       return res.status(400).json({
         msg: 'missing parameters'
       });
     }
+    // Esto verifica que el parametro sea valido
     const item = await cartAPI.getItems(id);
     if (item.length < 1) {
       return res.status(404).json({
         msg: 'item not found'
       });
     }
+    // Si pasa los dos chequeos sigue.
     next();
   }
 

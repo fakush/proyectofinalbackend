@@ -1,4 +1,4 @@
-import { newCartObject, CartObject } from '../models/cart/cart.iterfaces';
+import { newCartObject, CartObject } from '../models/cart/cart.interfaces';
 import { CartFactory, Persistencia } from '../models/cart/cart.factory';
 
 const tipo = Persistencia.Memory;
@@ -11,8 +11,8 @@ class cartAPIClass {
   }
 
   async getItems(id: string | undefined = undefined): Promise<CartObject[]> {
-    if (id) return this.cart.get(id);
-    else return this.cart.get();
+    if (id) return await this.cart.get(id);
+    else return await this.cart.get();
   }
 
   async addItems(itemData: newCartObject): Promise<CartObject> {

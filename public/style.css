@@ -3,6 +3,11 @@ body {
   background-color: gray;
 }
 
+.alertaLogout {
+  display: flex;
+  justify-content: space-between;
+}
+
 .myForm {
   display: flex;
   flex-direction: row;

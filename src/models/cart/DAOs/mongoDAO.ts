@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import Config from '../../../config';
-import { newCartObject, CartObject, CartBaseClass } from '../cart.iterfaces';
+import { newCartObject, CartObject, CartBaseClass } from '../cart.interfaces';
 import moment from 'moment';
 
 //MongoSchema

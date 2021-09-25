@@ -128,7 +128,7 @@ const renderChat = (data) => {
           </p>`;
     chatWindow.appendChild(div);
   });
-  // document.getElementById('productList').innerHTML = html;
+  chatWindow.scrollTop = chatWindow.scrollHeight;
 };
 socket.on('chatLog-messages', (data) => {
   renderChat(data);

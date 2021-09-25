@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { newCartObject, CartObject, CartBaseClass } from '../cart.iterfaces';
+import { newCartObject, CartObject, CartBaseClass } from '../cart.interfaces';
 import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
 

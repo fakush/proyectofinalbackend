@@ -10,7 +10,8 @@
     "migrate:db": ".\\node_modules\\.bin\\knex migrate:latest --env productos_dev",
     "rollback:db": ".\\node_modules\\.bin\\knex migrate:rollback --env productos_dev",
     "seed:db": ".\\node_modules\\.bin\\knex seed:run --env productos_dev",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "make_env": "node ./scr/make-env.ts"
   },
   "dependencies": {
     "cookie-parser": "^1.4.5",
@@ -31,8 +32,10 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.2",
     "@types/express": "^4.17.13",
     "@types/express-handlebars": "^5.3.1",
+    "@types/express-session": "^1.17.4",
     "@types/faker": "^5.5.8",
     "@types/firebase": "^3.2.1",
     "@types/jest": "^27.0.2",

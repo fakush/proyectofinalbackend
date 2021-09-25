@@ -27,13 +27,20 @@ const express_handlebars_1 = __importDefault(require("express-handlebars"));
 const path_1 = __importDefault(require("path"));
 const http = __importStar(require("http"));
 const index_1 = __importDefault(require("../routes/index"));
-const controllerFiles_1 = __importDefault(require("../controllers/controllerFiles"));
 const app = (0, express_1.default)();
 // paths
 const publicFolderPath = path_1.default.resolve(__dirname, '../../public');
 const layoutDirPath = path_1.default.resolve(__dirname, '../../views/layouts');
 const defaultLayerPth = path_1.default.resolve(__dirname, '../../views/layouts/index.hbs');
 const partialDirPath = path_1.default.resolve(__dirname, '../../views/partials');
+//Error Handler
+const errorHandler = (err, req, res, next) => {
+    console.log(`HUBO UN ERROR ${err}`);
+    res.status(500).json({
+        err: err.message
+    });
+};
+app.use(errorHandler);
 // Express & Handlebars Setup
 app.use(express_1.default.static(publicFolderPath));
 app.use(express_1.default.json());
@@ -45,9 +52,9 @@ app.engine('hbs', (0, express_handlebars_1.default)({
     defaultLayout: defaultLayerPth,
     partialsDir: partialDirPath
 }));
+//TODO Esto se tiene que ir
 // Data Aux
-const loadMyArray = new controllerFiles_1.default('productList.json');
-const myArray = JSON.parse(loadMyArray.read());
+const myArray = [];
 const listData = { isList: false, isForm: true, addItem: true, productItem: myArray };
 // Main Page
 app.get('/', (req, res) => {

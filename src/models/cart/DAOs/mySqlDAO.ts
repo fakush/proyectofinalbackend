@@ -1,6 +1,6 @@
 import knex from 'knex';
 import dbConfig from '../../../../knexfile';
-import { newCartObject, CartObject, CartBaseClass } from '../cart.iterfaces';
+import { newCartObject, CartObject, CartBaseClass } from '../cart.interfaces';
 import moment from 'moment';
 
 const mockData = [
