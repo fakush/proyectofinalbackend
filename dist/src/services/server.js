@@ -24,11 +24,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
+const mongoose_1 = __importDefault(require("mongoose"));
+const connect_mongo_1 = __importDefault(require("connect-mongo"));
 const express_session_1 = __importDefault(require("express-session"));
 const express_handlebars_1 = __importDefault(require("express-handlebars"));
 const path_1 = __importDefault(require("path"));
 const http = __importStar(require("http"));
+const config_1 = __importDefault(require("../config"));
 const index_1 = __importDefault(require("../routes/index"));
+const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 const app = (0, express_1.default)();
 // paths
 const publicFolderPath = path_1.default.resolve(__dirname, '../../public');
@@ -55,22 +59,36 @@ app.engine('hbs', (0, express_handlebars_1.default)({
     partialsDir: partialDirPath
 }));
 //Login
-let logged = { islogged: false, isTimedOut: false, isDestroyed: false, nombre: '' };
 const unSegundo = 1000;
 const unMinuto = unSegundo * 60;
 const unaHora = unMinuto * 60;
 const unDia = unaHora * 24;
-app.use((0, cookie_parser_1.default)());
-app.use((0, express_session_1.default)({
+//Conecto a Mongoose (Esto debería al menos protestar)
+const clientP = mongoose_1.default
+    .connect(`mongodb+srv://${config_1.default.MONGO_ATLAS_USER}:${config_1.default.MONGO_ATLAS_PASSWORD}@${config_1.default.MONGO_ATLAS_CLUSTER}/${config_1.default.MONGO_ATLAS_DBNAME}?retryWrites=true&w=majority`)
+    .then((m) => m.connection.getClient());
+const StoreOptions = {
+    store: connect_mongo_1.default.create({
+        clientPromise: clientP,
+        dbName: 'persistencia',
+        stringify: false,
+        autoRemove: 'interval',
+        autoRemoveInterval: 1
+    }),
     secret: 'SuperSecreto',
     resave: false,
     saveUninitialized: false,
     rolling: true,
-    cookie: { maxAge: unMinuto }
-}));
+    cookie: { maxAge: unMinuto * 10 }
+};
+let logged = { islogged: false, isTimedOut: false, isDestroyed: false, nombre: '', contador: 0 };
+app.use((0, cookie_parser_1.default)());
+app.use((0, express_session_1.default)(StoreOptions));
 // Main Page
 app.get('/', (req, res) => {
     console.log('estoy en get');
+    if (logged.islogged)
+        logged.contador = logged.contador + 1;
     if (!req.session.nombre && logged.islogged) {
         logged.islogged = false;
         logged.isTimedOut = true;

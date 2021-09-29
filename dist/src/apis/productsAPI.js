@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.productsAPI = void 0;
 const products_factory_1 = require("../models/products/products.factory");
-const tipo = products_factory_1.Persistencia.Memory;
+const tipo = products_factory_1.Persistencia.MongoAtlas;
 class prodAPI {
     constructor() {
         this.productos = products_factory_1.ProductsFactory.get(tipo);

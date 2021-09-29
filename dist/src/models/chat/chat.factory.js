@@ -6,7 +6,8 @@ const mongoDAO_1 = require("./DAOS/mongoDAO");
 var Persistencia;
 (function (Persistencia) {
     // SqlLite3 = 'SQL-LITE3',
-    Persistencia["MongoDB"] = "MONGODB";
+    Persistencia["MongoLocal"] = "MONGO-LOCAL";
+    Persistencia["MongoAtlas"] = "MONGO-ATLAS";
 })(Persistencia = exports.Persistencia || (exports.Persistencia = {}));
 class ChatFactory {
     static get(tipo) {
@@ -14,9 +15,12 @@ class ChatFactory {
             // case Persistencia.SqlLite3:
             //   console.log('Chat está escribiendo en SQLite3');
             //   return new PersistenciaSQLite3();
-            case Persistencia.MongoDB:
+            case Persistencia.MongoLocal:
                 console.log('Chat está escribiendo en MongoDB Local');
                 return new mongoDAO_1.PersistenciaMongo(true);
+            case Persistencia.MongoAtlas:
+                console.log('Chat está escribiendo en MongoDB Local');
+                return new mongoDAO_1.PersistenciaMongo();
             default:
                 console.log('Chat está escribiendo en MongoDB Local por default');
                 return new mongoDAO_1.PersistenciaMongo(true);

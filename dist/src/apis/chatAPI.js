@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.chatAPI = void 0;
 // import { newChatObject, ChatObject } from '../models/chat/chat.interfaces';
 const chat_factory_1 = require("../models/chat/chat.factory");
-const tipo = chat_factory_1.Persistencia.MongoDB;
+const tipo = chat_factory_1.Persistencia.MongoAtlas;
 class chatApiClass {
     constructor() {
         this.chat = chat_factory_1.ChatFactory.get(tipo);
