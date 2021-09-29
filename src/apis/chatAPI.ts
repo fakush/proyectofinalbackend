@@ -1,7 +1,7 @@
 // import { newChatObject, ChatObject } from '../models/chat/chat.interfaces';
 import { ChatFactory, Persistencia } from '../models/chat/chat.factory';
 
-const tipo = Persistencia.MongoDB;
+const tipo = Persistencia.MongoAtlas;
 
 class chatApiClass {
   private chat;

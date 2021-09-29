@@ -1,7 +1,7 @@
 import { newCartObject, CartObject } from '../models/cart/cart.interfaces';
 import { CartFactory, Persistencia } from '../models/cart/cart.factory';
 
-const tipo = Persistencia.Memory;
+const tipo = Persistencia.MongoAtlas;
 
 class cartAPIClass {
   private cart;

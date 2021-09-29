@@ -1,7 +1,7 @@
 import { newProductObject, ProductObject, ProductQuery } from '../models/products/products.interfaces';
 import { ProductsFactory, Persistencia } from '../models/products/products.factory';
 
-const tipo = Persistencia.Memory;
+const tipo = Persistencia.MongoAtlas;
 
 class prodAPI {
   private productos;
