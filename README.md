@@ -11,7 +11,7 @@
       <h5 align="center">Librerías Auxiliares: Cookie Parser - DotEnv - ES Lint -
         Prettier - Jest - Faker - Normalizr - Knex - Moment.js - Mongoose - UUID - Connect-Mongo - Etc.</h5>
       <div align="center">
-        <table>
+        <table style="background-color:gray">
           <tr>
             <td><img src='./public/images/nodejs.png' width='60' height='60' alt='Node JS' /></td>
             <td><img src='./public/images/express-cutout.png' width='60' height='60' alt='Node JS' /></td>
