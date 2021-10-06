@@ -4,14 +4,14 @@
 
 ## Stack
 
-<h5 class='card-title' style='text-align: center;'>App en Node JS. Código en Typescript. Servidor Express. Motor
+<h5 align="center">App en Node JS. Código en Typescript. Servidor Express. Motor
         de Plantillas Handlebars. WebSocket Socket.IO</h5>
-      <h5 class='card-title' style='text-align: center;'>Persistencia: Memoria - File System / Motores de Bases de
+      <h5 align="center">Persistencia: Memoria - File System / Motores de Bases de
         Datos: - MongoDB - MySQL - SQLite 3 - Firebase</h5>
-      <h5 class='card-title' style='text-align: center;'>Librerías Auxiliares: Cookie Parser - DotEnv - ES Lint -
+      <h5 align="center">Librerías Auxiliares: Cookie Parser - DotEnv - ES Lint -
         Prettier - Jest - Faker - Normalizr - Knex - Moment.js - Mongoose - UUID - Connect-Mongo - Etc.</h5>
-      <div class='table-responsive'>
-        <table class='table' style='text-align: center;'>
+      <div align="center">
+        <table>
           <tr>
             <td><img src='./public/images/nodejs.png' width='60' height='60' alt='Node JS' /></td>
             <td><img src='./public/images/express-cutout.png' width='60' height='60' alt='Node JS' /></td>
