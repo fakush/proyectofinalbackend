@@ -7,7 +7,7 @@
 <h5 align="center">App en Node JS. Código en Typescript. Servidor Express. Motor de Plantillas Handlebars. WebSocket Socket.IO</h5>
 <h5 align="center">Persistencia: Memoria - File System / Motores de Bases de Datos: - MongoDB - MySQL - SQLite 3 - Firebase</h5>
 <h5 align="center">Librerías Auxiliares: Cookie Parser - DotEnv - ES Lint - Prettier - Jest - Faker - Normalizr - Knex - Moment.js - Mongoose - UUID - Connect-Mongo - Etc.</h5>
-<div align="center" style="background-color:gray">
+<div align="center" style="background-color:Grey">
     <table>
         <tr>
             <td><img src='./public/images/nodejs.png' width='60' height='60' alt='Node JS' /></td>
