@@ -14,6 +14,19 @@ const UserSchema = new Schema<UserObject>({
   lastName: { type: String, required: true }
 });
 
+UserSchema.pre('save', async function (next) {
+  const user = this;
+  const hash = await bcrypt.hash(user.password, 10);
+
+  this.password = hash;
+  next();
+});
+
+UserSchema.methods.isValidPassword = async function (password) {
+  const user = this;
+  const compare = await bcrypt.compare(password, user.password);
+  return compare;
+};
 export class PersistenciaMongo implements UserBaseClass {
   private server: string;
   private users;
@@ -32,21 +45,6 @@ export class PersistenciaMongo implements UserBaseClass {
     //     this.users.insertMany(mockData);
     //   }
     // });
-  }
-
-  async pre(user: any) {
-    UserSchema.pre('save', async (next: any) => {
-      const hash = await bcrypt.hash(user.password, 10);
-      user.password = hash;
-      next();
-    });
-  }
-
-  async isValidPassword(user: any) {
-    UserSchema.methods.isValidPassword = async function (password) {
-      const compare = await bcrypt.compare(password, user.password);
-      return compare;
-    };
   }
 
   async findOneUser(data: any): Promise<UserObject> {

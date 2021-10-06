@@ -10,19 +10,11 @@ class authAPIClass {
     this.auth = UsersFactory.get(tipo);
   }
 
-  async pre(user: any): Promise<any> {
-    return await this.auth.pre(user);
-  }
-
-  async isValidPassword(user: any): Promise<any> {
-    return await this.auth.isValidPassword(user);
-  }
-
   async findOneUser(data: any): Promise<UserObject> {
     return await this.auth.findOneUser(data);
   }
 
-  async findUser(userId: string): Promise<UserObject> {
+  async findUser(userId?: string): Promise<UserObject> {
     return await this.auth.findUser(userId);
   }
 

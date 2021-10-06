@@ -1,5 +1,6 @@
 import passport from 'passport';
 import passportLocal from 'passport-local';
+import bcrypt from 'bcrypt';
 import { authAPI } from '../apis/UserAuthAPI';
 import { Request, Response } from 'express';
 
@@ -11,13 +12,15 @@ const strategyOptions: any = {
   passReqToCallback: true
 };
 
+let user: any = {};
+
 const loginFunc = async (req: Request, username: string, password: string, done: any) => {
-  const user = await authAPI.findOneUser({ username });
+  user = await authAPI.findOneUser({ username });
 
   if (!user) {
     return done(null, false, { message: 'User does not exist' });
   }
-  if (!authAPI.isValidPassword(user)) {
+  if (!user.isValidPassword(password)) {
     return done(null, false, { message: 'Password is not valid.' });
   }
   console.log('SALIO TODO BIEN');
@@ -45,13 +48,7 @@ const signUpFunc = async (req: Request, username: string, password: string, done
       console.log(user);
       return done(null, false, 'User already exists');
     } else {
-      const userData = {
-        username,
-        password,
-        email,
-        firstName,
-        lastName
-      };
+      const userData = { username, password, email, firstName, lastName };
       const newUser = authAPI.signUpUser(userData);
       return done(null, newUser);
     }
