@@ -17,8 +17,12 @@ router.get('/hello', (req, res) => {
   res.json({ msg: 'HOLA', userStatus });
 });
 router.post('/login', passport.authenticate('login'), function (req, res) {
-  userStatus.notLogged = false;
-  userStatus.islogged = true;
+  console.log('req.user: ', req.user);
+  if ((req.user = 'false')) {
+    userStatus.loginError = true;
+  } else {
+    userStatus.loginError = false;
+  }
   userStatus.nombre = req.body.username;
   res.redirect('/');
 });

@@ -66,20 +66,18 @@ const StoreOptions = {
   cookie: { maxAge: unMinuto * 10 }
 };
 
-let logged = { notLogged: true, islogged: false, isTimedOut: false, isDestroyed: false, nombre: '', contador: 0 };
 app.use(cookieParser());
 app.use(session(StoreOptions));
 
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use((req, res, next) => {
-  console.log(`REQ.SESSION =>\n${JSON.stringify(req.session)}`);
-  console.log(`REQ.USER =>\n${JSON.stringify(req.user)}`);
-  console.log(`REQ.AUTHENTICATE =>\n${JSON.stringify(req.isAuthenticated())}`);
-
-  next();
-});
+// app.use((req, res, next) => {
+//   console.log(`REQ.SESSION =>\n${JSON.stringify(req.session)}`);
+//   console.log(`REQ.USER =>\n${JSON.stringify(req.user)}`);
+//   console.log(`REQ.AUTHENTICATE =>\n${JSON.stringify(req.isAuthenticated())}`);
+//   next();
+// });
 
 // Main Page
 app.get('/', (req: any, res) => {

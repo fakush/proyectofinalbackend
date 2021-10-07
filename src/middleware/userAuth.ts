@@ -18,12 +18,14 @@ const loginFunc = async (req: Request, username: string, password: string, done:
   user = await authAPI.findOneUser({ username });
   if (!user) {
     userStatus.loginError = true;
-    return done(null, false, { message: 'User does not exist' });
+    return done(null, 'false', { message: 'User does not exist' });
   }
-  if (!user.isValidPassword(password)) {
+  if (!(await user.isValidPassword(password))) {
     userStatus.loginError = true;
-    return done(null, false, { message: 'Password is not valid.' });
+    return done(null, 'false', { message: 'Password is not valid.' });
   }
+  userStatus.notLogged = false;
+  userStatus.islogged = true;
   console.log('SALIO TODO BIEN');
   return done(null, user);
 };
