@@ -4,6 +4,7 @@ import routerProductos from './routerProductos';
 import routerVistaTest from './routerProductosVistaTest';
 import routerUsers from './routerUsers';
 import passport, { isLoggedIn } from '../middleware/userAuth';
+import { userStatus } from '../middleware/userStatus';
 
 const router = Router();
 
@@ -12,22 +13,47 @@ router.use('/carrito', routerCarrito);
 router.use('/productos', routerProductos);
 router.use('/user', isLoggedIn, routerUsers);
 router.get('/hello', (req, res) => {
-  res.json({ msg: 'HOLA', session: req.session });
+  userStatus.session = req.session;
+  res.json({ msg: 'HOLA', userStatus });
 });
 router.post('/login', passport.authenticate('login'), function (req, res) {
-  res.json({ msg: 'Welcome!', user: req.user });
+  userStatus.notLogged = false;
+  userStatus.islogged = true;
+  userStatus.nombre = req.body.username;
+  res.redirect('/');
+});
+
+router.post('/presignup', (req, res, next) => {
+  userStatus.notLogged = false;
+  userStatus.islogged = false;
+  userStatus.signUp = true;
+  res.redirect('/');
 });
 
 router.post('/signup', (req, res, next) => {
   passport.authenticate('signup', function (err, user, info) {
     console.log(err, user, info);
     if (err) {
-      return next(err);
+      userStatus.signUpError = true;
+      res.redirect('/');
     }
-    if (!user) return res.status(401).json({ data: info });
-
-    res.json({ msg: 'signup OK' });
+    if (!user) {
+      userStatus.signUpError = true;
+      res.redirect('/');
+    }
+    userStatus.notLogged = true;
+    userStatus.signUp = false;
+    userStatus.signUpOK = true;
+    res.redirect('/');
   })(req, res, next);
+});
+
+router.post('/logout', (req: any, res) => {
+  userStatus.notLogged = true;
+  userStatus.islogged = false;
+  userStatus.isDestroyed = true;
+  req.session.destroy;
+  res.redirect('/');
 });
 
 export default router;

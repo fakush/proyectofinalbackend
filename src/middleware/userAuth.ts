@@ -1,8 +1,8 @@
 import passport from 'passport';
 import passportLocal from 'passport-local';
-import bcrypt from 'bcrypt';
 import { authAPI } from '../apis/UserAuthAPI';
 import { Request, Response } from 'express';
+import { userStatus } from './userStatus';
 
 const LocalStrategy = passportLocal.Strategy;
 
@@ -16,11 +16,12 @@ let user: any = {};
 
 const loginFunc = async (req: Request, username: string, password: string, done: any) => {
   user = await authAPI.findOneUser({ username });
-
   if (!user) {
+    userStatus.loginError = true;
     return done(null, false, { message: 'User does not exist' });
   }
   if (!user.isValidPassword(password)) {
+    userStatus.loginError = true;
     return done(null, false, { message: 'Password is not valid.' });
   }
   console.log('SALIO TODO BIEN');
@@ -70,8 +71,8 @@ passport.deserializeUser((userId, done) => {
 });
 
 export const isLoggedIn = (req: Request, res: Response, done: any) => {
-  if (!req.user) return res.status(401).json({ msg: 'Unathorized' });
-
+  if (!req.user) return (userStatus.loginError = true);
+  // res.status(401).json({ msg: 'Unathorized' });
   done();
 };
 

@@ -10,6 +10,7 @@ import * as http from 'http';
 import Config from '../config';
 import routersIndex from '../routes/index';
 const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
+import { userStatus } from '../middleware/userStatus';
 
 const app = express();
 
@@ -65,7 +66,7 @@ const StoreOptions = {
   cookie: { maxAge: unMinuto * 10 }
 };
 
-let logged = { islogged: false, isTimedOut: false, isDestroyed: false, nombre: '', contador: 0 };
+let logged = { notLogged: true, islogged: false, isTimedOut: false, isDestroyed: false, nombre: '', contador: 0 };
 app.use(cookieParser());
 app.use(session(StoreOptions));
 
@@ -82,38 +83,13 @@ app.use((req, res, next) => {
 
 // Main Page
 app.get('/', (req: any, res) => {
-  console.log('estoy en get');
-  if (logged.islogged) logged.contador = logged.contador + 1;
-  if (!req.session.nombre && logged.islogged) {
-    logged.islogged = false;
-    logged.isTimedOut = true;
-    res.render('main', logged);
-    logged.isTimedOut = false;
-    logged.nombre = '';
-  }
-  if (logged.isDestroyed) {
-    res.render('main', logged);
-    logged.nombre = ``;
-    logged.isDestroyed = false;
-  } else {
-    res.render('main', logged);
-  }
-});
-
-app.post('/login', (req: any, res) => {
-  if (req.body.nombre) {
-    req.session.nombre = req.body.nombre;
-    logged.nombre = req.body.nombre;
-    logged.islogged = true;
-  }
-  res.redirect('/');
-});
-
-app.post('/logout', (req: any, res) => {
-  req.session.destroy;
-  logged.islogged = false;
-  logged.isDestroyed = true;
-  res.redirect('/');
+  userStatus.islogged ? userStatus.contador++ : (userStatus.contador = 0);
+  res.render('main', userStatus);
+  userStatus.isDestroyed = false;
+  userStatus.isTimedOut = false;
+  userStatus.signUpError = false;
+  userStatus.signUpOK = false;
+  userStatus.loginError = false;
 });
 
 // Use routers
