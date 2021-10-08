@@ -49,6 +49,7 @@
     "@types/moment": "^2.13.0",
     "@types/mongoose": "^5.11.97",
     "@types/mysql": "^2.15.19",
+    "@types/node": "^16.10.3",
     "@types/normalizr": "^2.0.18",
     "@types/passport": "^1.0.7",
     "@types/passport-local": "^1.0.34",
