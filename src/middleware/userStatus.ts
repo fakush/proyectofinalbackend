@@ -7,6 +7,9 @@ export const userStatus = {
   signUpOK: false,
   signUpError: false,
   loginError: false,
+  fbLogin: false,
+  foto: '',
+  email: '',
   nombre: '',
   session: {},
   contador: 0

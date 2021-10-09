@@ -1,0 +1,27 @@
+<hr />
+{{#if notLogged}}
+  <h3>Login con Facebook</h3>
+  <div class='jumbotron text-center text-primary'>
+    <h1><span class='fa fa-lock'></span> Social Authentication</h1>
+    <br />
+    <a href='/api/auth/facebook' class='btn btn-primary'><span class='fa fa-facebook'></span> Login con Facebook</a>
+  </div>
+{{/if}}
+{{#if islogged}}
+  <br />
+  <div class='alert alert-success alertaLogout' role='alert'>
+    <h2>Bienvenido {{this.nombre}}!</h2>
+    <img src='{{foto}}' width='100' alt='' /><br />
+    <a href='#'>{{email}}</a>
+    <h6>Esta es tu conexión Nº {{this.contador}}</h6>
+    <form action='/api/logout' method='POST' autocomplete='off'>
+      <button class='btn btn-warning' id='destroy' name='destroy'>Logout</button>
+    </form>
+  </div>
+{{/if}}
+{{#if loginError}}
+  <br />
+  <div class='alert alert-danger alertaLogout' role='alert'>
+    <h2>Error de Login con Facebook</h2>
+  </div>
+{{/if}}

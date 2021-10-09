@@ -38,39 +38,29 @@ router.get('/hello', (req, res) => {
     userStatus_1.userStatus.session = req.session;
     res.json({ msg: 'HOLA', userStatus: userStatus_1.userStatus });
 });
-router.post('/login', userAuth_1.default.authenticate('login'), function (req, res) {
-    console.log('req.user: ', req.user);
-    if ((req.user = 'false')) {
-        userStatus_1.userStatus.loginError = true;
+router.get('/auth/facebook', userAuth_1.default.authenticate('facebook', { scope: ['email'] }));
+router.get('/auth/facebook/callback', userAuth_1.default.authenticate('facebook', {
+    successRedirect: '/api/datos',
+    failureRedirect: '/api/fail'
+}));
+router.get('/datos', (req, res) => {
+    if (req.isAuthenticated()) {
+        const userData = req.user;
+        userStatus_1.userStatus.nombre = userData.displayName;
+        if (userData.photos)
+            userStatus_1.userStatus.foto = userData.photos[0].value;
+        if (userData.emails)
+            userStatus_1.userStatus.email = userData.emails[0].value;
     }
-    else {
-        userStatus_1.userStatus.loginError = false;
-    }
-    userStatus_1.userStatus.nombre = req.body.username;
-    res.redirect('/');
-});
-router.post('/presignup', (req, res, next) => {
     userStatus_1.userStatus.notLogged = false;
-    userStatus_1.userStatus.islogged = false;
-    userStatus_1.userStatus.signUp = true;
+    userStatus_1.userStatus.islogged = true;
     res.redirect('/');
+    console.log('hice el redirect');
 });
-router.post('/signup', (req, res, next) => {
-    userAuth_1.default.authenticate('signup', function (err, user, info) {
-        console.log(err, user, info);
-        if (err) {
-            userStatus_1.userStatus.signUpError = true;
-            res.redirect('/');
-        }
-        if (!user) {
-            userStatus_1.userStatus.signUpError = true;
-            res.redirect('/');
-        }
-        userStatus_1.userStatus.notLogged = true;
-        userStatus_1.userStatus.signUp = false;
-        userStatus_1.userStatus.signUpOK = true;
-        res.redirect('/');
-    })(req, res, next);
+router.get('/fail', (req, res) => {
+    userStatus_1.userStatus.loginError = true;
+    res.redirect('/');
+    console.log('hice el redirect');
 });
 router.post('/logout', (req, res) => {
     userStatus_1.userStatus.notLogged = true;

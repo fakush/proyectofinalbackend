@@ -16,40 +16,42 @@ router.get('/hello', (req, res) => {
   userStatus.session = req.session;
   res.json({ msg: 'HOLA', userStatus });
 });
-router.post('/login', passport.authenticate('login'), function (req, res) {
-  console.log('req.user: ', req.user);
-  if ((req.user = 'false')) {
-    userStatus.loginError = true;
-  } else {
-    userStatus.loginError = false;
+
+router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email'] }));
+router.get(
+  '/auth/facebook/callback',
+  passport.authenticate('facebook', {
+    successRedirect: '/api/datos',
+    failureRedirect: '/api/fail'
+  })
+);
+
+type Photos = { value: string };
+type Emails = { value: string };
+interface User extends Express.User {
+  contador?: number;
+  displayName?: string;
+  photos?: Photos[];
+  emails?: Emails[];
+}
+
+router.get('/datos', (req, res) => {
+  if (req.isAuthenticated()) {
+    const userData: User = req.user;
+    userStatus.nombre = userData.displayName;
+    if (userData.photos) userStatus.foto = userData.photos[0].value;
+    if (userData.emails) userStatus.email = userData.emails[0].value;
   }
-  userStatus.nombre = req.body.username;
-  res.redirect('/');
-});
-
-router.post('/presignup', (req, res, next) => {
   userStatus.notLogged = false;
-  userStatus.islogged = false;
-  userStatus.signUp = true;
+  userStatus.islogged = true;
   res.redirect('/');
+  console.log('hice el redirect');
 });
 
-router.post('/signup', (req, res, next) => {
-  passport.authenticate('signup', function (err, user, info) {
-    console.log(err, user, info);
-    if (err) {
-      userStatus.signUpError = true;
-      res.redirect('/');
-    }
-    if (!user) {
-      userStatus.signUpError = true;
-      res.redirect('/');
-    }
-    userStatus.notLogged = true;
-    userStatus.signUp = false;
-    userStatus.signUpOK = true;
-    res.redirect('/');
-  })(req, res, next);
+router.get('/fail', (req, res) => {
+  userStatus.loginError = true;
+  res.redirect('/');
+  console.log('hice el redirect');
 });
 
 router.post('/logout', (req: any, res) => {
