@@ -1,7 +1,9 @@
+import colors from 'colors';
 import { Request, Response, NextFunction } from 'express';
 import passport from 'passport';
 import { VerifyFunction, StrategyOption, Strategy as FaceBookStrategy } from 'passport-facebook';
 import Config from '../config';
+colors.enable();
 
 const strategyOptions: StrategyOption = {
   clientID: Config.FACEBOOK_APP_ID,
@@ -11,7 +13,7 @@ const strategyOptions: StrategyOption = {
 };
 
 const loginFunc: VerifyFunction = async (accessToken, refreshToken, profile, done) => {
-  console.log('SALIO TODO BIEN');
+  console.log('SALIO TODO BIEN'.green);
   console.log(accessToken);
   console.log(refreshToken);
   console.log(profile);

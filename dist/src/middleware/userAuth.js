@@ -13,9 +13,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.isLoggedIn = void 0;
+const colors_1 = __importDefault(require("colors"));
 const passport_1 = __importDefault(require("passport"));
 const passport_facebook_1 = require("passport-facebook");
 const config_1 = __importDefault(require("../config"));
+colors_1.default.enable();
 const strategyOptions = {
     clientID: config_1.default.FACEBOOK_APP_ID,
     clientSecret: config_1.default.FACEBOOK_APP_SECRET,
@@ -23,7 +25,7 @@ const strategyOptions = {
     profileFields: ['id', 'displayName', 'photos', 'emails']
 };
 const loginFunc = (accessToken, refreshToken, profile, done) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('SALIO TODO BIEN');
+    console.log('SALIO TODO BIEN'.green);
     console.log(accessToken);
     console.log(refreshToken);
     console.log(profile);
