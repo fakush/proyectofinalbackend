@@ -3,11 +3,12 @@ import { Request, Response, NextFunction } from 'express';
 import passport from 'passport';
 import { VerifyFunction, StrategyOption, Strategy as FaceBookStrategy } from 'passport-facebook';
 import Config from '../config';
+import { fbClientIdArgument, fbClientSecretArgument } from './getArgs';
 colors.enable();
 
 const strategyOptions: StrategyOption = {
-  clientID: Config.FACEBOOK_APP_ID,
-  clientSecret: Config.FACEBOOK_APP_SECRET,
+  clientID: fbClientIdArgument || Config.FACEBOOK_APP_ID,
+  clientSecret: fbClientSecretArgument || Config.FACEBOOK_APP_SECRET,
   callbackURL: 'http://localhost:8080/api/auth/facebook/callback',
   profileFields: ['id', 'displayName', 'photos', 'emails']
 };

@@ -29,7 +29,11 @@ const routerProductosVistaTest_1 = __importDefault(require("./routerProductosVis
 const routerUsers_1 = __importDefault(require("./routerUsers"));
 const userAuth_1 = __importStar(require("../middleware/userAuth"));
 const userStatus_1 = require("../middleware/userStatus");
+const getArgs_1 = require("../middleware/getArgs");
+const child_process_1 = require("child_process");
+const path_1 = __importDefault(require("path"));
 const router = (0, express_1.Router)();
+const scriptPath = path_1.default.resolve(__dirname, '../middleware/getRandoms');
 router.use('/productos/vista-test', routerProductosVistaTest_1.default);
 router.use('/carrito', routerCarrito_1.default);
 router.use('/productos', routerProductos_1.default);
@@ -37,6 +41,30 @@ router.use('/user', userAuth_1.isLoggedIn, routerUsers_1.default);
 router.get('/hello', (req, res) => {
     userStatus_1.userStatus.session = req.session;
     res.json({ msg: 'HOLA', userStatus: userStatus_1.userStatus });
+});
+router.get('/info', (req, res) => {
+    res.json({
+        'Argumentos de entrada': getArgs_1.allArguments,
+        'Path de ejecución': process.cwd(),
+        'Nombre de la plataforma': process.platform,
+        'Process id': process.pid,
+        'Versión de node': process.version,
+        'Carpeta corriente': process.execPath,
+        'Uso de memoria': process.memoryUsage()
+    });
+});
+router.get('/randoms', (req, res) => {
+    let numeros;
+    req.query.cant ? (numeros = Number(req.query.cant)) : 100000000;
+    const randoms = (0, child_process_1.fork)(scriptPath);
+    const msg = { command: 'start', cantidad: numeros };
+    randoms.send(JSON.stringify(msg));
+    randoms.on('message', (result) => {
+        res.json(result);
+    });
+});
+router.get('/matar', (req, res) => {
+    process.exit(0);
 });
 router.get('/auth/facebook', userAuth_1.default.authenticate('facebook', { scope: ['email'] }));
 router.get('/auth/facebook/callback', userAuth_1.default.authenticate('facebook', {

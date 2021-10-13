@@ -17,10 +17,11 @@ const colors_1 = __importDefault(require("colors"));
 const passport_1 = __importDefault(require("passport"));
 const passport_facebook_1 = require("passport-facebook");
 const config_1 = __importDefault(require("../config"));
+const getArgs_1 = require("./getArgs");
 colors_1.default.enable();
 const strategyOptions = {
-    clientID: config_1.default.FACEBOOK_APP_ID,
-    clientSecret: config_1.default.FACEBOOK_APP_SECRET,
+    clientID: getArgs_1.fbClientIdArgument || config_1.default.FACEBOOK_APP_ID,
+    clientSecret: getArgs_1.fbClientSecretArgument || config_1.default.FACEBOOK_APP_SECRET,
     callbackURL: 'http://localhost:8080/api/auth/facebook/callback',
     profileFields: ['id', 'displayName', 'photos', 'emails']
 };

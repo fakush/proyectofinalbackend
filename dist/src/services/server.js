@@ -27,17 +27,17 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const express_session_1 = __importDefault(require("express-session"));
 const userAuth_1 = __importDefault(require("../middleware/userAuth"));
 const express_handlebars_1 = __importDefault(require("express-handlebars"));
-const path_1 = __importDefault(require("path"));
 const http = __importStar(require("http"));
 const index_1 = __importDefault(require("../routes/index"));
 const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 const userStatus_1 = require("../middleware/userStatus");
 const app = (0, express_1.default)();
 // paths
-const publicFolderPath = path_1.default.resolve(__dirname, '../../public');
-const layoutDirPath = path_1.default.resolve(__dirname, '../../views/layouts');
-const defaultLayerPth = path_1.default.resolve(__dirname, '../../views/layouts/index.hbs');
-const partialDirPath = path_1.default.resolve(__dirname, '../../views/partials');
+console.log(process.cwd() + '/public');
+const publicFolderPath = process.cwd() + '/public';
+const layoutDirPath = process.cwd() + '/views/layouts';
+const defaultLayerPth = process.cwd() + '/views/layouts/index.hbs';
+const partialDirPath = process.cwd() + '/views/partials';
 //Error Handler
 const errorHandler = (err, req, res, next) => {
     console.log(`HUBO UN ERROR ${err}`);

@@ -15,10 +15,11 @@ import { userStatus } from '../middleware/userStatus';
 const app = express();
 
 // paths
-const publicFolderPath = path.resolve(__dirname, '../../public');
-const layoutDirPath = path.resolve(__dirname, '../../views/layouts');
-const defaultLayerPth = path.resolve(__dirname, '../../views/layouts/index.hbs');
-const partialDirPath = path.resolve(__dirname, '../../views/partials');
+console.log(process.cwd() + '/public');
+const publicFolderPath = process.cwd() + '/public';
+const layoutDirPath = process.cwd() + '/views/layouts';
+const defaultLayerPth = process.cwd() + '/views/layouts/index.hbs';
+const partialDirPath = process.cwd() + '/views/partials';
 
 //Error Handler
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {

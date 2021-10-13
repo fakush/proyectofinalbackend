@@ -5,8 +5,13 @@ import routerVistaTest from './routerProductosVistaTest';
 import routerUsers from './routerUsers';
 import passport, { isLoggedIn } from '../middleware/userAuth';
 import { userStatus } from '../middleware/userStatus';
+import { allArguments } from '../middleware/getArgs';
+import { clearConfigCache } from 'prettier';
+import { fork } from 'child_process';
+import path from 'path';
 
 const router = Router();
+const scriptPath = path.resolve(__dirname, '../middleware/getRandoms');
 
 router.use('/productos/vista-test', routerVistaTest);
 router.use('/carrito', routerCarrito);
@@ -15,6 +20,32 @@ router.use('/user', isLoggedIn, routerUsers);
 router.get('/hello', (req, res) => {
   userStatus.session = req.session;
   res.json({ msg: 'HOLA', userStatus });
+});
+router.get('/info', (req, res) => {
+  res.json({
+    'Argumentos de entrada': allArguments,
+    'Path de ejecución': process.cwd(),
+    'Nombre de la plataforma': process.platform,
+    'Process id': process.pid,
+    'Versión de node': process.version,
+    'Carpeta corriente': process.execPath,
+    'Uso de memoria': process.memoryUsage()
+  });
+});
+
+router.get('/randoms', (req, res) => {
+  let numeros: number;
+  req.query.cant ? (numeros = Number(req.query.cant)) : 100000000;
+  const randoms = fork(scriptPath);
+  const msg = { command: 'start', cantidad: numeros };
+  randoms.send(JSON.stringify(msg));
+  randoms.on('message', (result) => {
+    res.json(result);
+  });
+});
+
+router.get('/matar', (req, res) => {
+  process.exit(0);
 });
 
 router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email'] }));
