@@ -10,17 +10,16 @@ colors.enable();
 const port = portArgument || Config.PORT;
 const clusterArgument = ClusterArgument || false;
 const numCPUs = os.cpus().length;
+console.log(`CLUSTER ==> ${clusterArgument}`.blue);
 
 initWsServer(myServer);
 
 if (cluster.isMaster && clusterArgument) {
   console.log(`NUMERO DE CPUS ===> ${numCPUs}`);
   console.log(`PID MASTER ${process.pid}`);
-
   for (let i = 0; i < numCPUs; i++) {
     cluster.fork();
   }
-
   cluster.on('exit', (worker: any) => {
     console.log(`Worker ${worker.process.pid} died at ${Date()}`);
     cluster.fork();

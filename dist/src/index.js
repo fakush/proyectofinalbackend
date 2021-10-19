@@ -14,6 +14,7 @@ colors_1.default.enable();
 const port = getArgs_1.portArgument || config_1.default.PORT;
 const clusterArgument = getArgs_1.ClusterArgument || false;
 const numCPUs = os_1.default.cpus().length;
+console.log(`CLUSTER ==> ${clusterArgument}`.blue);
 (0, sockets_1.default)(server_1.default);
 if (cluster_1.default.isMaster && clusterArgument) {
     console.log(`NUMERO DE CPUS ===> ${numCPUs}`);
