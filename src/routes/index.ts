@@ -8,6 +8,7 @@ import { userStatus } from '../middleware/userStatus';
 import { allArguments } from '../middleware/getArgs';
 import { clearConfigCache } from 'prettier';
 import { fork } from 'child_process';
+import os from 'os';
 import path from 'path';
 
 const router = Router();
@@ -29,11 +30,19 @@ router.get('/info', (req, res) => {
     'Process id': process.pid,
     'Versión de node': process.version,
     'Carpeta corriente': process.execPath,
-    'Uso de memoria': process.memoryUsage()
+    'Uso de memoria': process.memoryUsage(),
+    'Numero de CPUs': os.cpus().length
   });
 });
 
+router.get('/pid', (req, res) => {
+  console.log(`Hola desde ${process.pid}`.green);
+  res.json({
+    pid: process.pid
+  });
+});
 router.get('/randoms', (req, res) => {
+  console.log(`El proceso ${process.pid} entró en Random`.yellow);
   let numeros: number;
   req.query.cant ? (numeros = Number(req.query.cant)) : 100000000;
   const randoms = fork(scriptPath);
@@ -45,6 +54,7 @@ router.get('/randoms', (req, res) => {
 });
 
 router.get('/matar', (req, res) => {
+  console.log(`Matamos el proceso ${process.pid}`.red);
   process.exit(0);
 });
 
