@@ -11,7 +11,6 @@ module.exports = {
       script: '.dist/src/index.js',
       watch: true,
       autorestart: true,
-      instances: -1,
       args: '--cluster=true'
     }
   ]
