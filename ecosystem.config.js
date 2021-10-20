@@ -1,17 +1,18 @@
 module.exports = {
   apps: [
     {
-      name: 'fork',
-      script: '.dist/src/index.js',
-      watch: true,
-      autorestart: true
-    },
-    {
-      name: 'cluster',
-      script: '.dist/src/index.js',
+      name: 'fork 1',
+      script: './dist/src/index.js',
       watch: true,
       autorestart: true,
-      args: '--cluster=true'
+      args: '--port=8081'
+    },
+    {
+      name: 'fork 2',
+      script: './dist/src/index.js',
+      watch: true,
+      autorestart: true,
+      args: '--port=8082 --cluster=true'
     }
   ]
 };
