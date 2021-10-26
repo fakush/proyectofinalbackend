@@ -10,6 +10,7 @@ const mongoDAO_1 = require("./DAOs/mongoDAO");
 const mySqlDAO_1 = require("./DAOs/mySqlDAO");
 const sqlite3DAO_1 = require("./DAOs/sqlite3DAO");
 const firebaseDAO_1 = require("./DAOs/firebaseDAO");
+const logger_1 = require("../../middleware/logger");
 const path_1 = __importDefault(require("path"));
 var Persistencia;
 (function (Persistencia) {
@@ -26,29 +27,29 @@ class CartFactory {
         switch (tipo) {
             // Esta dos veces memoria para evitar "Error de capa 8"
             case Persistencia.Memory:
-                console.log('Carrito está escribiendo en Memoria');
+                logger_1.logger.log.info('Carrito está escribiendo en Memoria');
                 return new memoryDAO_1.PersistenciaMemoria();
             case Persistencia.FilesSystem:
-                console.log('Carrito está escribiendo en File System');
+                logger_1.logger.log.info('Carrito está escribiendo en File System');
                 const filePath = path_1.default.resolve(__dirname, '../../../assets/savedCart.json');
                 return new fsDAO_1.PersistenciaFS(filePath);
             case Persistencia.MongoLocal:
-                console.log('Carrito está escribiendo en Mongo Local');
+                logger_1.logger.log.info('Carrito está escribiendo en Mongo Local');
                 return new mongoDAO_1.PersistenciaMongo(true);
             case Persistencia.MongoAtlas:
-                console.log('Carrito está escribiendo en Mongo Atlas');
+                logger_1.logger.log.info('Carrito está escribiendo en Mongo Atlas');
                 return new mongoDAO_1.PersistenciaMongo();
             case Persistencia.Mysql:
-                console.log('Carrito está escribiendo en MysqlLocal');
+                logger_1.logger.log.info('Carrito está escribiendo en MysqlLocal');
                 return new mySqlDAO_1.PersistenciaMysql();
             case Persistencia.SqlLite3:
-                console.log('Carrito está escribiendo en SQLite3');
+                logger_1.logger.log.info('Carrito está escribiendo en SQLite3');
                 return new sqlite3DAO_1.PersistenciaSQLite3();
             case Persistencia.Firebase:
-                console.log('Carrito está escribiendo en Firebase');
+                logger_1.logger.log.info('Carrito está escribiendo en Firebase');
                 return new firebaseDAO_1.PersistenciaFirebase();
             default:
-                console.log('Carrito está escribiendo en Memoria por default');
+                logger_1.logger.log.info('Carrito está escribiendo en Memoria por default');
                 return new memoryDAO_1.PersistenciaMemoria();
         }
     }

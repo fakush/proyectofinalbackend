@@ -16,6 +16,7 @@ exports.PersistenciaMongo = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const config_1 = __importDefault(require("../../../config"));
 const moment_1 = __importDefault(require("moment"));
+const logger_1 = require("../../../middleware/logger");
 //MongoSchema
 const cartSchema = new mongoose_1.default.Schema({
     timestamp: { type: String, required: true },
@@ -72,7 +73,7 @@ class PersistenciaMongo {
         this.carrito = mongoose_1.default.model(dbCollection, cartSchema);
         this.carrito.count().then((count) => {
             if (count < 1) {
-                console.log('Insertando Data Mockup');
+                logger_1.logger.log.warn('Insertando Data Mockup');
                 this.carrito.insertMany(mockData);
             }
         });

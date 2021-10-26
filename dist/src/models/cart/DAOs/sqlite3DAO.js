@@ -16,6 +16,7 @@ exports.PersistenciaSQLite3 = void 0;
 const knex_1 = __importDefault(require("knex"));
 const knexfile_1 = __importDefault(require("../../../../knexfile"));
 const moment_1 = __importDefault(require("moment"));
+const logger_1 = require("../../../middleware/logger");
 const mockData = [
     { timestamp: 'Apr 4 05:06:07', producto: 5 },
     { timestamp: 'Apr 6 05:06:08', producto: 4 },
@@ -25,12 +26,12 @@ class PersistenciaSQLite3 {
     constructor() {
         this.table = 'carrito';
         const environment = process.env.NODE_ENV || 'ecommerce_sqLite3_dev';
-        console.log(`SETTING ${environment} DB`);
+        logger_1.logger.log.info(`SETTING ${environment} DB`);
         const options = knexfile_1.default[environment];
         this.carrito = (0, knex_1.default)(options);
         this.carrito.schema.hasTable(this.table).then((exists) => {
             if (!exists) {
-                console.log('SQLITE: Initializing table "carrito"');
+                logger_1.logger.log.warn('SQLITE: Initializing table "carrito"');
                 this.carrito.schema
                     .createTable(this.table, (carritoTable) => {
                     carritoTable.increments('_id');
@@ -42,7 +43,7 @@ class PersistenciaSQLite3 {
                 })
                     .then(() => {
                     mockData.forEach((item) => __awaiter(this, void 0, void 0, function* () { return yield this.carrito(this.table).insert(item); }));
-                    console.log('SQL: Done creating table "carrito" & Mockup Data');
+                    logger_1.logger.log.info('SQL: Done creating table "carrito" & Mockup Data');
                 });
             }
         });
