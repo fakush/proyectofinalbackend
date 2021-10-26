@@ -16,6 +16,7 @@ exports.PersistenciaMongo = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const config_1 = __importDefault(require("../../../config"));
 const moment_1 = __importDefault(require("moment"));
+const logger_1 = require("../../../middleware/logger");
 //MongoSchema
 const productsSchema = new mongoose_1.default.Schema({
     timestamp: { type: String, required: true },
@@ -119,7 +120,7 @@ class PersistenciaMongo {
         this.products = mongoose_1.default.model(dbCollection, productsSchema);
         this.products.count().then((count) => {
             if (count < 1) {
-                console.log('Insertando Data Mockup');
+                logger_1.logger.log.warn('Insertando Data Mockup');
                 this.products.insertMany(mockData);
             }
         });
@@ -201,7 +202,7 @@ class PersistenciaMongo {
                 query.stock = { $gte: Number(options.stockMin) };
             if (options.stockMin && options.stockMax)
                 query.stock = { $gte: Number(options.stockMin), $lte: Number(options.stockMax) };
-            console.log(query);
+            logger_1.logger.log.debug(query);
             return this.products.find(query);
         });
     }

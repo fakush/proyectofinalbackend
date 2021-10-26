@@ -16,16 +16,17 @@ exports.PersistenciaSQLite3 = void 0;
 const knex_1 = __importDefault(require("knex"));
 const knexfile_1 = __importDefault(require("../../../../knexfile"));
 const moment_1 = __importDefault(require("moment"));
+const logger_1 = require("../../../middleware/logger");
 class PersistenciaSQLite3 {
     constructor() {
         this.table = 'chatLog';
         const environment = process.env.NODE_ENV || 'ecommerce_sqLite3_dev';
-        console.log(`SETTING ${environment} DB`);
+        logger_1.logger.log.info(`SETTING ${environment} DB`);
         const options = knexfile_1.default[environment];
         this.chat = (0, knex_1.default)(options);
         this.chat.schema.hasTable(this.table).then((exists) => {
             if (!exists) {
-                console.log('SQLITE: Initializing table "chatLog"');
+                logger_1.logger.log.warn('SQLITE: Initializing table "chatLog"');
                 this.chat.schema
                     .createTable(this.table, (chatTable) => {
                     chatTable.increments('_id');
@@ -34,7 +35,7 @@ class PersistenciaSQLite3 {
                     chatTable.string('mensaje');
                 })
                     .then(() => {
-                    console.log('SQL: Done creating table "chatLog"');
+                    logger_1.logger.log.info('SQL: Done creating table "chatLog"');
                 });
             }
         });

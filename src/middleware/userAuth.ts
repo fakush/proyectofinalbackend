@@ -4,6 +4,7 @@ import passport from 'passport';
 import { VerifyFunction, StrategyOption, Strategy as FaceBookStrategy } from 'passport-facebook';
 import Config from '../config';
 import { fbClientIdArgument, fbClientSecretArgument } from './getArgs';
+import { logger } from './logger';
 colors.enable();
 
 const strategyOptions: StrategyOption = {
@@ -14,10 +15,10 @@ const strategyOptions: StrategyOption = {
 };
 
 const loginFunc: VerifyFunction = async (accessToken, refreshToken, profile, done) => {
-  console.log('SALIO TODO BIEN'.green);
-  console.log(accessToken);
-  console.log(refreshToken);
-  console.log(profile);
+  logger.log.info('SALIO TODO BIEN'.green);
+  logger.log.debug(accessToken);
+  logger.log.debug(refreshToken);
+  logger.log.debug(profile);
   return done(null, profile);
 };
 

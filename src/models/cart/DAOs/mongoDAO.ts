@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import Config from '../../../config';
 import { newCartObject, CartObject, CartBaseClass } from '../cart.interfaces';
 import moment from 'moment';
+import { logger } from '../../../middleware/logger';
 
 //MongoSchema
 const cartSchema = new mongoose.Schema<CartObject>({
@@ -65,7 +66,7 @@ export class PersistenciaMongo implements CartBaseClass {
     this.carrito = mongoose.model<CartObject>(dbCollection, cartSchema);
     this.carrito.count().then((count) => {
       if (count < 1) {
-        console.log('Insertando Data Mockup');
+        logger.log.warn('Insertando Data Mockup');
         this.carrito.insertMany(mockData);
       }
     });

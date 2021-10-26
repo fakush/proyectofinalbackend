@@ -16,6 +16,7 @@ exports.PersistenciaMysql = void 0;
 const knex_1 = __importDefault(require("knex"));
 const knexfile_1 = __importDefault(require("../../../../knexfile"));
 const moment_1 = __importDefault(require("moment"));
+const logger_1 = require("../../../middleware/logger");
 const mockData = [
     {
         timestamp: 'Apr 5 05:06:08',
@@ -103,12 +104,12 @@ class PersistenciaMysql {
     constructor() {
         this.table = 'productos';
         const environment = process.env.NODE_ENV || 'ecommerce_sql_dev';
-        console.log(`SETTING ${environment} DB`);
+        logger_1.logger.log.info(`SETTING ${environment} DB`);
         const options = knexfile_1.default[environment];
         this.products = (0, knex_1.default)(options);
         this.products.schema.hasTable(this.table).then((exists) => {
             if (!exists) {
-                console.log('SQL: Initializing table "productos"');
+                logger_1.logger.log.warn('SQL: Initializing table "productos"');
                 this.products.schema
                     .createTable(this.table, (productosTable) => {
                     productosTable.increments('_id');
@@ -122,7 +123,7 @@ class PersistenciaMysql {
                 })
                     .then(() => {
                     mockData.forEach((item) => __awaiter(this, void 0, void 0, function* () { return yield this.products(this.table).insert(item); }));
-                    console.log('SQL: Done creating table "productos" & Mockup Data');
+                    logger_1.logger.log.info('SQL: Done creating table "productos" & Mockup Data');
                 });
             }
         });

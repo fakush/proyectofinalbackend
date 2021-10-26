@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import Config from '../../../config';
 import { newProductObject, ProductObject, ProductQuery, ProductBaseClass } from '../products.interfaces';
 import moment from 'moment';
+import { logger } from '../../../middleware/logger';
 
 //MongoSchema
 const productsSchema = new mongoose.Schema<ProductObject>({
@@ -112,7 +113,7 @@ export class PersistenciaMongo implements ProductBaseClass {
     this.products = mongoose.model<ProductObject>(dbCollection, productsSchema);
     this.products.count().then((count) => {
       if (count < 1) {
-        console.log('Insertando Data Mockup');
+        logger.log.warn('Insertando Data Mockup');
         this.products.insertMany(mockData);
       }
     });
@@ -176,7 +177,7 @@ export class PersistenciaMongo implements ProductBaseClass {
     if (options.stockMin) query.stock = { $gte: Number(options.stockMin) } as unknown as number;
     if (options.stockMin && options.stockMax)
       query.stock = { $gte: Number(options.stockMin), $lte: Number(options.stockMax) } as unknown as number;
-    console.log(query);
+    logger.log.debug(query);
     return this.products.find(query);
   }
 }

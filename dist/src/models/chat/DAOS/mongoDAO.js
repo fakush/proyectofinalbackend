@@ -16,6 +16,7 @@ exports.PersistenciaMongo = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const normalizr_1 = require("normalizr");
 const config_1 = __importDefault(require("../../../config"));
+const logger_1 = require("../../../middleware/logger");
 //MongoSchema
 const dbCollection = 'chatLogs';
 const messageSchema = new mongoose_1.default.Schema({
@@ -167,7 +168,7 @@ class PersistenciaMongo {
         this.chatLog = messageModel;
         this.chatLog.count().then((count) => {
             if (count < 1) {
-                console.log('Insertando Data Mockup');
+                logger_1.logger.log.info('Insertando Data Mockup');
                 this.chatLog.insertMany(mockData);
             }
         });

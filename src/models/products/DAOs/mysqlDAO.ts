@@ -2,6 +2,7 @@ import knex from 'knex';
 import dbConfig from '../../../../knexfile';
 import { newProductObject, ProductObject, ProductQuery, ProductBaseClass } from '../products.interfaces';
 import moment from 'moment';
+import { logger } from '../../../middleware/logger';
 
 const mockData = [
   {
@@ -93,12 +94,12 @@ export class PersistenciaMysql implements ProductBaseClass {
 
   constructor() {
     const environment = process.env.NODE_ENV || 'ecommerce_sql_dev';
-    console.log(`SETTING ${environment} DB`);
+    logger.log.info(`SETTING ${environment} DB`);
     const options = dbConfig[environment];
     this.products = knex(options);
     this.products.schema.hasTable(this.table).then((exists: any) => {
       if (!exists) {
-        console.log('SQL: Initializing table "productos"');
+        logger.log.warn('SQL: Initializing table "productos"');
         this.products.schema
           .createTable(this.table, (productosTable: any) => {
             productosTable.increments('_id');
@@ -112,7 +113,7 @@ export class PersistenciaMysql implements ProductBaseClass {
           })
           .then(() => {
             mockData.forEach(async (item) => await this.products(this.table).insert(item));
-            console.log('SQL: Done creating table "productos" & Mockup Data');
+            logger.log.info('SQL: Done creating table "productos" & Mockup Data');
           });
       }
     });

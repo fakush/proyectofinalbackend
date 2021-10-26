@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.controllerProductosTest = void 0;
 const productsTestAPI_1 = require("../apis/productsTestAPI");
+const logger_1 = require("../middleware/logger");
 class ProductoTest {
     getProducts(req, res) {
         const id = req.params.id;
@@ -15,7 +16,7 @@ class ProductoTest {
     }
     makeProducts(req, res) {
         const cant = req.query.cant != undefined && req.query.cant != '' ? Number(req.query.cant) : 10;
-        console.log(cant);
+        logger_1.logger.log.debug(cant);
         for (let i = 0; i < cant; i++) {
             productsTestAPI_1.ProductosTestAPI.addProducts();
         }

@@ -8,10 +8,11 @@ const moment_1 = __importDefault(require("moment"));
 const productsAPI_1 = require("../apis/productsAPI");
 const chatAPI_1 = require("../apis/chatAPI");
 const faker_1 = __importDefault(require("faker"));
+const logger_1 = require("../middleware/logger");
 const initWsServer = (server) => {
     const io = new socket_io_1.Server(server);
     io.on('connection', (socket) => {
-        console.log('Nueva Conexion establecida');
+        logger_1.logger.log.info('Nueva Conexion establecida');
         // Lógica Lista Productos
         socket.on('askData', () => {
             productsAPI_1.productsAPI.getProducts().then((result) => socket.emit('productMessages', result));
@@ -51,7 +52,7 @@ const initWsServer = (server) => {
                 email: msg.email,
                 mensaje: msg.mensaje
             };
-            // console.log(newChatLine);
+            // logger.log.info(newChatLine);
             io.emit('chat-message', newChatLine);
             chatAPI_1.chatAPI.addChatLine(newChatEntry);
         });

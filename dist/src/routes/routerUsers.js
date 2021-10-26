@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const UserAuthAPI_1 = require("../apis/UserAuthAPI");
+const logger_1 = require("../middleware/logger");
 const router = (0, express_1.Router)();
 router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const data = yield UserAuthAPI_1.authAPI.findUser;
@@ -19,7 +20,7 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password, email, firstName, lastName } = req.body;
     if (!username || !password || !email || !firstName || !lastName) {
-        console.log('Invalid body fields');
+        logger_1.logger.log.debug('Invalid body fields');
         return res.status(400).json({ msg: 'Invalid fields' });
     }
     const userData = { username, password, email, firstName, lastName };

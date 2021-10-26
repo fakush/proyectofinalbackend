@@ -11,11 +11,13 @@ import Config from '../config';
 import routersIndex from '../routes/index';
 const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 import { userStatus } from '../middleware/userStatus';
+import compression from 'compression';
+import { logger } from '../middleware/logger';
 
 const app = express();
 
 // paths
-console.log(process.cwd() + '/public');
+logger.log.info(process.cwd() + '/public');
 const publicFolderPath = process.cwd() + '/public';
 const layoutDirPath = process.cwd() + '/views/layouts';
 const defaultLayerPth = process.cwd() + '/views/layouts/index.hbs';
@@ -23,12 +25,15 @@ const partialDirPath = process.cwd() + '/views/partials';
 
 //Error Handler
 const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
-  console.log(`HUBO UN ERROR ${err}`);
+  logger.log.error(`HUBO UN ERROR ${err}`);
   res.status(500).json({
     err: err.message
   });
 };
 app.use(errorHandler);
+
+// Setea el uso de compresion.
+app.use(compression());
 
 // Express & Handlebars Setup
 app.use(express.static(publicFolderPath));

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { ProductosTestAPI } from '../apis/productsTestAPI';
+import { logger } from '../middleware/logger';
 
 class ProductoTest {
   getProducts(req: Request, res: Response) {
@@ -14,7 +15,7 @@ class ProductoTest {
 
   makeProducts(req: Request, res: Response) {
     const cant = req.query.cant != undefined && req.query.cant != '' ? Number(req.query.cant) : 10;
-    console.log(cant);
+    logger.log.debug(cant);
 
     for (let i = 0; i < cant; i++) {
       ProductosTestAPI.addProducts();

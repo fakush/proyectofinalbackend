@@ -18,6 +18,7 @@ const passport_1 = __importDefault(require("passport"));
 const passport_facebook_1 = require("passport-facebook");
 const config_1 = __importDefault(require("../config"));
 const getArgs_1 = require("./getArgs");
+const logger_1 = require("./logger");
 colors_1.default.enable();
 const strategyOptions = {
     clientID: getArgs_1.fbClientIdArgument || config_1.default.FACEBOOK_APP_ID,
@@ -26,10 +27,10 @@ const strategyOptions = {
     profileFields: ['id', 'displayName', 'photos', 'emails']
 };
 const loginFunc = (accessToken, refreshToken, profile, done) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('SALIO TODO BIEN'.green);
-    console.log(accessToken);
-    console.log(refreshToken);
-    console.log(profile);
+    logger_1.logger.log.info('SALIO TODO BIEN'.green);
+    logger_1.logger.log.debug(accessToken);
+    logger_1.logger.log.debug(refreshToken);
+    logger_1.logger.log.debug(profile);
     return done(null, profile);
 });
 passport_1.default.use(new passport_facebook_1.Strategy(strategyOptions, loginFunc));

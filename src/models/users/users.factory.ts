@@ -1,4 +1,5 @@
 import { PersistenciaMongo } from './DAOs/mongoDAO';
+import { logger } from '../../middleware/logger';
 
 export enum Persistencia {
   MongoLocal = 'MONGO-LOCAL',
@@ -10,15 +11,15 @@ export class UsersFactory {
     switch (tipo) {
       // Esta dos veces Mongo Atlas para evitar "Error de capa 8"
       case Persistencia.MongoLocal:
-        console.log('Usuarios está escribiendo en Mongo Local');
+        logger.log.info('Usuarios está escribiendo en Mongo Local');
         return new PersistenciaMongo(true);
 
       case Persistencia.MongoAtlas:
-        console.log('Usuarios está escribiendo en Mongo Atlas');
+        logger.log.info('Usuarios está escribiendo en Mongo Atlas');
         return new PersistenciaMongo();
 
       default:
-        console.log('Usuarios está escribiendo en Memoria por default');
+        logger.log.info('Usuarios está escribiendo en Memoria por default');
         return new PersistenciaMongo();
     }
   }

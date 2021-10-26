@@ -3,12 +3,13 @@ import moment from 'moment';
 import { productsAPI } from '../apis/productsAPI';
 import { chatAPI } from '../apis/chatAPI';
 import faker from 'faker';
+import { logger } from '../middleware/logger';
 
 const initWsServer = (server: any) => {
   const io = new Server(server);
 
   io.on('connection', (socket) => {
-    console.log('Nueva Conexion establecida');
+    logger.log.info('Nueva Conexion establecida');
 
     // Lógica Lista Productos
     socket.on('askData', () => {
@@ -51,7 +52,7 @@ const initWsServer = (server: any) => {
         email: msg.email,
         mensaje: msg.mensaje
       };
-      // console.log(newChatLine);
+      // logger.log.info(newChatLine);
       io.emit('chat-message', newChatLine);
       chatAPI.addChatLine(newChatEntry);
     });

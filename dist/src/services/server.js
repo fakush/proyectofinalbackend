@@ -31,21 +31,25 @@ const http = __importStar(require("http"));
 const index_1 = __importDefault(require("../routes/index"));
 const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 const userStatus_1 = require("../middleware/userStatus");
+const compression_1 = __importDefault(require("compression"));
+const logger_1 = require("../middleware/logger");
 const app = (0, express_1.default)();
 // paths
-console.log(process.cwd() + '/public');
+logger_1.logger.log.info(process.cwd() + '/public');
 const publicFolderPath = process.cwd() + '/public';
 const layoutDirPath = process.cwd() + '/views/layouts';
 const defaultLayerPth = process.cwd() + '/views/layouts/index.hbs';
 const partialDirPath = process.cwd() + '/views/partials';
 //Error Handler
 const errorHandler = (err, req, res, next) => {
-    console.log(`HUBO UN ERROR ${err}`);
+    logger_1.logger.log.error(`HUBO UN ERROR ${err}`);
     res.status(500).json({
         err: err.message
     });
 };
 app.use(errorHandler);
+// Setea el uso de compresion.
+app.use((0, compression_1.default)());
 // Express & Handlebars Setup
 app.use(express_1.default.static(publicFolderPath));
 app.use(express_1.default.json());

@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { normalize, schema } from 'normalizr';
 import Config from '../../../config';
+import { logger } from '../../../middleware/logger';
 
 //MongoSchema
 const dbCollection = 'chatLogs';
@@ -159,7 +160,7 @@ export class PersistenciaMongo {
     this.chatLog = messageModel;
     this.chatLog.count().then((count) => {
       if (count < 1) {
-        console.log('Insertando Data Mockup');
+        logger.log.info('Insertando Data Mockup');
         this.chatLog.insertMany(mockData);
       }
     });

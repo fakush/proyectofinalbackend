@@ -2,6 +2,7 @@ import knex from 'knex';
 import dbConfig from '../../../../knexfile';
 import { newChatObject, ChatObject, ChatBaseClass } from '../chat.interfaces';
 import moment from 'moment';
+import { logger } from '../../../middleware/logger';
 
 export class PersistenciaSQLite3 implements ChatBaseClass {
   private chat;
@@ -9,12 +10,12 @@ export class PersistenciaSQLite3 implements ChatBaseClass {
 
   constructor() {
     const environment = process.env.NODE_ENV || 'ecommerce_sqLite3_dev';
-    console.log(`SETTING ${environment} DB`);
+    logger.log.info(`SETTING ${environment} DB`);
     const options = dbConfig[environment];
     this.chat = knex(options);
     this.chat.schema.hasTable(this.table).then((exists: any) => {
       if (!exists) {
-        console.log('SQLITE: Initializing table "chatLog"');
+        logger.log.warn('SQLITE: Initializing table "chatLog"');
         this.chat.schema
           .createTable(this.table, (chatTable: any) => {
             chatTable.increments('_id');
@@ -23,7 +24,7 @@ export class PersistenciaSQLite3 implements ChatBaseClass {
             chatTable.string('mensaje');
           })
           .then(() => {
-            console.log('SQL: Done creating table "chatLog"');
+            logger.log.info('SQL: Done creating table "chatLog"');
           });
       }
     });

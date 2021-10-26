@@ -16,6 +16,7 @@ exports.PersistenciaFirebase = void 0;
 const firebase_admin_1 = __importDefault(require("firebase-admin"));
 const moment_1 = __importDefault(require("moment"));
 const uuid_1 = require("uuid");
+const logger_1 = require("../../../middleware/logger");
 const firebaseConfig = {
     type: process.env.FIREBASE_TYPE,
     project_id: process.env.FIREBASE_PROJECT_ID,
@@ -138,7 +139,7 @@ class PersistenciaFirebase {
                 const item = this.productsDB.doc(id);
                 const doc = yield item.get();
                 if (!doc.exists) {
-                    return console.log('Documento invalido');
+                    return logger_1.logger.log.error('Documento invalido');
                 }
                 else {
                     return { id: doc.id, data: doc.data() };
@@ -174,7 +175,7 @@ class PersistenciaFirebase {
                 const item = this.productsDB.doc(docID);
                 const doc = yield item.get();
                 if (!doc.exists) {
-                    return console.log('Documento invalido');
+                    return logger_1.logger.log.error('Documento invalido');
                 }
                 else {
                     return { id: doc.id, data: doc.data() };
@@ -194,7 +195,7 @@ class PersistenciaFirebase {
                 const item = this.productsDB.doc(id);
                 const doc = yield item.get();
                 if (!doc.exists) {
-                    return console.log('Documento invalido');
+                    return logger_1.logger.log.error('Documento invalido');
                 }
                 else {
                     return { id: doc.id, data: doc.data() };
@@ -237,7 +238,7 @@ class PersistenciaFirebase {
                 return output;
             }
             catch (error) {
-                console.log('No se permiten consultas con más de un tipo de condicional por rango');
+                logger_1.logger.log.error('No se permiten consultas con más de un tipo de condicional por rango');
                 return 'No se permiten consultas con más de un tipo de condicional por rango';
             }
         });

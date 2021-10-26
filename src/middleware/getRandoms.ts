@@ -1,3 +1,5 @@
+import { logger } from './logger';
+
 export const randoms = (cantidad: number) => {
   let lista: any = {};
   for (let i = 0; i < cantidad; i++) {
@@ -11,7 +13,7 @@ export const randoms = (cantidad: number) => {
 process.on('message', (msg: any) => {
   msg = JSON.parse(msg);
   if (msg.command == 'start') {
-    console.log('Start Process');
+    logger.log.warn('Start Process');
     const result = randoms(msg.cantidad);
     if (process && process.send) {
       process.send(result);

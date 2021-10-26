@@ -2,6 +2,7 @@ import admin from 'firebase-admin';
 import { newProductObject, ProductObject, ProductQuery, ProductBaseClass } from '../products.interfaces';
 import moment from 'moment';
 import { v4 as uuidv4 } from 'uuid';
+import { logger } from '../../../middleware/logger';
 
 const firebaseConfig: any = {
   type: process.env.FIREBASE_TYPE,
@@ -127,7 +128,7 @@ export class PersistenciaFirebase implements ProductBaseClass {
       const item: any = this.productsDB.doc(id);
       const doc = await item.get();
       if (!doc.exists) {
-        return console.log('Documento invalido') as unknown as ProductObject[];
+        return logger.log.error('Documento invalido') as unknown as ProductObject[];
       } else {
         return { id: doc.id, data: doc.data() } as unknown as ProductObject[];
       }
@@ -160,7 +161,7 @@ export class PersistenciaFirebase implements ProductBaseClass {
         const item: any = this.productsDB.doc(docID);
         const doc = await item.get();
         if (!doc.exists) {
-          return console.log('Documento invalido') as unknown as ProductObject[];
+          return logger.log.error('Documento invalido') as unknown as ProductObject[];
         } else {
           return { id: doc.id, data: doc.data() } as unknown as ProductObject[];
         }
@@ -178,7 +179,7 @@ export class PersistenciaFirebase implements ProductBaseClass {
         const item: any = this.productsDB.doc(id);
         const doc = await item.get();
         if (!doc.exists) {
-          return console.log('Documento invalido') as unknown as ProductObject[];
+          return logger.log.error('Documento invalido') as unknown as ProductObject[];
         } else {
           return { id: doc.id, data: doc.data() } as unknown as ProductObject[];
         }
@@ -209,7 +210,7 @@ export class PersistenciaFirebase implements ProductBaseClass {
       }));
       return output;
     } catch (error) {
-      console.log('No se permiten consultas con más de un tipo de condicional por rango');
+      logger.log.error('No se permiten consultas con más de un tipo de condicional por rango');
       return 'No se permiten consultas con más de un tipo de condicional por rango' as unknown as ProductObject[];
     }
   }

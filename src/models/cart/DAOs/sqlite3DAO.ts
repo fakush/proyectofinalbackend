@@ -2,6 +2,7 @@ import knex from 'knex';
 import dbConfig from '../../../../knexfile';
 import { newCartObject, CartObject, CartBaseClass } from '../cart.interfaces';
 import moment from 'moment';
+import { logger } from '../../../middleware/logger';
 
 const mockData = [
   { timestamp: 'Apr 4 05:06:07', producto: 5 },
@@ -15,12 +16,12 @@ export class PersistenciaSQLite3 implements CartBaseClass {
 
   constructor() {
     const environment = process.env.NODE_ENV || 'ecommerce_sqLite3_dev';
-    console.log(`SETTING ${environment} DB`);
+    logger.log.info(`SETTING ${environment} DB`);
     const options = dbConfig[environment];
     this.carrito = knex(options);
     this.carrito.schema.hasTable(this.table).then((exists: any) => {
       if (!exists) {
-        console.log('SQLITE: Initializing table "carrito"');
+        logger.log.warn('SQLITE: Initializing table "carrito"');
         this.carrito.schema
           .createTable(this.table, (carritoTable: any) => {
             carritoTable.increments('_id');
@@ -32,7 +33,7 @@ export class PersistenciaSQLite3 implements CartBaseClass {
           })
           .then(() => {
             mockData.forEach(async (item) => await this.carrito(this.table).insert(item));
-            console.log('SQL: Done creating table "carrito" & Mockup Data');
+            logger.log.info('SQL: Done creating table "carrito" & Mockup Data');
           });
       }
     });

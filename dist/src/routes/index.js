@@ -33,6 +33,7 @@ const getArgs_1 = require("../middleware/getArgs");
 const child_process_1 = require("child_process");
 const os_1 = __importDefault(require("os"));
 const path_1 = __importDefault(require("path"));
+const logger_1 = require("../middleware/logger");
 const router = (0, express_1.Router)();
 const scriptPath = path_1.default.resolve(__dirname, '../middleware/getRandoms');
 router.use('/productos/vista-test', routerProductosVistaTest_1.default);
@@ -56,13 +57,13 @@ router.get('/info', (req, res) => {
     });
 });
 router.get('/pid', (req, res) => {
-    console.log(`Hola desde ${process.pid}`.green);
+    logger_1.logger.log.info(`Hola desde ${process.pid}`.green);
     res.json({
         pid: process.pid
     });
 });
 router.get('/randoms', (req, res) => {
-    console.log(`El proceso ${process.pid} entró en Random`.yellow);
+    logger_1.logger.log.warn(`El proceso ${process.pid} entró en Random`.yellow);
     let numeros;
     req.query.cant ? (numeros = Number(req.query.cant)) : 100000000;
     const randoms = (0, child_process_1.fork)(scriptPath);
@@ -73,7 +74,7 @@ router.get('/randoms', (req, res) => {
     });
 });
 router.get('/matar', (req, res) => {
-    console.log(`Matamos el proceso ${process.pid}`.red);
+    logger_1.logger.log.error(`Matamos el proceso ${process.pid}`.red);
     process.exit(0);
 });
 router.get('/auth/facebook', userAuth_1.default.authenticate('facebook', { scope: ['email'] }));
@@ -93,12 +94,12 @@ router.get('/datos', (req, res) => {
     userStatus_1.userStatus.notLogged = false;
     userStatus_1.userStatus.islogged = true;
     res.redirect('/');
-    console.log('hice el redirect');
+    logger_1.logger.log.info('hice el redirect');
 });
 router.get('/fail', (req, res) => {
     userStatus_1.userStatus.loginError = true;
     res.redirect('/');
-    console.log('hice el redirect');
+    logger_1.logger.log.info('hice el redirect');
 });
 router.post('/logout', (req, res) => {
     userStatus_1.userStatus.notLogged = true;

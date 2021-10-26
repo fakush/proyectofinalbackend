@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { logger } from './middleware/logger';
 
 fs.renameSync('../.env.example', './.env');
-console.log('.env file created');
+logger.log.info('.env file created');

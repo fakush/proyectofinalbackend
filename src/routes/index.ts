@@ -10,6 +10,7 @@ import { clearConfigCache } from 'prettier';
 import { fork } from 'child_process';
 import os from 'os';
 import path from 'path';
+import { logger } from '../middleware/logger';
 
 const router = Router();
 const scriptPath = path.resolve(__dirname, '../middleware/getRandoms');
@@ -36,13 +37,13 @@ router.get('/info', (req, res) => {
 });
 
 router.get('/pid', (req, res) => {
-  console.log(`Hola desde ${process.pid}`.green);
+  logger.log.info(`Hola desde ${process.pid}`.green);
   res.json({
     pid: process.pid
   });
 });
 router.get('/randoms', (req, res) => {
-  console.log(`El proceso ${process.pid} entró en Random`.yellow);
+  logger.log.warn(`El proceso ${process.pid} entró en Random`.yellow);
   let numeros: number;
   req.query.cant ? (numeros = Number(req.query.cant)) : 100000000;
   const randoms = fork(scriptPath);
@@ -54,7 +55,7 @@ router.get('/randoms', (req, res) => {
 });
 
 router.get('/matar', (req, res) => {
-  console.log(`Matamos el proceso ${process.pid}`.red);
+  logger.log.error(`Matamos el proceso ${process.pid}`.red);
   process.exit(0);
 });
 
@@ -86,13 +87,13 @@ router.get('/datos', (req, res) => {
   userStatus.notLogged = false;
   userStatus.islogged = true;
   res.redirect('/');
-  console.log('hice el redirect');
+  logger.log.info('hice el redirect');
 });
 
 router.get('/fail', (req, res) => {
   userStatus.loginError = true;
   res.redirect('/');
-  console.log('hice el redirect');
+  logger.log.info('hice el redirect');
 });
 
 router.post('/logout', (req: any, res) => {
