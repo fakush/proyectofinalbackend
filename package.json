@@ -15,10 +15,15 @@
     "build": "node_modules/.bin/tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon",
-    "make_env": "node ./scr/make-env.ts"
+    "make_env": "node ./scr/make-env.ts",
+    "start:profilling": "node --prof dist/src/index.js",
+    "start:inspect": "node --inspect dist/src/index.js"
   },
   "dependencies": {
+    "artillery": "^1.7.9",
+    "autocannon": "^7.5.0",
     "bcrypt": "^5.0.1",
+    "clinic": "^9.0.0",
     "colors": "^1.4.0",
     "compression": "^1.7.4",
     "connect-mongo": "^4.6.0",
@@ -47,6 +52,8 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
+    "@types/artillery": "^1.6.2",
+    "@types/autocannon": "^4.1.1",
     "@types/bcrypt": "^5.0.0",
     "@types/colors": "^1.2.1",
     "@types/compression": "^1.7.2",

@@ -24,19 +24,19 @@ const myFormat = printf((info) => {
 class Logger {
     constructor() {
         this.logConfiguration = {
-            level: 'info',
-            format: combine(colorize({ all: true }), timestamp({ format: 'MMM-DD-YYYY HH:mm:ss' }), label({ label: 'ProyectoCoderhouse' }), myFormat),
+            level: 'silly',
+            format: combine(colorize({ all: true }), timestamp({ format: 'MMM-DD-YYYY HH:mm:ss' }), label({ label: 'ProyectoCoderhouse' })),
             transports: [
-                new winston_1.default.transports.Console(),
+                new winston_1.default.transports.Console({ format: combine(myFormat) }),
                 new winston_1.default.transports.File({
-                    filename: '../../logs/warn.log',
+                    filename: process.cwd() + '/assets/warn.log',
                     level: 'warn',
-                    format: combine(warnFilter(), timestamp(), myFormat)
+                    format: combine(warnFilter(), myFormat)
                 }),
                 new winston_1.default.transports.File({
-                    filename: '../../logs/error.log',
+                    filename: process.cwd() + '/assets/error.log',
                     level: 'error',
-                    format: combine(errorFilter(), timestamp(), myFormat)
+                    format: combine(errorFilter(), myFormat)
                 })
             ]
         };

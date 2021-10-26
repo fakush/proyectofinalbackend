@@ -18,7 +18,7 @@ exports.randoms = randoms;
 process.on('message', (msg) => {
     msg = JSON.parse(msg);
     if (msg.command == 'start') {
-        logger_1.logger.log.warn('Start Process');
+        logger_1.logger.log.warn('Start Random Number Process');
         const result = (0, exports.randoms)(msg.cantidad);
         if (process && process.send) {
             process.send(result);

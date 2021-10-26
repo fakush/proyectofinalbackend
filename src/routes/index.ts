@@ -11,6 +11,7 @@ import { fork } from 'child_process';
 import os from 'os';
 import path from 'path';
 import { logger } from '../middleware/logger';
+import { getprimes } from '../utils/isPrime';
 
 const router = Router();
 const scriptPath = path.resolve(__dirname, '../middleware/getRandoms');
@@ -24,7 +25,7 @@ router.get('/hello', (req, res) => {
   res.json({ msg: 'HOLA', userStatus });
 });
 router.get('/info', (req, res) => {
-  res.json({
+  let getData = {
     'Argumentos de entrada': allArguments,
     'Path de ejecución': process.cwd(),
     'Nombre de la plataforma': process.platform,
@@ -32,8 +33,11 @@ router.get('/info', (req, res) => {
     'Versión de node': process.version,
     'Carpeta corriente': process.execPath,
     'Uso de memoria': process.memoryUsage(),
-    'Numero de CPUs': os.cpus().length
-  });
+    'Numero de CPUs': os.cpus().length,
+    '100 Primes': getprimes(100)
+  };
+  res.json(getData);
+  logger.log.silly(getData);
 });
 
 router.get('/pid', (req, res) => {

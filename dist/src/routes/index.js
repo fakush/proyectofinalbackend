@@ -34,6 +34,7 @@ const child_process_1 = require("child_process");
 const os_1 = __importDefault(require("os"));
 const path_1 = __importDefault(require("path"));
 const logger_1 = require("../middleware/logger");
+const isPrime_1 = require("../utils/isPrime");
 const router = (0, express_1.Router)();
 const scriptPath = path_1.default.resolve(__dirname, '../middleware/getRandoms');
 router.use('/productos/vista-test', routerProductosVistaTest_1.default);
@@ -45,7 +46,7 @@ router.get('/hello', (req, res) => {
     res.json({ msg: 'HOLA', userStatus: userStatus_1.userStatus });
 });
 router.get('/info', (req, res) => {
-    res.json({
+    let getData = {
         'Argumentos de entrada': getArgs_1.allArguments,
         'Path de ejecución': process.cwd(),
         'Nombre de la plataforma': process.platform,
@@ -53,8 +54,11 @@ router.get('/info', (req, res) => {
         'Versión de node': process.version,
         'Carpeta corriente': process.execPath,
         'Uso de memoria': process.memoryUsage(),
-        'Numero de CPUs': os_1.default.cpus().length
-    });
+        'Numero de CPUs': os_1.default.cpus().length,
+        '100 Primes': (0, isPrime_1.getprimes)(100)
+    };
+    res.json(getData);
+    logger_1.logger.log.silly(getData);
 });
 router.get('/pid', (req, res) => {
     logger_1.logger.log.info(`Hola desde ${process.pid}`.green);
