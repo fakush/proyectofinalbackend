@@ -5,6 +5,10 @@ import winston from 'winston';
 const { createLogger, format, transports } = winston;
 const { combine, printf, timestamp, colorize, label } = format;
 
+const infoFilter = format((info) => {
+  return info.level.includes('info') ? info : false;
+});
+
 const warnFilter = format((info) => {
   return info.level.includes('warn') ? info : false;
 });
@@ -26,20 +30,19 @@ class Logger {
     format: combine(
       colorize({ all: true }),
       timestamp({ format: 'MMM-DD-YYYY HH:mm:ss' }),
-      label({ label: 'ProyectoCoderhouse' }),
-      myFormat
+      label({ label: 'ProyectoCoderhouse' })
     ),
     transports: [
-      new winston.transports.Console(),
+      new winston.transports.Console({ level: 'info', format: combine(myFormat) }),
       new winston.transports.File({
-        filename: '../../logs/warn.log',
+        filename: process.cwd() + '/assets/warn.log',
         level: 'warn',
-        format: combine(warnFilter(), timestamp(), myFormat)
+        format: combine(warnFilter(), myFormat)
       }),
       new winston.transports.File({
-        filename: '../../logs/error.log',
+        filename: process.cwd() + '/assets/error.log',
         level: 'error',
-        format: combine(errorFilter(), timestamp(), myFormat)
+        format: combine(errorFilter(), myFormat)
       })
     ]
   };

@@ -1,0 +1,16 @@
+[ProyectoCoderhouse] Oct-26-2021 18:44:50 | [33mwarn[39m: [33m{[39m
+[33m  'Argumentos de entrada': { _: [] },[39m
+[33m  'Path de ejecución': 'C:\\Users\\fcreu\\Documents\\Curso MERN\\Proyecto Final\\Proyecto Final',[39m
+[33m  'Nombre de la plataforma': 'win32',[39m
+[33m  'Process id': 32692,[39m
+[33m  'Versión de node': 'v14.16.1',[39m
+[33m  'Carpeta corriente': 'C:\\Program Files\\nodejs\\node.exe',[39m
+[33m  'Uso de memoria': {[39m
+[33m    rss: 310566912,[39m
+[33m    heapTotal: 268865536,[39m
+[33m    heapUsed: 261064024,[39m
+[33m    external: 20591842,[39m
+[33m    arrayBuffers: 18365291[39m
+[33m  },[39m
+[33m  'Numero de CPUs': 8[39m
+[33m}[39m
