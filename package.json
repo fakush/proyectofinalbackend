@@ -4,7 +4,7 @@
   "description": "Primera entrega del proyecto final; del curso Programación Backend",
   "main": "index.js",
   "scripts": {
-    "start": "node_modules/.bin/tsc && node ./dist/src/index.js --cluster",
+    "start": "npx tsc && node ./dist/src/index.js --cluster",
     "start:args": "node ./dist/src/index.js --port=3000 --fbClientId=myId --fbClientSecret=mySecret",
     "start:cluster": "node ./dist/src/index.js --cluster=true",
     "start:forevercluster": "node_modules/.bin/forever -w start ./dist/src/index.js --cluster=true",
