@@ -2,3 +2,5 @@ node_modules
 /viejoeslintrc.json
 /db/chatLog.sqlite
 /.env
+/dist
+/Profilling

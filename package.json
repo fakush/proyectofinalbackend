@@ -17,7 +17,9 @@
     "dev": "nodemon",
     "make_env": "node ./scr/make-env.ts",
     "start:profilling": "node --prof dist/src/index.js",
-    "start:inspect": "node --inspect dist/src/index.js"
+    "start:inspect": "node --inspect dist/src/index.js",
+    "start:0x": "0x dist/src/index.js",
+    "start:clinic": "clinic doctor -- node dist/src/index.js"
   },
   "dependencies": {
     "artillery": "^1.7.9",

@@ -58,7 +58,7 @@ router.get('/info', (req, res) => {
         '100 Primes': (0, isPrime_1.getprimes)(100)
     };
     res.json(getData);
-    logger_1.logger.log.silly(getData);
+    // logger.log.silly(getData);
 });
 router.get('/pid', (req, res) => {
     logger_1.logger.log.info(`Hola desde ${process.pid}`.green);

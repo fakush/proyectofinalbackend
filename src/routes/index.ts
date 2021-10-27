@@ -37,7 +37,7 @@ router.get('/info', (req, res) => {
     '100 Primes': getprimes(100)
   };
   res.json(getData);
-  logger.log.silly(getData);
+  // logger.log.silly(getData);
 });
 
 router.get('/pid', (req, res) => {
