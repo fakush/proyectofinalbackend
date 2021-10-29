@@ -36,7 +36,7 @@ app.use(errorHandler);
 app.use(compression());
 
 // Express & Handlebars Setup
-app.use(express.static(publicFolderPath));
+app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'hbs');
