@@ -16,15 +16,15 @@ export class ChatFactory {
       //   return new PersistenciaSQLite3();
       case Persistencia.MongoLocal:
         logger.log.info('Chat está escribiendo en MongoDB Local');
-        return new PersistenciaMongo(true);
+        return new PersistenciaMongo();
 
       case Persistencia.MongoAtlas:
         logger.log.info('Chat está escribiendo en MongoDB Local');
-        return new PersistenciaMongo();
+        return new PersistenciaMongo(true);
 
       default:
         logger.log.info('Chat está escribiendo en MongoDB Local por default');
-        return new PersistenciaMongo(true);
+        return new PersistenciaMongo();
     }
   }
 }
