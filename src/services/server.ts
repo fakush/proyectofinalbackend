@@ -13,6 +13,7 @@ const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 import { userStatus } from '../middleware/userStatus';
 import compression from 'compression';
 import { logger } from '../middleware/logger';
+import { mongoConnection } from '../utils/MongoConnection';
 
 const app = express();
 
@@ -36,7 +37,7 @@ app.use(errorHandler);
 app.use(compression());
 
 // Express & Handlebars Setup
-app.use(express.static('public'));
+app.use(express.static(publicFolderPath));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'hbs');
@@ -58,13 +59,13 @@ const unDia = unaHora * 24;
 //Conecto a Mongoose (Esto debería al menos protestar, peno no...)
 // const clientP = mongoose.connect(`mongodb+srv://${Config.MONGO_ATLAS_USER}:${Config.MONGO_ATLAS_PASSWORD}@${Config.MONGO_ATLAS_CLUSTER}/${Config.MONGO_ATLAS_DBNAME}?retryWrites=true&w=majority`).then((m) => m.connection.getClient());
 const StoreOptions = {
-  // store: MongoStore.create({
-  //   clientPromise: clientP,
-  //   dbName: 'persistencia',
-  //   stringify: false,
-  //   autoRemove: 'interval',
-  //   autoRemoveInterval: 1
-  // }),
+  store: MongoStore.create({
+    clientPromise: mongoConnection,
+    dbName: 'persistencia',
+    stringify: false,
+    autoRemove: 'interval',
+    autoRemoveInterval: 1
+  }),
   secret: 'SuperSecreto',
   resave: false,
   saveUninitialized: false,

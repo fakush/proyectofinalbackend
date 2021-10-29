@@ -106,10 +106,10 @@ export class PersistenciaMongo implements ProductBaseClass {
   private products;
 
   constructor(local: boolean = false) {
-    local
-      ? (this.server = `mongodb://localhost:27017/${Config.MONGO_LOCAL_DBNAME}`)
-      : (this.server = `mongodb+srv://${Config.MONGO_ATLAS_USER}:${Config.MONGO_ATLAS_PASSWORD}@${Config.MONGO_ATLAS_CLUSTER}/${Config.MONGO_ATLAS_DBNAME}?retryWrites=true&w=majority`);
-    mongoose.connect(this.server);
+    // local
+    //   ? (this.server = `mongodb://localhost:27017/${Config.MONGO_LOCAL_DBNAME}`)
+    //   : (this.server = `mongodb+srv://${Config.MONGO_ATLAS_USER}:${Config.MONGO_ATLAS_PASSWORD}@${Config.MONGO_ATLAS_CLUSTER}/${Config.MONGO_ATLAS_DBNAME}?retryWrites=true&w=majority`);
+    // mongoose.connect(this.server);
     this.products = mongoose.model<ProductObject>(dbCollection, productsSchema);
     this.products.count().then((count) => {
       if (count < 1) {
