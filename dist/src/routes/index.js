@@ -35,6 +35,9 @@ const os_1 = __importDefault(require("os"));
 const path_1 = __importDefault(require("path"));
 const logger_1 = require("../middleware/logger");
 const isPrime_1 = require("../utils/isPrime");
+const config_1 = __importDefault(require("../config"));
+const mailer_1 = require("../services/mailer");
+const moment_1 = __importDefault(require("moment"));
 const router = (0, express_1.Router)();
 const scriptPath = path_1.default.resolve(__dirname, '../middleware/getRandoms');
 router.use('/productos/vista-test', routerProductosVistaTest_1.default);
@@ -55,7 +58,7 @@ router.get('/info', (req, res) => {
         'Carpeta corriente': process.execPath,
         'Uso de memoria': process.memoryUsage(),
         'Numero de CPUs': os_1.default.cpus().length,
-        '100 Primes': (0, isPrime_1.getprimes)(100)
+        '100 Primes': (0, isPrime_1.getprimes)(1000)
     };
     res.json(getData);
     // logger.log.silly(getData);
@@ -94,6 +97,19 @@ router.get('/datos', (req, res) => {
             userStatus_1.userStatus.foto = userData.photos[0].value;
         if (userData.emails)
             userStatus_1.userStatus.email = userData.emails[0].value;
+        const myMail = {
+            destination: config_1.default.ETHEREAL_EMAIL,
+            subject: 'Nuevo Login en Facebook',
+            content: `<h1>New Login</h1><p>New user logged: ${userStatus_1.userStatus.nombre} - ${(0, moment_1.default)().format()}</p>`,
+            attachments: [
+                {
+                    filename: 'user.png',
+                    path: userStatus_1.userStatus.foto
+                }
+            ]
+        };
+        mailer_1.EmailService.sendEmail(myMail.destination, myMail.subject, myMail.content);
+        mailer_1.EmailService.sendGmail(userStatus_1.userStatus.email, myMail.subject, myMail.content, myMail.attachments);
     }
     userStatus_1.userStatus.notLogged = false;
     userStatus_1.userStatus.islogged = true;

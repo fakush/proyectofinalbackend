@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PersistenciaMongo = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
-const config_1 = __importDefault(require("../../../config"));
 const moment_1 = __importDefault(require("moment"));
 const logger_1 = require("../../../middleware/logger");
 //MongoSchema
@@ -113,10 +112,10 @@ const mockData = [
 ];
 class PersistenciaMongo {
     constructor(local = false) {
-        local
-            ? (this.server = `mongodb://localhost:27017/${config_1.default.MONGO_LOCAL_DBNAME}`)
-            : (this.server = `mongodb+srv://${config_1.default.MONGO_ATLAS_USER}:${config_1.default.MONGO_ATLAS_PASSWORD}@${config_1.default.MONGO_ATLAS_CLUSTER}/${config_1.default.MONGO_ATLAS_DBNAME}?retryWrites=true&w=majority`);
-        mongoose_1.default.connect(this.server);
+        // local
+        //   ? (this.server = `mongodb://localhost:27017/${Config.MONGO_LOCAL_DBNAME}`)
+        //   : (this.server = `mongodb+srv://${Config.MONGO_ATLAS_USER}:${Config.MONGO_ATLAS_PASSWORD}@${Config.MONGO_ATLAS_CLUSTER}/${Config.MONGO_ATLAS_DBNAME}?retryWrites=true&w=majority`);
+        // mongoose.connect(this.server);
         this.products = mongoose_1.default.model(dbCollection, productsSchema);
         this.products.count().then((count) => {
             if (count < 1) {

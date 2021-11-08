@@ -24,7 +24,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
+const connect_mongo_1 = __importDefault(require("connect-mongo"));
 const express_session_1 = __importDefault(require("express-session"));
+const helmet_1 = __importDefault(require("helmet"));
 const userAuth_1 = __importDefault(require("../middleware/userAuth"));
 const express_handlebars_1 = __importDefault(require("express-handlebars"));
 const http = __importStar(require("http"));
@@ -33,6 +35,7 @@ const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 const userStatus_1 = require("../middleware/userStatus");
 const compression_1 = __importDefault(require("compression"));
 const logger_1 = require("../middleware/logger");
+const MongoConnection_1 = require("../utils/MongoConnection");
 const app = (0, express_1.default)();
 // paths
 logger_1.logger.log.info(process.cwd() + '/public');
@@ -50,6 +53,8 @@ const errorHandler = (err, req, res, next) => {
 app.use(errorHandler);
 // Setea el uso de compresion.
 app.use((0, compression_1.default)());
+// Setea el uso de helmet.
+app.use((0, helmet_1.default)());
 // Express & Handlebars Setup
 app.use(express_1.default.static(publicFolderPath));
 app.use(express_1.default.json());
@@ -69,13 +74,13 @@ const unDia = unaHora * 24;
 //Conecto a Mongoose (Esto debería al menos protestar, peno no...)
 // const clientP = mongoose.connect(`mongodb+srv://${Config.MONGO_ATLAS_USER}:${Config.MONGO_ATLAS_PASSWORD}@${Config.MONGO_ATLAS_CLUSTER}/${Config.MONGO_ATLAS_DBNAME}?retryWrites=true&w=majority`).then((m) => m.connection.getClient());
 const StoreOptions = {
-    // store: MongoStore.create({
-    //   clientPromise: clientP,
-    //   dbName: 'persistencia',
-    //   stringify: false,
-    //   autoRemove: 'interval',
-    //   autoRemoveInterval: 1
-    // }),
+    store: connect_mongo_1.default.create({
+        clientPromise: MongoConnection_1.mongoConnection,
+        dbName: 'persistencia',
+        stringify: false,
+        autoRemove: 'interval',
+        autoRemoveInterval: 1
+    }),
     secret: 'SuperSecreto',
     resave: false,
     saveUninitialized: false,
@@ -87,9 +92,9 @@ app.use((0, express_session_1.default)(StoreOptions));
 app.use(userAuth_1.default.initialize());
 app.use(userAuth_1.default.session());
 // app.use((req, res, next) => {
-//   console.log(`REQ.SESSION =>\n${JSON.stringify(req.session)}`);
-//   console.log(`REQ.USER =>\n${JSON.stringify(req.user)}`);
-//   console.log(`REQ.AUTHENTICATE =>\n${JSON.stringify(req.isAuthenticated())}`);
+//   console.log(`REQ.SESSION =>\n${JSON.stringify(req.session)}`.yellow);
+//   console.log(`REQ.USER =>\n${JSON.stringify(req.user)}`.yellow);
+//   console.log(`REQ.AUTHENTICATE =>\n${JSON.stringify(req.isAuthenticated())}`.yellow);
 //   next();
 // });
 // Main Page

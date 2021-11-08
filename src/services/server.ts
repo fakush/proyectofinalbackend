@@ -3,6 +3,7 @@ import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 import MongoStore from 'connect-mongo';
 import session from 'express-session';
+import helmet from 'helmet';
 import passport from '../middleware/userAuth';
 import handlebars from 'express-handlebars';
 import path from 'path';
@@ -35,6 +36,9 @@ app.use(errorHandler);
 
 // Setea el uso de compresion.
 app.use(compression());
+
+// Setea el uso de helmet.
+app.use(helmet());
 
 // Express & Handlebars Setup
 app.use(express.static(publicFolderPath));
@@ -80,9 +84,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // app.use((req, res, next) => {
-//   console.log(`REQ.SESSION =>\n${JSON.stringify(req.session)}`);
-//   console.log(`REQ.USER =>\n${JSON.stringify(req.user)}`);
-//   console.log(`REQ.AUTHENTICATE =>\n${JSON.stringify(req.isAuthenticated())}`);
+//   console.log(`REQ.SESSION =>\n${JSON.stringify(req.session)}`.yellow);
+//   console.log(`REQ.USER =>\n${JSON.stringify(req.user)}`.yellow);
+//   console.log(`REQ.AUTHENTICATE =>\n${JSON.stringify(req.isAuthenticated())}`.yellow);
 //   next();
 // });
 

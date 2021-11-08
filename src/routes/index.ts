@@ -12,6 +12,9 @@ import os from 'os';
 import path from 'path';
 import { logger } from '../middleware/logger';
 import { getprimes } from '../utils/isPrime';
+import config from '../config';
+import { EmailService } from '../services/mailer';
+import moment from 'moment';
 
 const router = Router();
 const scriptPath = path.resolve(__dirname, '../middleware/getRandoms');
@@ -34,7 +37,7 @@ router.get('/info', (req, res) => {
     'Carpeta corriente': process.execPath,
     'Uso de memoria': process.memoryUsage(),
     'Numero de CPUs': os.cpus().length,
-    '100 Primes': getprimes(100)
+    '100 Primes': getprimes(1000)
   };
   res.json(getData);
   // logger.log.silly(getData);
@@ -87,6 +90,19 @@ router.get('/datos', (req, res) => {
     userStatus.nombre = userData.displayName;
     if (userData.photos) userStatus.foto = userData.photos[0].value;
     if (userData.emails) userStatus.email = userData.emails[0].value;
+    const myMail = {
+      destination: config.ETHEREAL_EMAIL,
+      subject: 'Nuevo Login en Facebook',
+      content: `<h1>New Login</h1><p>New user logged: ${userStatus.nombre} - ${moment().format()}</p>`,
+      attachments: [
+        {
+          filename: 'user.png',
+          path: userStatus.foto
+        }
+      ]
+    };
+    EmailService.sendEmail(myMail.destination, myMail.subject, myMail.content);
+    EmailService.sendGmail(userStatus.email, myMail.subject, myMail.content, myMail.attachments);
   }
   userStatus.notLogged = false;
   userStatus.islogged = true;

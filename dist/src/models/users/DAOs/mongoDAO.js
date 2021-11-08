@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PersistenciaMongo = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
-const config_1 = __importDefault(require("../../../config"));
 const Schema = mongoose_1.default.Schema;
 const dbCollection = 'users';
 const UserSchema = new Schema({
@@ -42,10 +41,10 @@ UserSchema.methods.isValidPassword = function (password) {
 };
 class PersistenciaMongo {
     constructor(local = false) {
-        local
-            ? (this.server = `mongodb://localhost:27017/${config_1.default.MONGO_LOCAL_DBNAME}`)
-            : (this.server = `mongodb+srv://${config_1.default.MONGO_ATLAS_USER}:${config_1.default.MONGO_ATLAS_PASSWORD}@${config_1.default.MONGO_ATLAS_CLUSTER}/${config_1.default.MONGO_ATLAS_DBNAME}?retryWrites=true&w=majority`);
-        mongoose_1.default.connect(this.server);
+        // local
+        //   ? (this.server = `mongodb://localhost:27017/${Config.MONGO_LOCAL_DBNAME}`)
+        //   : (this.server = `mongodb+srv://${Config.MONGO_ATLAS_USER}:${Config.MONGO_ATLAS_PASSWORD}@${Config.MONGO_ATLAS_CLUSTER}/${Config.MONGO_ATLAS_DBNAME}?retryWrites=true&w=majority`);
+        // mongoose.connect(this.server);
         this.users = mongoose_1.default.model(dbCollection, UserSchema);
         // logica para popular db vacia. (cambiar mockData por data a mockear)
         // this.users.count().then((count) => {
