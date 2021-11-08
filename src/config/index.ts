@@ -30,7 +30,11 @@ const venv = {
 
   GMAIL_USERNAME: process.env.GMAIL_USERNAME,
   GMAIL_EMAIL: process.env.GMAIL_EMAIL,
-  GMAIL_PASSWORD: process.env.GMAIL_PASSWORD
+  GMAIL_PASSWORD: process.env.GMAIL_PASSWORD,
+
+  TWILIO_ACCOUNT_ID: process.env.TWILIO_ACCOUNT_ID,
+  TWILIO_TOKEN: process.env.TWILIO_TOKEN,
+  TWILIO_CELLPHONE: process.env.TWILIO_CELLPHONE
 };
 
 export default venv;

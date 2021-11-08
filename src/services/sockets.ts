@@ -4,6 +4,7 @@ import { productsAPI } from '../apis/productsAPI';
 import { chatAPI } from '../apis/chatAPI';
 import faker from 'faker';
 import { logger } from '../middleware/logger';
+import { SmsService } from './sms';
 
 const initWsServer = (server: any) => {
   const io = new Server(server);
@@ -53,6 +54,12 @@ const initWsServer = (server: any) => {
         mensaje: msg.mensaje
       };
       // logger.log.info(newChatLine);
+      //Todo: Add sms service
+      if (newChatEntry.message.toLowerCase().includes('administrador')) {
+        const smsMessage = `Mensaje de: ${newChatEntry.email}; con el contenido: ${newChatEntry.message}`;
+        SmsService.sendMessage('+541134803233', smsMessage);
+        logger.log.info(`Enviando mensaje SMS: ${smsMessage}`);
+      }
       io.emit('chat-message', newChatLine);
       chatAPI.addChatLine(newChatEntry);
     });

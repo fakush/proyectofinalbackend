@@ -38,7 +38,7 @@ app.use(errorHandler);
 app.use(compression());
 
 // Setea el uso de helmet.
-app.use(helmet());
+// app.use(helmet());
 
 // Express & Handlebars Setup
 app.use(express.static(publicFolderPath));

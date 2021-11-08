@@ -115,6 +115,7 @@ const renderChat = (data) => {
   const author = new normalizr.schema.Entity('author', {}, { idAttribute: 'email' });
   const message = new normalizr.schema.Entity('mensaje', { author: author }, { idAttribute: '_id' });
   const messageSchema = new normalizr.schema.Array(message);
+  // console.log('Data==>', data);
   const denormalizedData = normalizr.denormalize(data.result, messageSchema, data.entities);
   denormalizedData.map((item) => {
     const div = document.createElement('div');

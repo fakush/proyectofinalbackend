@@ -173,9 +173,10 @@ export class PersistenciaMongo {
         author: aMsg.author,
         message: aMsg.message
       }));
-      let normalizedMessages = normalize(messages, chatLogSchema);
+      let normalizedMessages = await normalize(messages, chatLogSchema);
       return normalizedMessages;
     } catch (err) {
+      logger.log.error(err);
       return err;
     }
   }

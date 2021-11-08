@@ -19,7 +19,7 @@ export class ChatFactory {
         return new PersistenciaMongo();
 
       case Persistencia.MongoAtlas:
-        logger.log.info('Chat está escribiendo en MongoDB Local');
+        logger.log.info('Chat está escribiendo en MongoDB Atlas');
         return new PersistenciaMongo(true);
 
       default:
