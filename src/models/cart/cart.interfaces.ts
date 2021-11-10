@@ -1,14 +1,20 @@
-export interface newCartObject {
-  producto: any;
-}
+import { Schema } from 'mongoose';
+
+export type productReference = Schema.Types.ObjectId | string;
 export interface CartObject {
-  _id?: string;
-  timestamp: string;
-  producto: any;
+  _id: productReference;
+  userId: string;
+  products: ProductObject[];
+}
+
+export interface ProductObject {
+  _id: string;
+  amount: number;
 }
 
 export interface CartBaseClass {
-  get(id?: string | undefined): Promise<CartObject[]>;
-  add(data: newCartObject): Promise<CartObject>;
-  delete(id: string): Promise<void>;
+  getCart(userId?: string): Promise<CartObject>;
+  createCart(userId: string): Promise<CartObject>;
+  add2Cart(cartId: string, product: ProductObject): Promise<CartObject>;
+  deleteProduct(cartId: string, product: ProductObject): Promise<CartObject>;
 }

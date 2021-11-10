@@ -1,5 +1,8 @@
-import { newCartObject, CartObject } from '../models/cart/cart.interfaces';
+import { CartObject } from '../models/cart/cart.interfaces';
 import { CartFactory, Persistencia } from '../models/cart/cart.factory';
+import { authAPI } from './UserAuthAPI';
+// import { productsAPI } from './productsAPI';
+import { logger } from '../middleware/logger';
 
 const tipo = Persistencia.MongoAtlas;
 
@@ -10,18 +13,30 @@ class cartAPIClass {
     this.cart = CartFactory.get(tipo);
   }
 
-  async getItems(id: string | undefined = undefined): Promise<CartObject[]> {
-    if (id) return await this.cart.get(id);
-    else return await this.cart.get();
+  async getCart(userId: string): Promise<CartObject> {
+    return await this.cart.getCart(userId);
   }
 
-  async addItems(itemData: newCartObject): Promise<CartObject> {
-    const newProduct = await this.cart.add(itemData);
-    return newProduct;
+  async createCart(userId: string): Promise<CartObject> {
+    const user = await authAPI.findUser(userId);
+    logger.log.debug(`Creating cart for user ${user}`);
+    if (!user) throw new Error('User does not exist. Error creating cart');
+    const newCart = await this.cart.createCart(userId);
+    return newCart;
   }
 
-  async deleteItem(id: string) {
-    await this.cart!.delete(id);
+  async add2Cart(cartId: string, productId: string, amount: number): Promise<CartObject> {
+    // const product = (await productsAPI.getProducts(productId))[0];
+    const newProduct = { _id: productId, amount: amount };
+    const updatedCart = await this.cart.add2Cart(cartId, newProduct);
+    return updatedCart;
+  }
+
+  async deleteProduct(cartId: string, productId: string, amount: number) {
+    // const product = (await productsAPI.getProducts(productId))[0];
+    const oldProduct = { _id: productId, amount: amount };
+    const updatedCart = await this.cart.deleteProduct(cartId, oldProduct);
+    return updatedCart;
   }
 }
 
