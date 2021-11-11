@@ -37,7 +37,7 @@ class Orders {
     );
     // Enviar notificación a whatsapp
     const whatsappMessage = `Nuevo pedido de: ${userData.username} - ${userData.email}`;
-    WhatsappService.sendMessage(config.ADMIN_WHASTAPP_NUMBER, whatsappMessage);
+    WhatsappService.sendMessage(`+${config.ADMIN_WHASTAPP_NUMBER}`, whatsappMessage);
     logger.log.info(`Enviando mensaje Whatsapp: ${whatsappMessage} al número ${config.ADMIN_WHASTAPP_NUMBER}`);
     // Enviando SMS de confirmación al usuario - OK
     const smsMessage = `Su pedido de: ${newOrder.products}. Ha sido recibido y se está preparando`;
