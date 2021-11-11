@@ -39,9 +39,9 @@ router.post('/presignup', (req, res) => {
 // Register Local
 router.post(
   '/signup',
-  controllerProfilePic.hasImage,
-  //   uploadProfilePic,
-  //   controllerProfilePic.uploadImage,
+  // controllerProfilePic.hasImage,
+  uploadProfilePic,
+  controllerProfilePic.uploadImage,
   (req, res, next) => {
     passportLocal.authenticate('signup', function (err, user, info) {
       if (err) return res.redirect('/api/auth/local/fail', err);

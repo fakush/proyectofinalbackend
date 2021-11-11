@@ -21,6 +21,7 @@ const app = express();
 // paths
 logger.log.info(process.cwd() + '/public');
 const publicFolderPath = process.cwd() + '/public';
+const uploadsFolderPath = process.cwd() + '/assets/images';
 const layoutDirPath = process.cwd() + '/views/layouts';
 const defaultLayerPth = process.cwd() + '/views/layouts/index.hbs';
 const partialDirPath = process.cwd() + '/views/partials';
@@ -42,6 +43,7 @@ app.use(compression());
 
 // Express & Handlebars Setup
 app.use(express.static(publicFolderPath));
+app.use(express.static(uploadsFolderPath));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'hbs');

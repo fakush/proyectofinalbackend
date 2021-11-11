@@ -24,4 +24,4 @@ export const uploadProfilePic = multer({
   limits: {
     fileSize: 1024 * 1024
   }
-}).single('profilepic');
+}).single('file');

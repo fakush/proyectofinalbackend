@@ -17,13 +17,12 @@ class ControllerProfilePic {
   }
 
   async uploadImage(req: Request, res: Response, next: NextFunction) {
-    const id = req.params.id;
     const { name } = req.body;
     const fileObject = {
-      data: fs.readFileSync(imagesFolderPath + req.file.filename),
+      data: fs.readFileSync(imagesFolderPath + '/' + req.file.filename),
       contentType: 'image/png'
     };
-    await profilePicAPI.addProfilePic(id, name, fileObject);
+    await profilePicAPI.addProfilePic(name, fileObject);
     next();
   }
 }

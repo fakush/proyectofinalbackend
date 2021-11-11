@@ -3,6 +3,7 @@ import { ProfilePicFactory, Persistencia } from '../models/profilePics/profilePi
 import { authAPI } from './UserAuthAPI';
 // import { productsAPI } from './productsAPI';
 import { logger } from '../middleware/logger';
+import { log } from 'util';
 
 const tipo = Persistencia.MongoAtlas;
 
@@ -17,11 +18,11 @@ class ProfilePicAPIClass {
     return await this.profilePic.getProfilePic(userId);
   }
 
-  async addProfilePic(userId: string, name: string, img: PicObject): Promise<ProfilePicObject> {
-    const user = await authAPI.findUser(userId);
-    logger.log.debug(`Creating profile picture for user ${user}`);
-    if (!user) throw new Error('User does not exist. Error creating profile picture');
-    const newPic = await this.profilePic.addProfilePic(userId, name, img);
+  async addProfilePic(name: string, img: PicObject): Promise<ProfilePicObject> {
+    logger.log.debug(`Creating profile picture`);
+    const newPic = await this.profilePic.addProfilePic(name, img);
+    logger.log.debug(`Profile picture created`);
+    logger.log.debug(newPic);
     return newPic;
   }
 

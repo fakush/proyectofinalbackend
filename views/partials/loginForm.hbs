@@ -26,7 +26,7 @@
 {{/if}}
 {{#if signUp}}
   <h3>Registro de Usuario</h3>
-  <form action='/api/auth/local/signup' method='POST' class='mySignupForm' {{! enctype='multipart/form-data' }}>
+  <form action='/api/auth/local/signup' method='POST' class='mySignupForm' enctype='multipart/form-data'>
     <div class='form-group'>
       <label for='username'>Username</label>
       <input type='text' class='form-control' id='username' name='username' placeholder='Nombre de Usuario' required />

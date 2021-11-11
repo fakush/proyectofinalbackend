@@ -4,7 +4,6 @@ import { logger } from '../../../middleware/logger';
 
 //MongoSchema
 const profilePicSchema = new mongoose.Schema<ProfilePicObject>({
-  id: { type: Schema.Types.ObjectId, required: true, unique: true },
   name: { type: String, required: true },
   img: { type: Object, required: true }
 });
@@ -29,8 +28,10 @@ export class PersistenciaMongo implements ProfilePicBaseClass {
     return item;
   }
 
-  async addProfilePic(userId: string, name: string, img: PicObject): Promise<ProfilePicObject> {
-    const newProfilePic = new this.profilePic({ userId, name, img });
+  async addProfilePic(name: string, img: PicObject): Promise<ProfilePicObject> {
+    logger.log.debug('intento subir la foto');
+    logger.log.debug(img);
+    const newProfilePic = new this.profilePic({ name, img });
     await newProfilePic.save();
     return newProfilePic;
   }
