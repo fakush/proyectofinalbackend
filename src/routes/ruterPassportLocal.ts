@@ -41,7 +41,8 @@ router.post(
   '/signup',
   // controllerProfilePic.hasImage,
   uploadProfilePic,
-  controllerProfilePic.uploadImage,
+  //Todo: Corto el upload a Mongo, para que no tire error.
+  // controllerProfilePic.uploadImage,
   (req, res, next) => {
     passportLocal.authenticate('signup', function (err, user, info) {
       if (err) return res.redirect('/api/auth/local/fail', err);
