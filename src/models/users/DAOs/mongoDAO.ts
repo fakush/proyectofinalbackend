@@ -11,7 +11,12 @@ const UserSchema = new Schema<UserObject>({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   firstName: { type: String, required: true },
-  lastName: { type: String, required: true }
+  lastName: { type: String, required: true },
+  address: { type: String, required: true },
+  phone: { type: String, required: true },
+  age: { type: Number, required: true },
+  isAdmin: { type: Boolean, required: true },
+  timestamp: { type: String, required: true }
 });
 
 UserSchema.pre('save', async function (next) {
@@ -72,10 +77,23 @@ export class PersistenciaMongo implements UserBaseClass {
       email: data.email,
       password: data.password,
       firstName: data.firstName,
-      lastName: data.lastName
+      lastName: data.lastName,
+      address: data.address,
+      phone: data.phone,
+      age: data.age,
+      isAdmin: data.isAdmin,
+      timestamp: data.timestamp
     };
     const newUser = new this.users(addUser);
     await newUser.save();
     return newUser;
+  }
+
+  async validateUserPassword(username: string, password: string): Promise<boolean> {
+    const user = await this.users.findOne({ username });
+    if (!user) return false;
+    const compare = await bcrypt.compare(password, user.password);
+    if (!compare) return false;
+    return true;
   }
 }

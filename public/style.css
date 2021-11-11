@@ -15,6 +15,11 @@ body {
   justify-content: space-around;
 }
 
+.mySignupForm {
+  width: 60%;
+  margin: auto;
+}
+
 .form-cell {
   margin-left: 5px;
   margin-right: 5px;

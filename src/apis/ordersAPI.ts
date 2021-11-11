@@ -1,11 +1,11 @@
 import { OrderObject } from '../models/orders/orders.interfaces';
 import { OrderFactory, Persistencia } from '../models/orders/orders.factory';
-import { authAPI } from './UserAuthAPI';
+import { cartAPI } from './cartAPI';
 import { logger } from '../middleware/logger';
 
 const tipo = Persistencia.MongoAtlas;
 
-class cartAPIClass {
+class OrderAPIClass {
   private order;
 
   constructor() {
@@ -20,11 +20,11 @@ class cartAPIClass {
     return await this.order.getOrders(userId);
   }
 
-  async createOrder(userId: string, products: object[]): Promise<OrderObject> {
-    const user = await authAPI.findUser(userId);
-    logger.log.debug(`Creating order for user ${user}`);
-    if (!user) throw new Error('User does not exist. Error creating order');
-    const newOrder = await this.order.createOrder(userId, products);
+  async createOrder(userId: string): Promise<OrderObject> {
+    const cart = await cartAPI.getCart(userId);
+    logger.log.debug(`Creating order for cart ${cartAPI}`);
+    if (!cart) throw new Error('Cart does not exist. Error creating order');
+    const newOrder = await this.order.createOrder(userId, cart.products);
     return newOrder;
   }
 
@@ -33,4 +33,4 @@ class cartAPIClass {
   }
 }
 
-export const cartAPI = new cartAPIClass();
+export const orderAPI = new OrderAPIClass();

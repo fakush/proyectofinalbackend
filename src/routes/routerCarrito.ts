@@ -3,12 +3,10 @@ import { controllerCarrito } from '../controllers/controllerCarrito';
 
 const router = Router();
 
-router.get('/', controllerCarrito.getItems);
+router.get('/:id', controllerCarrito.lookForId, controllerCarrito.getCart);
 
-router.get('/:id', controllerCarrito.checkValidId, controllerCarrito.getItems);
+router.post('/:id', controllerCarrito.lookForId, controllerCarrito.add2Cart);
 
-router.post('/:id_producto?', controllerCarrito.checkValidProduct, controllerCarrito.addItem);
-
-router.delete('/:id?', controllerCarrito.checkValidId, controllerCarrito.deleteItems);
+router.delete('/:id', controllerCarrito.lookForId, controllerCarrito.deleteProducts);
 
 export default router;

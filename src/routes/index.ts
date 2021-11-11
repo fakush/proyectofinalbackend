@@ -3,10 +3,11 @@ import routerCarrito from './routerCarrito';
 import routerProductos from './routerProductos';
 import routerVistaTest from './routerProductosVistaTest';
 import routerUsers from './routerUsers';
-import passport, { isLoggedIn } from '../middleware/userAuth';
+import routerPassportLocal from './ruterPassportLocal';
+import routerOrders from './routerOrders';
+import passport, { isLoggedIn } from '../middleware/userAuth-Facebook';
 import { userStatus } from '../middleware/userStatus';
 import { allArguments } from '../middleware/getArgs';
-import { clearConfigCache } from 'prettier';
 import { fork } from 'child_process';
 import os from 'os';
 import path from 'path';
@@ -22,6 +23,9 @@ const scriptPath = path.resolve(__dirname, '../middleware/getRandoms');
 router.use('/productos/vista-test', routerVistaTest);
 router.use('/carrito', routerCarrito);
 router.use('/productos', routerProductos);
+router.use('/auth/local', routerPassportLocal);
+router.use('/orders', routerOrders);
+
 router.use('/user', isLoggedIn, routerUsers);
 router.get('/hello', (req, res) => {
   userStatus.session = req.session;
@@ -104,7 +108,7 @@ router.get('/datos', (req, res) => {
     EmailService.sendEmail(myMail.destination, myMail.subject, myMail.content);
     EmailService.sendGmail(userStatus.email, myMail.subject, myMail.content, myMail.attachments);
   }
-  userStatus.notLogged = false;
+  userStatus.login = false;
   userStatus.islogged = true;
   res.redirect('/');
   logger.log.info('hice el redirect');
@@ -117,7 +121,7 @@ router.get('/fail', (req, res) => {
 });
 
 router.post('/logout', (req: any, res) => {
-  userStatus.notLogged = true;
+  userStatus.login = true;
   userStatus.islogged = false;
   userStatus.isDestroyed = true;
   req.session.destroy;

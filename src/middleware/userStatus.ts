@@ -1,5 +1,5 @@
 export const userStatus = {
-  notLogged: true,
+  login: true,
   islogged: false,
   isTimedOut: false,
   isDestroyed: false,

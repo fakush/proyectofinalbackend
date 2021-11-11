@@ -16,6 +16,11 @@ export interface newUserObject {
   password: string;
   firstName: string;
   lastName: string;
+  address: string;
+  phone: string;
+  age: number;
+  isAdmin: boolean;
+  timestamp: string;
 }
 
 export interface UserObject {
@@ -25,6 +30,11 @@ export interface UserObject {
   password: string;
   firstName: string;
   lastName: string;
+  address: string;
+  phone: string;
+  age: number;
+  isAdmin: boolean;
+  timestamp: string;
 }
 
 export interface UserBaseClass {

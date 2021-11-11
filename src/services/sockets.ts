@@ -54,7 +54,6 @@ const initWsServer = (server: any) => {
         mensaje: msg.mensaje
       };
       // logger.log.info(newChatLine);
-      //Todo: Add sms service
       if (newChatEntry.message.toLowerCase().includes('administrador')) {
         const smsMessage = `Mensaje de: ${newChatEntry.email}; con el contenido: ${newChatEntry.message}`;
         SmsService.sendMessage('+541134803233', smsMessage);

@@ -2,7 +2,6 @@ import { Schema } from 'mongoose';
 
 export type productReference = Schema.Types.ObjectId | string;
 export interface CartObject {
-  _id: productReference;
   userId: string;
   products: ProductObject[];
 }

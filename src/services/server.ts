@@ -80,18 +80,17 @@ const StoreOptions = {
 app.use(cookieParser());
 app.use(session(StoreOptions));
 
+app.use((req, res, next) => {
+  console.log(`REQ.SESSION =>\n${JSON.stringify(req.session)}`.yellow);
+  console.log(`REQ.USER =>\n${JSON.stringify(req.user)}`.yellow);
+  next();
+});
+
 app.use(passport.initialize());
 app.use(passport.session());
 
-// app.use((req, res, next) => {
-//   console.log(`REQ.SESSION =>\n${JSON.stringify(req.session)}`.yellow);
-//   console.log(`REQ.USER =>\n${JSON.stringify(req.user)}`.yellow);
-//   console.log(`REQ.AUTHENTICATE =>\n${JSON.stringify(req.isAuthenticated())}`.yellow);
-//   next();
-// });
-
 // Main Page
-app.get('/', (req: any, res) => {
+app.get('/', (req: Request, res) => {
   userStatus.islogged ? userStatus.contador++ : (userStatus.contador = 0);
   res.render('main', userStatus);
   userStatus.isDestroyed = false;
@@ -99,6 +98,11 @@ app.get('/', (req: any, res) => {
   userStatus.signUpError = false;
   userStatus.signUpOK = false;
   userStatus.loginError = false;
+});
+
+//TODO: Render Imagenes
+app.get('/images', (req: Request, res) => {
+  res.render(process.cwd() + '/assets/images');
 });
 
 // Use routers

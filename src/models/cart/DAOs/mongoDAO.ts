@@ -4,7 +4,7 @@ import { logger } from '../../../middleware/logger';
 
 //MongoSchema
 const cartSchema = new mongoose.Schema<CartObject>({
-  _id: { type: Schema.Types.ObjectId, required: true, unique: true },
+  userId: { type: String, required: true, unique: true },
   products: [{ _id: Schema.Types.ObjectId, amount: Number }]
 });
 
@@ -46,7 +46,9 @@ export class PersistenciaMongo implements CartBaseClass {
   }
 
   async add2Cart(cartId: string, product: ProductObject): Promise<CartObject> {
-    const cart = await this.carrito.findById(cartId);
+    logger.log.info('add2Cart');
+    logger.log.info(product);
+    const cart = await this.carrito.findOne({ cartId });
     if (!cart) throw new Error('Cart not found');
     const index = cart.products.findIndex((aProduct: any) => aProduct._id == product._id);
     if (index < 0) cart.products.push(product);
@@ -56,12 +58,20 @@ export class PersistenciaMongo implements CartBaseClass {
   }
 
   async deleteProduct(cartId: string, product: ProductObject): Promise<CartObject> {
-    const cart = await this.carrito.findById(cartId);
+    const cart = await this.carrito.findOne({ cartId });
     if (!cart) throw new Error('Cart not found');
     const index = cart.products.findIndex((aProduct) => aProduct._id == product._id);
     if (index < 0) throw new Error('Product not found');
     if (cart.products[index].amount <= product.amount) cart.products.splice(index, 1);
     else cart.products[index].amount -= product.amount;
+    await cart.save();
+    return cart;
+  }
+
+  async emptyCart(cartId: string): Promise<CartObject> {
+    const cart = await this.carrito.findOne({ cartId });
+    if (!cart) throw new Error('Cart not found');
+    cart.products = [];
     await cart.save();
     return cart;
   }

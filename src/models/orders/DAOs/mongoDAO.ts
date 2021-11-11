@@ -29,7 +29,7 @@ export class PersistenciaMongo implements OrderBaseClass {
   }
 
   async getOrders(userId: string): Promise<OrderObject> {
-    const item = await this.orders.findById({ userId });
+    const item = await this.orders.findOne({ userId });
     if (!item) throw new Error('No existe orden del usuario');
     return item;
   }

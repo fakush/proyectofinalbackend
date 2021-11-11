@@ -27,6 +27,7 @@ class cartAPIClass {
 
   async add2Cart(cartId: string, productId: string, amount: number): Promise<CartObject> {
     // const product = (await productsAPI.getProducts(productId))[0];
+    logger.log.debug(`Adding ${amount} of product ${productId} to cart ${cartId}`);
     const newProduct = { _id: productId, amount: amount };
     const updatedCart = await this.cart.add2Cart(cartId, newProduct);
     return updatedCart;
@@ -34,8 +35,15 @@ class cartAPIClass {
 
   async deleteProduct(cartId: string, productId: string, amount: number) {
     // const product = (await productsAPI.getProducts(productId))[0];
+    logger.log.debug(`Removing ${amount} of product ${productId} to cart ${cartId}`);
     const oldProduct = { _id: productId, amount: amount };
     const updatedCart = await this.cart.deleteProduct(cartId, oldProduct);
+    return updatedCart;
+  }
+
+  async emptyCart(cartId: string): Promise<CartObject> {
+    logger.log.debug(`Emptying cart ${cartId}`);
+    const updatedCart = await this.cart.emptyCart(cartId);
     return updatedCart;
   }
 }
