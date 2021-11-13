@@ -2,6 +2,8 @@
 
 ## Facundo Creus
 
+### 🏠 [Homepage](https://github.com/fakush/proyectofinalbackend)
+
 ## Stack
 
 <h5 align="center">App en Node JS. Código en Typescript. Servidor Express. Motor de Plantillas Handlebars. WebSocket Socket.IO</h5>
@@ -46,26 +48,39 @@
 <BR />
 <br />
 
-## ENDPOINTS LOCALHOST
+## Endpoints Documentation
 
-### Productos:
+```http
+/api-docs
+```
 
-`GET - All Productos: http://localhost:8080/api/productos/`
+---
 
-`GET - Single Producto: http://localhost:8080/api/productos/:id`
+## Prerequisites
 
-`POST - Producto: http://localhost:8080/api/productos/`
+- node >=14.0.0
+- npm >=6.0.0
 
-`PUT - Producto: http://localhost:8080/api/productos/:id`
+## Install
 
-`DELETE - Producto: http://localhost:8080/api/productos/:id`
+```sh
+npm install
+```
 
-### Carrito:
+## Build
 
-`GET - All Items: http://localhost:8080/api/carrito/`
+```sh
+npm run build
+```
 
-`GET - Single Item: http://localhost:8080/api/carrito/:id`
+## Usage
 
-`POST - Item: http://localhost:8080/api/carrito/:id_producto`
+```sh
+npm run start
+```
 
-`DELETE - Producto: http://localhost:8080/api/carrito/:id`
+## Run as dev
+
+```sh
+npm run dev
+```
