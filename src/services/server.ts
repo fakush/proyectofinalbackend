@@ -15,6 +15,8 @@ import { userStatus } from '../middleware/userStatus';
 import compression from 'compression';
 import { logger } from '../middleware/logger';
 import { mongoConnection } from '../utils/MongoConnection';
+import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
 
 const app = express();
 
@@ -109,6 +111,37 @@ app.get('/images', (req: Request, res) => {
 
 // Use routers
 app.use('/api', routersIndex);
+
+// Swagger
+const options = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Proyecto Backend para CoderHouse',
+      version: '0.0.1',
+      description: 'This is a simple CRUD API application made with Express and documented with Swagger',
+      license: {
+        name: 'MIT',
+        url: 'https://spdx.org/licenses/MIT.html'
+      },
+      contact: {
+        name: 'Facundo Creus',
+        url: 'https://github.com/fakush',
+        email: 'fcreus@gmail.com'
+      }
+    },
+    servers: [
+      {
+        url: 'http://localhost:8080',
+        description: 'Development server'
+      }
+    ]
+  },
+  apis: ['src/routes/*']
+};
+
+const specs = swaggerJsdoc(options);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 const myServer = new http.Server(app);
 export default myServer;

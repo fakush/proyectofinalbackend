@@ -7,11 +7,145 @@ import { controllerProfilePic } from '../controllers/controllerProfilePic';
 import { uploadProfilePic } from '../middleware/profilePics';
 import asyncHandler from 'express-async-handler';
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     LocalUserData:
+ *       type: object
+ *       properties:
+ *         _id:
+ *           type: String
+ *           description: ID del usuario
+ *           example: "618d72256fc267b7222e8bce"
+ *         username:
+ *           type: String
+ *           description: Nombre de usuario
+ *           example: "HomeroElGrande"
+ *         email:
+ *           type: String
+ *           description: Correo electrónico del usuario
+ *           example: homero@springfield.com
+ *         password:
+ *           type: String
+ *           description: Contraseña del usuario
+ *           example: "12345678"
+ *         firstName:
+ *           type: String
+ *           description: Nombre del usuario
+ *           example: "Homero"
+ *         lastName:
+ *           type: String
+ *           description: Apellido del usuario
+ *           example: "Simpson"
+ *         address:
+ *           type: String
+ *           description: Dirección del usuario
+ *           example: "Av. Siempreviva 456"
+ *         phone:
+ *           type: String
+ *           description: Teléfono del usuario
+ *           example: "54-11-34803233"
+ *         age:
+ *           type: Number
+ *           description: Edad del usuario
+ *           example: 38
+ *         isAdmin:
+ *           type: Boolean
+ *           description: Indica si el usuario es administrador
+ *           example: true
+ *         timestamp:
+ *           type: Date
+ *           description: Fecha de creación / edición del usuario
+ *           example: 2021-11-11T16:42:29-03:00
+ *     NewLocalUserInput:
+ *       type: object
+ *       properties:
+ *         username:
+ *           type: String
+ *           description: Nombre de usuario
+ *           example: "HomeroElGrande"
+ *         email:
+ *           type: String
+ *           description: Correo electrónico del usuario
+ *           example: homero@springfield.com
+ *         password:
+ *           type: String
+ *           description: Contraseña del usuario
+ *           example: "12345678"
+ *         firstName:
+ *           type: String
+ *           description: Nombre del usuario
+ *           example: "Homero"
+ *         lastName:
+ *           type: String
+ *           description: Apellido del usuario
+ *           example: "Simpson"
+ *         address:
+ *           type: String
+ *           description: Dirección del usuario
+ *           example: "Av. Siempreviva 456"
+ *         phone:
+ *           type: String
+ *           description: Teléfono del usuario
+ *           example: "54-11-34803233"
+ *         age:
+ *           type: Number
+ *           description: Edad del usuario
+ *           example: 38
+ *         isAdmin:
+ *           type: Boolean
+ *           description: Indica si el usuario es administrador
+ *           example: true
+ *     LocalUserLogin:
+ *       type: object
+ *       properties:
+ *         username:
+ *           type: String
+ *           description: correo electrónico del usuario
+ *           example: homero@springfield.com
+ *         password:
+ *           type: String
+ *           description: Contraseña del usuario
+ *           example: "12345678"
+ */
+
 const router = Router();
 
 router.get('/', async (req, res) => {});
 
-//Login Local
+/**
+ * @swagger
+ * /api/auth/local/login:
+ *   post:
+ *     summary: Iniciar sesión con usuario local
+ *     requestBody:
+ *         required: true
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/LocalUserLogin'
+ *     responses:
+ *       200:
+ *         description: get user data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items :
+ *                  $ref: '#/components/schemas/LocalUserData'
+ *       400:
+ *         description: Bad request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                  message:
+ *                   type: string
+ *                   description: Mensaje de error
+ *                   example: "User/Password are not valid"
+ */
 router.post('/login', passportLocal.authenticate('login'), function (req, res) {
   //   res.json({ msg: 'Welcome!', user: req.user });
   res.redirect('/');
@@ -36,7 +170,38 @@ router.post('/presignup', (req, res) => {
   res.redirect('/');
 });
 
-// Register Local
+/**
+ * @swagger
+ * /api/auth/local/signup:
+ *   post:
+ *     summary: Registro de usuario local
+ *     requestBody:
+ *         required: true
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/NewLocalUserInput'
+ *     responses:
+ *       200:
+ *         description: get user data
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items :
+ *                  $ref: '#/components/schemas/LocalUserData'
+ *       400:
+ *         description: Bad request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                  message:
+ *                   type: string
+ *                   description: Mensaje de error
+ *                   example: "User/Password are not valid"
+ */
 router.post(
   '/signup',
   // controllerProfilePic.hasImage,
@@ -53,11 +218,6 @@ router.post(
     })(req, res, next);
   }
 );
-
-router.get('/logout', async (req, res) => {
-  req.session.destroy;
-  res.status(200).json({ msg: 'Logged out' });
-});
 
 //Logueo con éxito
 router.get('/welcome', (req, res) => {

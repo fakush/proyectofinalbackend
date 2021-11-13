@@ -18,12 +18,23 @@ router.use('/orders', routerOrders);
 //Se pasan a esta ruta los endpoints para testear
 router.use('/test', routerTests);
 
-router.post('/logout', (req: any, res) => {
+/**
+ * @swagger
+ * /api/auth/logout:
+ *   post:
+ *     summary: Termina la sesión del usuario
+ *     responses:
+ *       200:
+ *         description: req.session.destroy
+ *         content:
+ *         redirect: /
+ */
+router.post('/auth/logout', (req: any, res) => {
   userStatus.login = true;
   userStatus.islogged = false;
   userStatus.isDestroyed = true;
   req.session.destroy;
-  res.redirect('/');
+  res.status(200).redirect('/');
 });
 
 export default router;

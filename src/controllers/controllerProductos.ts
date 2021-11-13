@@ -17,7 +17,7 @@ class Producto {
   checkValidTypes(req: Request, res: Response, next: NextFunction) {
     const { nombre, descripcion, codigo, foto, precio, stock } = req.body;
     if (!nombre && !descripcion && !codigo && !foto && !precio && !stock) {
-      return res.status(400).json({
+      return res.status(401).json({
         msg: 'Al menos se debe ingresar un campo a modificar'
       });
     }
@@ -29,7 +29,7 @@ class Producto {
       (precio && isNaN(precio)) ||
       (stock && isNaN(stock))
     ) {
-      return res.status(400).json({
+      return res.status(402).json({
         msg: 'El tipo de dato para alguno de los campos es incorrecto'
       });
     }
@@ -45,7 +45,7 @@ class Producto {
     }
     const producto = await productsAPI.getProducts(id);
     if (producto.length < 1) {
-      return res.status(404).json({
+      return res.status(401).json({
         msg: 'Invalid Id'
       });
     }
@@ -94,7 +94,7 @@ class Producto {
   async deleteProducts(req: Request, res: Response) {
     const id = req.params.id;
     await productsAPI.deleteProduct(id);
-    return res.json({
+    return res.status(200).json({
       msg: 'borrando productos',
       data: await productsAPI.getProducts()
     });

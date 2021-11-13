@@ -6,3 +6,4 @@ node_modules
 /src/middleware/sendEmail.ts
 /.vscode
 /dist
+/public/images

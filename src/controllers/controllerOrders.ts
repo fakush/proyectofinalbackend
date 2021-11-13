@@ -19,7 +19,7 @@ class Orders {
   async getOrders(req: Request, res: Response) {
     const userId = req.params.id;
     const cart = await orderAPI.getOrders(userId);
-    if (!cart) res.status(404).json({ msg: `cart not found` });
+    if (!cart) res.status(401).json({ msg: `Order not found` });
     return res.json({ data: cart });
   }
 
