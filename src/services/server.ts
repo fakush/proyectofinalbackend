@@ -17,6 +17,8 @@ import { logger } from '../middleware/logger';
 import { mongoConnection } from '../utils/MongoConnection';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
+import { graphqlHTTP } from 'express-graphql';
+import { resolvers, graphqlSchema } from './graphql';
 
 const app = express();
 
@@ -39,6 +41,16 @@ app.use(errorHandler);
 
 // Setea el uso de compresion.
 app.use(compression());
+
+// Setea el uso de graphql
+app.use(
+  '/graphql',
+  graphqlHTTP({
+    schema: graphqlSchema,
+    rootValue: resolvers,
+    graphiql: true
+  })
+);
 
 // Setea el uso de helmet.
 // app.use(helmet());
