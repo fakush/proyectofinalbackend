@@ -14,11 +14,12 @@ const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 import { userStatus } from '../middleware/userStatus';
 import compression from 'compression';
 import { logger } from '../middleware/logger';
-import { mongoConnection } from '../utils/MongoConnection';
+import { mongoConnection, MongoDB } from '../utils/MongoConnection';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 
 const app = express();
+const myMongo = new MongoDB();
 
 // paths
 logger.log.info(process.cwd() + '/public');
@@ -84,11 +85,11 @@ const StoreOptions = {
 app.use(cookieParser());
 app.use(session(StoreOptions));
 
-app.use((req, res, next) => {
-  console.log(`REQ.SESSION =>\n${JSON.stringify(req.session)}`.yellow);
-  console.log(`REQ.USER =>\n${JSON.stringify(req.user)}`.yellow);
-  next();
-});
+// app.use((req, res, next) => {
+//   console.log(`REQ.SESSION =>\n${JSON.stringify(req.session)}`.yellow);
+//   console.log(`REQ.USER =>\n${JSON.stringify(req.user)}`.yellow);
+//   next();
+// });
 
 app.use(passport.initialize());
 app.use(passport.session());

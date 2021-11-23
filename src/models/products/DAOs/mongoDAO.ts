@@ -100,6 +100,7 @@ const mockData = [
     stock: 15
   }
 ];
+export const Products = mongoose.model<ProductBaseClass>(dbCollection, productsSchema);
 
 export class PersistenciaMongo implements ProductBaseClass {
   private server: string;

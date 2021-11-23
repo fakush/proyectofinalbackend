@@ -6,6 +6,7 @@ import os from 'os';
 import cluster from 'cluster';
 import { portArgument, ClusterArgument } from './middleware/getArgs';
 import { logger } from './middleware/logger';
+import { axiosTest } from './utils/axiosTest';
 colors.enable();
 
 const port = portArgument || Config.PORT;
@@ -35,6 +36,9 @@ if (cluster.isMaster && clusterArgument) {
 // myServer.on('error', (err) => {
 //   logger.log.error('SERVER ERROR: '.red, err);
 // });
+
+// Realizar pruebas sobre la db con axios
+//axiosTest();
 
 // Imprimo en Consola el código de salida
 process.on('exit', (code) => {
