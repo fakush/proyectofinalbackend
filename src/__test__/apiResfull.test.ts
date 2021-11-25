@@ -6,7 +6,7 @@ import { Products } from '../models/products/DAOs/mongoDAO';
 import ExpressServer from '../services/server';
 import { expect } from 'chai';
 
-describe('Ejemplos de tests', () => {
+describe('Tests de los endpoints de productos.', () => {
   let newMongo: any;
   let request: any;
 
