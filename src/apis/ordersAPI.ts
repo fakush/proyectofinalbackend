@@ -2,8 +2,10 @@ import { OrderObject } from '../models/orders/orders.interfaces';
 import { OrderFactory, Persistencia } from '../models/orders/orders.factory';
 import { cartAPI } from './cartAPI';
 import { logger } from '../middleware/logger';
+import { PersistenceArgument } from '../middleware/getArgs';
 
-const tipo = Persistencia.MongoAtlas;
+//Si hay un argumento de persistencia, lo uso, sino, uso el default.
+const tipo = PersistenceArgument || Persistencia.MongoAtlas;
 
 class OrderAPIClass {
   private order;

@@ -7,19 +7,33 @@ export enum Persistencia {
 }
 
 export class OrderFactory {
+  // Esto debería ser tipo generico para todos los DAO
+  private static instance: PersistenciaMongo;
+
+  private constructor() {}
+
   static get(tipo: Persistencia) {
     switch (tipo) {
       case Persistencia.MongoLocal:
         logger.log.info('Carrito está escribiendo en Mongo Local');
-        return new PersistenciaMongo(true);
+        if (!OrderFactory.instance) {
+          OrderFactory.instance = new PersistenciaMongo(true);
+        }
+        return OrderFactory.instance;
 
       case Persistencia.MongoAtlas:
         logger.log.info('Carrito está escribiendo en Mongo Atlas');
-        return new PersistenciaMongo();
+        if (!OrderFactory.instance) {
+          OrderFactory.instance = new PersistenciaMongo();
+        }
+        return OrderFactory.instance;
 
       default:
         logger.log.info('Carrito está escribiendo en Mongo Atlas por default');
-        return new PersistenciaMongo();
+        if (!OrderFactory.instance) {
+          OrderFactory.instance = new PersistenciaMongo();
+        }
+        return OrderFactory.instance;
     }
   }
 }
