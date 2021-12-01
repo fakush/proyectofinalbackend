@@ -17,7 +17,7 @@ const messageSchema = new mongoose.Schema({
   message: { type: String, required: true, max: 1000 },
   timestamp: { type: String, required: true, max: 1000 }
 });
-const messageModel = mongoose.model(dbCollection, messageSchema);
+export const messageModel = mongoose.model(dbCollection, messageSchema);
 
 //NormalizrSchema
 const author = new schema.Entity('author', {}, { idAttribute: 'email' });
