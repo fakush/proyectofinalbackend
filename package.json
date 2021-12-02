@@ -14,6 +14,8 @@
     "stop:pm2": "node_modules/.bin/pm2 stop all",
     "build": "node_modules/.bin/tsc",
     "test": "jest",
+    "prod": "set NODE_ENV=production && node ./dist/src/index.js --cluster",
+    "dev:env": "set NODE_ENV=development && node ./dist/src/index.js --cluster",
     "dev": "nodemon",
     "make_env": "node ./scr/make-env.ts",
     "start:profilling": "node --prof dist/src/index.js",

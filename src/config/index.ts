@@ -1,8 +1,18 @@
 import dotenv from 'dotenv';
+import { logger } from '../middleware/logger';
+import path from 'path';
 
-dotenv.config();
+if (!process.env.NODE_ENV) {
+  logger.log.warn('Inicializando en entorno: Default');
+  dotenv.config();
+} else {
+  logger.log.warn('Inicializando en entorno: ', process.env.NODE_ENV);
+  dotenv.config({ path: process.cwd() + process.env.NODE_ENV + '.env' });
+}
 
 const venv = {
+  NODE_ENV: process.env.NODE_ENV,
+
   PORT: process.env.PORT || 8080,
   MONGO_ATLAS_USER: process.env.MONGO_ATLAS_USER || 'user',
   MONGO_ATLAS_PASSWORD: process.env.MONGO_ATLAS_PASSWORD || 'pwd',
