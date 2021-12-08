@@ -14,12 +14,15 @@ const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 import { userStatus } from '../middleware/userStatus';
 import compression from 'compression';
 import { logger } from '../middleware/logger';
-import { mongoConnection, MongoDB } from '../utils/MongoConnection';
+import { mongoConnection, MongoDB, atlasURL } from '../utils/MongoConnection';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
+import { graphqlHTTP } from 'express-graphql';
+import { resolvers, graphqlSchema } from './graphql';
 
 const app = express();
 const myMongo = new MongoDB();
+myMongo.getConnection();
 
 // paths
 logger.log.info(process.cwd() + '/public');
@@ -43,6 +46,16 @@ app.use(compression());
 
 // Setea el uso de helmet.
 // app.use(helmet());
+
+// Setea el uso de graphql
+app.use(
+  '/graphql',
+  graphqlHTTP({
+    schema: graphqlSchema,
+    rootValue: resolvers,
+    graphiql: true
+  })
+);
 
 // Express & Handlebars Setup
 app.use(express.static(publicFolderPath));
@@ -69,7 +82,7 @@ const unDia = unaHora * 24;
 // const clientP = mongoose.connect(`mongodb+srv://${Config.MONGO_ATLAS_USER}:${Config.MONGO_ATLAS_PASSWORD}@${Config.MONGO_ATLAS_CLUSTER}/${Config.MONGO_ATLAS_DBNAME}?retryWrites=true&w=majority`).then((m) => m.connection.getClient());
 const StoreOptions = {
   store: MongoStore.create({
-    clientPromise: mongoConnection,
+    mongoUrl: atlasURL,
     dbName: 'persistencia',
     stringify: false,
     autoRemove: 'interval',

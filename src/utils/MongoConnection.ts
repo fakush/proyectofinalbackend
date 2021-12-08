@@ -4,7 +4,7 @@ import config from '../config';
 mongoose.Promise = global.Promise;
 
 const localURL = `mongodb://localhost:27017/${config.MONGO_LOCAL_DBNAME}`;
-const atlasURL = `mongodb+srv://${config.MONGO_ATLAS_USER}:${config.MONGO_ATLAS_PASSWORD}@${config.MONGO_ATLAS_CLUSTER}/${config.MONGO_ATLAS_DBNAME}?retryWrites=true&w=majority`;
+export const atlasURL = `mongodb+srv://${config.MONGO_ATLAS_USER}:${config.MONGO_ATLAS_PASSWORD}@${config.MONGO_ATLAS_CLUSTER}/${config.MONGO_ATLAS_DBNAME}?retryWrites=true&w=majority`;
 
 export class MongoDB {
   private instance: number;
